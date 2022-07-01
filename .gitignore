@@ -1,4 +1,4 @@
 .venv
 backend/backend/__pycache__
 backend/ncteApp/__pycache__
-backend/ncteApp/migrations/__pycache__
+backend/ncteApp/migrations/
