@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from ..models import Summary
-from ..serializers import SummarySerializer
+from ncteApp.models import Summary
+from ncteApp.serializers import SummarySerializer
 
 # Create your views here.
 class SummaryAPI(APIView):
