@@ -26,6 +26,13 @@ export const textStyles = StyleSheet.create ({
     button: {
         color: theme.light_grey,
         fontSize: 15,
+    },
+
+    album: {
+        fontSize: 25,
+        color: '#727272',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })
 
@@ -43,10 +50,12 @@ export const viewStyles = StyleSheet.create ({
     }
 })
 
-export const lineStyles = StyleSheet.create ({
-    line: {
-        width: 70,
-        color: theme.light_grey,
+export const iconStyles = StyleSheet.create ({
+    add: {
+        width: 15,
+        height: 15,
+        marginTop: 60,
+        marginLeft: 20,
     }
 })
 
@@ -66,11 +75,5 @@ export const boxStyles = StyleSheet.create ({
         borderColor: theme.light_grey,
         borderWidth: 1,
         borderRadius: 15,
-    }
-})
-
-export const imageStyles = StyleSheet.create ({
-    icon: {
-
-    }
+    },
 })
