@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from ..ncteApp.views.summary_views import SummaryAPI
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('ncteApp.urls')),
+    path('<int:pk>', SummaryAPI.summary_detail, name='detail'),
+    path('<int:pk>', SummaryAPI.summary_update, name='update'),
 ]

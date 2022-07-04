@@ -8,13 +8,13 @@ from ..serializers import SummarySerializer
 # Create your views here.
 class SummaryAPI(APIView):
     #특정 note의 summary 정보를 가져옵니다.
-    def get(self, request):
+    def summary_detail(self, request):
         queryset = Summary.objects.filter(note_id=request.Notes.note_id)
         serializer = SummarySerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     #특정 note의 summary 정보를 수정합니다.
-    def put(self, request):
+    def summary_update(self, request):
         summary_instance = self.get_object(Summary.summary_id, request.Notes.note_id)
         data = {
             'summary': request.data.get('summary')
