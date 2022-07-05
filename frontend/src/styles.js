@@ -20,7 +20,7 @@ export const textStyles = StyleSheet.create ({
         borderBottomColor: theme.light_grey,
         borderBottomWidth: 1,
         margin: 10,
-        width: 250,
+        width: 240,
     },
 
     button: {
@@ -33,6 +33,22 @@ export const textStyles = StyleSheet.create ({
         color: '#727272',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    text: {
+        fontSize: 15,
+        color: 'black',
+    },
+
+    textArea: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'flex-start',
+        margin: 10,
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 20,
+        width: 300,
     }
 })
 
@@ -76,4 +92,8 @@ export const boxStyles = StyleSheet.create ({
         borderWidth: 1,
         borderRadius: 15,
     },
+
+    textbox: {
+
+    }
 })
