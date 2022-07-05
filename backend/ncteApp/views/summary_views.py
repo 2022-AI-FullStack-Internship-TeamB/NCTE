@@ -17,11 +17,9 @@ class SummaryAPI(APIView):
 
     #특정 note의 summary 정보를 수정합니다.
     @api_view(['PUT'])
-    def summary_update(self, request, v2):
-        summary_instance = self.get_object(Summary.summary_id, note_id=v2)
-        data = {
-            'summary': request.data.get('summary')
-        }
+    def summary_update(request, v2):
+        summary_instance = Summary.objects.get(note_id=v2)
+        data = request.data
         serializer = SummarySerializer(instance=summary_instance, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
