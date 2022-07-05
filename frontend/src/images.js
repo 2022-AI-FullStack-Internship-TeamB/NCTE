@@ -11,6 +11,7 @@ import list from '../assets/list.png';
 import logo from '../assets/logo.png';
 import mypage from '../assets/mypage.png';
 import update from '../assets/update.png';
+import camera_green from '../assets/camera_green.png';
 
 export const images = {
     email: email,
@@ -26,4 +27,5 @@ export const images = {
     logo: logo,
     mypage: mypage,
     update: update,
+    camera_green: camera_green,
 }

@@ -28,9 +28,7 @@ export default function Navigation(){
                         tabBarShowLabel: false,
                         tabBarIcon: () => (
                             <Image source = {images.camera} />
-                        ),
-                        tabBarActiveTintColor: theme.light_green,
-                        tabBarActiveBackgroundColor: theme.light_green,
+                        )
                     }} />
                 <Tab.Screen name = {AlbumName} component = {AlbumScreen} 
                     options = {{
