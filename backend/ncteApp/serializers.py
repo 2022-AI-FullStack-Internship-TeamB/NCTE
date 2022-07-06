@@ -3,9 +3,6 @@ from .models import Users, Categories, Summary
 from .models import Users, Notes
 from dataclasses import field
 from rest_framework import serializers
-<< << << < HEAD
-== == == =
->>>>>> > main
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -60,6 +57,7 @@ class MyTokenObtainPairSerializer(EmailTokenObtainPairSerializer):
 
 
 class NoteSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Notes
         fields = ['note_id', 'user_id', 'title',

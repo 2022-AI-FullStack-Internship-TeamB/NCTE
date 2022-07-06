@@ -22,12 +22,12 @@ class NoteDetail(APIView):
 
     def get_object(self, pk):
         try:
-            note = NoteSerializer.get(pk=pk)
+            note = Notes.objects.get(pk=pk)
             return note
         except Notes.DoesNotExist:
             return Response(data={"data": "not found"}, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, pk):
+    def get(self, request, pk):
         note = Notes.objects.filter(note_id=pk)
         querysest = note.select_related(
             "category_id").values('category_id__category')
@@ -42,7 +42,7 @@ class NoteDetail(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(data={"data": "fail"}, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, pk):
+    def delete(self, request, pk):
         note = Notes.objects.filter(note_id=pk)
         note.delete()
         return Response(data={"data": "success"}, status=status.HTTP_200_OK)
