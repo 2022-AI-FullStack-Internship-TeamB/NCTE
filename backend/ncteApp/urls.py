@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import user_views
+from .views import user_views, summary_views
 # from .serializers import MyTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from rest_framework_simplejwt.views import TokenVerifyView
@@ -18,4 +18,6 @@ urlpatterns = [
          name='token_obtain_pair'),
     path('token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify', TokenVerifyView.as_view(), name='token_verify'),
+
+    path('summary/<int:pk>', summary_views.SummaryAPI.as_view()),
 ]
