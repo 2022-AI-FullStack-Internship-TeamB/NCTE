@@ -7,6 +7,5 @@ from ncteApp.views.summary_views import SummaryAPI
 # 대부분의 api는 v1으로 적고 겹칠경우에만 version 숫자를 변경
 
 urlpatterns = [
-    path('<int:v1>', SummaryAPI.as_view(), name='summary_detail'),
-    path('<int:v2>', SummaryAPI.as_view(), name='summary_update'),
+    path('summary/<int:pk>', SummaryAPI.as_view()),
 ]
