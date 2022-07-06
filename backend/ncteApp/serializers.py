@@ -1,6 +1,6 @@
 from dataclasses import field
 from rest_framework import serializers
-from .models import Users, Summary
+from .models import Users, Categories, Summary
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
@@ -52,6 +52,12 @@ class MyTokenObtainPairSerializer(EmailTokenObtainPairSerializer):
         data['success'] = True
 
         return data
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categories
+        fields = ['category_id', 'category']
 
 class SummarySerializer(serializers.ModelSerializer):
     class Meta:
