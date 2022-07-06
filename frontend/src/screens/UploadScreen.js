@@ -32,7 +32,7 @@ const UploadScreen = () => {
                 </Text>
             </View>
             
-            <View style = {viewStyles.container}>
+            <View style = {viewStyles.center}>
                 <View style = {{
                     marginTop: 10,
                 }}>
@@ -82,7 +82,6 @@ const UploadScreen = () => {
                 </View>
                 <View style = {{
                     marginTop: 10,
-                    marginLeft: 100,
                 }}>
                     <CustomButton 
                         onPress = {_onPress}

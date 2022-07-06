@@ -26,6 +26,6 @@ export const images = {
     list: list,
     logo: logo,
     mypage: mypage,
-    update: update,
+    modify: update,
     camera_green: camera_green,
 }
