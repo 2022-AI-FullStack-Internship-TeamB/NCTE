@@ -1,6 +1,6 @@
 from dataclasses import field
 from rest_framework import serializers
-from .models import Users, Notes
+from .models import Users, Notes, Summary
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
@@ -10,7 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
-
     class Meta:
         model = Users
         fields = ['id', 'username', 'email', 'password']
@@ -60,3 +59,8 @@ class NoteSerializer(serializers.ModelSerializer):
         model = Notes
         fields = ['note_id', 'user_id', 'title',
                   'contents', 'category_id', 'date']
+                  
+class SummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Summary
+        fields = ('summary_id', 'note_id', 'summary') 

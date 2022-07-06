@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import user_views
+from .views import user_views, summary_views
 # from .serializers import MyTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from rest_framework_simplejwt.views import TokenVerifyView
@@ -21,4 +21,5 @@ urlpatterns = [
 
     # 메모
 
+    path('summary/<int:pk>', summary_views.SummaryAPI.as_view()),
 ]
