@@ -1,16 +1,20 @@
 import React from 'react';
-import { SafeAreaView, TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { textStyles, boxStyles } from '../styles';
 
-const TextArea = ({ value, onChangeText }) => {
+const TextArea = ({ value, setValue }) => {
     return (
-        <TextInput
-            multiline
-            numberOfLines = {200}
-            style = {textStyles.textArea}
-            value = {value}
-            onChangeText = {onChangeText}
-        />
+            <View style = {{
+                height: 180,
+            }}>
+            <TextInput
+                multiline
+                numberOfLines = {5}
+                style = {textStyles.textArea}
+                value = {value}
+                onChangeText = {setValue}
+            />
+            </View>        
     );
 }
 

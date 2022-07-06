@@ -49,6 +49,7 @@ export const textStyles = StyleSheet.create ({
         borderWidth: 1,
         borderRadius: 20,
         width: 300,
+        padding: 15,
     }
 })
 

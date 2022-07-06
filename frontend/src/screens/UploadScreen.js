@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Text, Dimensions, TouchableOpacity, Picker } from 'react-native';
+import { View, Text } from 'react-native';
 import { viewStyles, textStyles, boxStyles } from '../styles';
+import InputScrollView from 'react-native-input-scroll-view';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import TextArea from '../components/TextArea';
-//import { Picker } from '@react-native-picker/picker';
+import CustomPicker from '../components/CustomPicker';
 
 const UploadScreen = () => {
-    const width = Dimensions.get('window').width;
 
     const [title, setTitle] = useState('');
     const [contents, setContents] = useState('');
-    const [category, setCategory] = useState('diary');
+
+    const [open, setOpen] = useState(false);
+    const [category, setCategory] = useState([]);
+    const [items, setItems] = useState ([
+        { label: 'Diary', value: 'diary' },
+        { label: 'Todo', value: 'todo' },
+        { label: 'Study', value: 'study' },
+    ]);
 
     const _onPress = () => {
         console.log('saved');
     }
 
     return (
-        <View>
+        <InputScrollView nestedScrollEnabled = {true}>
             <View style = {boxStyles.top}>
                 <Text style = {textStyles.title}>
                     Note
                 </Text>
             </View>
+            
             <View style = {viewStyles.container}>
                 <View style = {{
-                    marginTop: 30,
+                    marginTop: 10,
                 }}>
                     <View style = {viewStyles.row}>
                         <Text style = {textStyles.text, {
@@ -47,42 +55,42 @@ const UploadScreen = () => {
                     }}>
                         Contents
                     </Text>
-                    <TextArea />
+                    <TextArea 
+                        value = {contents}
+                        setValue = {setContents}
+                    />
                 </View>
                 <View>
                     <View style = {viewStyles.row}>
                         <Text style = {textStyles.text, {
-                            margin: 5,
+                            marginLeft: 0,
+                            marginRight: 15,
+                            marginTop: 13
                         }}>
                             Category
                         </Text>
-                        <Picker
-                            selectedValue = {category}
-                            onValueChange = {(itemValue, itemIndex) => 
-                                setCategory(itemValue)
-                            }
-                            style = {{
-                                width: 200,
-                                height: 50,
-                            }}>
-                            <Picker.item label = 'Diary' value = 'diary' />
-                            <Picker.item label = 'Todo' value = 'todo' />
-                            <Picker.item label = 'Study' value = 'study' />
-                        </Picker>
+                        <CustomPicker
+                            open = {open}
+                            value = {category}
+                            items = {items}
+                            setOpen = {setOpen}
+                            setValue = {setCategory}
+                            setItems = {setItems}
+                            placeholder = "Select a category"
+                        />
                     </View>
                 </View>
                 <View style = {{
-                    alignItems: 'center'
+                    marginTop: 10,
+                    marginLeft: 100,
                 }}>
                     <CustomButton 
                         onPress = {_onPress}
                         text = "Save"
                     />
                 </View>
-            </View>
-            
-            
-        </View>
+            </View> 
+        </InputScrollView>
     );
 }
 
