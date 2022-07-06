@@ -1,7 +1,11 @@
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from .models import Users, Categories, Summary
+from .models import Users, Notes
 from dataclasses import field
 from rest_framework import serializers
-from .models import Users, Notes
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+<< << << < HEAD
+== == == =
+>>>>>> > main
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -60,3 +64,15 @@ class NoteSerializer(serializers.ModelSerializer):
         model = Notes
         fields = ['note_id', 'user_id', 'title',
                   'contents', 'category_id', 'date']
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categories
+        fields = ['category_id', 'category']
+
+
+class SummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Summary
+        fields = ('summary_id', 'note_id', 'summary')
