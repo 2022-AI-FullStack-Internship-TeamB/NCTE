@@ -3,6 +3,8 @@ from .models import Users, Categories, Summary
 from .models import Users, Notes
 from dataclasses import field
 from rest_framework import serializers
+from .models import Users, Categories, Summary, Notes
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
