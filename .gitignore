@@ -2,3 +2,4 @@
 backend/backend/__pycache__
 backend/ncteApp/__pycache__
 backend/ncteApp/migrations/
+backend/ncteApp/views/__pycache__ 
