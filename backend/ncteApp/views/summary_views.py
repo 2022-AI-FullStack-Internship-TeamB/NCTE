@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status, permissions
 from ncteApp.models import Summary
 from ncteApp.serializers import SummarySerializer
 
 # Create your views here.
 class SummaryAPI(APIView):
+    permission_classes = [permissions.AllowAny]
+
     #특정 note의 summary 정보를 가져옵니다.
     def get(self, request, pk):
         queryset = Summary.objects.filter(note_id=pk)
