@@ -1,6 +1,6 @@
 from dataclasses import field
 from rest_framework import serializers
-from .models import Users
+from .models import Users, Notes
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
@@ -53,3 +53,10 @@ class MyTokenObtainPairSerializer(EmailTokenObtainPairSerializer):
         data['success'] = True
 
         return data
+
+
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notes
+        fields = ['note_id', 'user_id', 'title',
+                  'contents', 'category_id', 'date']
