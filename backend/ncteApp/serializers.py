@@ -1,6 +1,6 @@
 from dataclasses import field
 from rest_framework import serializers
-from .models import Users, Notes, Summary
+from .models import Users, Categories, Summary, Notes
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
@@ -60,6 +60,11 @@ class NoteSerializer(serializers.ModelSerializer):
         fields = ['note_id', 'user_id', 'title',
                   'contents', 'category_id', 'date']
                   
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categories
+        fields = ['category_id', 'category']
+
 class SummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary
