@@ -20,6 +20,7 @@ urlpatterns = [
     path('token/verify', TokenVerifyView.as_view(), name='token_verify'),
 
     # 메모
+    path('notes/<int:pk>/all', note_views.NotesList.as_view()),
     path('notes', note_views.CreateNote.as_view()),
     path('notes/<int:pk>', note_views.NoteDetail.as_view()),
 

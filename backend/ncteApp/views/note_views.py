@@ -5,6 +5,14 @@ from rest_framework.views import APIView
 from ..serializers import NoteSerializer
 from django.db.models import Q, F
 
+class NotesList(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, pk):
+        queryset = Notes.objects.filter(user_id=pk)
+        serializer = NoteSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class CreateNote(APIView):
     permission_classes = [permissions.AllowAny]
