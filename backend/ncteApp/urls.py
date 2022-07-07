@@ -10,11 +10,11 @@ from rest_framework_simplejwt.views import TokenVerifyView
 
 urlpatterns = [
     # 사용자
-    path('v1/signup', user_views.UserCreate.as_view()),
-    path('v1/user/<int:pk>', user_views.UserDetail.as_view()),
+    path('signup', user_views.UserCreate.as_view()),
+    path('user/<int:pk>', user_views.UserDetail.as_view()),
 
     # 토큰
-    path('v1/login', user_views.MyTokenObtainPairView.as_view(),
+    path('login', user_views.MyTokenObtainPairView.as_view(),
          name='token_obtain_pair'),
     path('token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify', TokenVerifyView.as_view(), name='token_verify'),
