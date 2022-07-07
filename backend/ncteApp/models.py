@@ -1,15 +1,23 @@
+from dataclasses import field
 from pyexpat import model
 from tkinter import CASCADE
 from django.db import models
 from django.utils.timezone import now
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 
 
 # Create your models here.
-class Users(models.Model):
-    user_id = models.AutoField(primary_key=True, db_column='user_id')
-    nickname = models.CharField(max_length=20, null=False)
-    email_address = models.CharField(max_length=40, null=False)
-    password = models.CharField(max_length=20, null=False)
+class Users(AbstractUser):
+    id = models.AutoField(primary_key=True, db_column='user_id')
+    username = models.CharField(max_length=20, unique=True)
+    email = models.EmailField(
+        verbose_name='email address', max_length=255, unique=True)
+    password = models.CharField(max_length=300, null=False)
+
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
 
 class Categories(models.Model):
