@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { textStyles, viewStyles, boxStyles } from '../../styles';
-import { images } from '../../images';
-import CustomInput from '../../components/CustomInput';
-import CustomButton from '../../components/CustomButton';
+import { textStyles, viewStyles, boxStyles } from '../styles';
+import { images } from '../images';
+import CustomInput from '../components/CustomInput';
+import CustomButton from '../components/CustomButton';
 
 const SignUpScreen = () => {
 

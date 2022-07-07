@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, Pressable } from 'react-native';
 import { textStyles, boxStyles } from '../styles';
 
-const customButton = ({ onPress, text }) => {
+const CustomButton = ({ onPress, text }) => {
     return (
         <Pressable
             onPress = {onPress}
@@ -16,4 +16,4 @@ const customButton = ({ onPress, text }) => {
     );
 }
 
-export default customButton;
+export default CustomButton;

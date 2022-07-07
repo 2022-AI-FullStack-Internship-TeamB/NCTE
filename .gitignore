@@ -3,3 +3,9 @@ backend/backend/__pycache__
 backend/ncteApp/__pycache__
 backend/ncteApp/migrations/
 backend/ncteApp/views/__pycache__
+<<<<<<< HEAD
+node_modules/
+.expo/
+=======
+
+>>>>>>> 47eba43f25e9a4da2321c2b2692eece7c5307f4c
