@@ -50,6 +50,13 @@ export const textStyles = StyleSheet.create ({
         borderRadius: 20,
         width: 300,
         padding: 15,
+    },
+
+    hashtag: {
+        fontSize: 20,
+        fontStyle: 'italic',
+        alignSelf: 'flex-start',
+        marginLeft: 10
     }
 })
 
@@ -64,6 +71,12 @@ export const viewStyles = StyleSheet.create ({
     row: {
         flexDirection: 'row',
         margin: 10,
+    },
+
+    center: {
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        marginTop: 10,
     }
 })
 

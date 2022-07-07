@@ -7,13 +7,13 @@ const TextArea = ({ value, setValue }) => {
             <View style = {{
                 height: 180,
             }}>
-            <TextInput
-                multiline
-                numberOfLines = {5}
-                style = {textStyles.textArea}
-                value = {value}
-                onChangeText = {setValue}
-            />
+                <TextInput
+                    multiline
+                    numberOfLines = {5}
+                    style = {textStyles.textArea}
+                    value = {value}
+                    onChangeText = {setValue}
+                />
             </View>        
     );
 }
