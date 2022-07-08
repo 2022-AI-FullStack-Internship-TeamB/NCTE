@@ -28,6 +28,30 @@ export const textStyles = StyleSheet.create ({
         fontSize: 15,
     },
 
+    album: {
+        fontSize: 25,
+        color: '#727272',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    text: {
+        fontSize: 15,
+        color: 'black',
+    },
+
+    textArea: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'flex-start',
+        margin: 10,
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 20,
+        width: 300,
+        padding: 15,
+    },
+
     InBox: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -99,13 +123,9 @@ export const boxStyles = StyleSheet.create ({
         opacity: 0.4,
     },
 
-
 })
 
 export const imageStyles = StyleSheet.create ({
-    icon: {
-            
-    },
 
     logo: {
         height: 100,
@@ -115,5 +135,15 @@ export const imageStyles = StyleSheet.create ({
         marginTop: 190,
         marginLeft: 40,
         margin:50
+    }
+})
+
+
+export const iconStyles = StyleSheet.create ({
+    add: {
+        width: 15,
+        height: 15,
+        marginTop: 60,
+        marginLeft: 20,
     }
 })
