@@ -4,16 +4,23 @@ import { textStyles, viewStyles, boxStyles, iconStyles } from '../styles';
 import { images } from '../images';
 import { theme } from '../theme';
 import AlbumButton from '../components/AlbumButton';
+import IconButton from '../components/IconButton';
 
 const Album = () => {
 
     const _onPress = () => {
         console.log('pressed');
     }
+
     return (
         <View>
             <View style = {boxStyles.top}>
-                <Image source = {images.add} style = {iconStyles.add} />
+                <IconButton 
+                    image = {images.add} 
+                    onPress = {_onPress}
+                    marginLeft = {20}
+                    marginTop = {50}
+                    />
             </View>
             
             <View style = {viewStyles.container}>
