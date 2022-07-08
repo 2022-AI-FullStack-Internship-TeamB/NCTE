@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from "axios";
+import Constants from "expo-constants";
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
@@ -7,17 +9,55 @@ import CustomButton from '../components/CustomButton';
 
 const SignUpScreen = () => {
 
+    const { manifest } = Constants;
+
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
+
+    const data = {
+        //id: id,
+        username: nickname,
+        email: email,
+        password: password,
+    }
 
     const onBackPressed = () => {
         console.warn("Back");
     };
 
-    const onConfirmPressed = () => {
-        console.warn("Confirm");
+    const emulator = 'https://172.30.1.81:8000'
+    const onConfirmPressed = async () => {
+        // console.warn("Confirm");
+        if (email == "" || nickname == "" || password == "") {
+            alert('빈칸없이 다 입력해주세요😊');
+        }
+
+        try {
+            const response = await axios.post(
+                //`${emulator}/api/signup`,
+                `http://127.0.0.1:8000/api/signup`,
+                data
+            )
+            .then(function (response) {
+                if (response.data['success'] == true) {
+                    alert('회원가입되었습니다.');
+                } else {
+                    alert('중복된 아이디가 존재합니다.');
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+        
     };
+
+    // device id로 로그인하는 방법 찾아보기
+    // user verification도 진행
+    // user의 불편함을 줄여주는 방식으로 고민
 
 	return (
     	<View>
