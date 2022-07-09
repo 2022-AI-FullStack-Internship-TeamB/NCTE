@@ -6,10 +6,14 @@ import { theme } from '../theme';
 import AlbumButton from '../components/AlbumButton';
 import IconButton from '../components/IconButton';
 
-const Album = () => {
+const Album = ({ navigation }) => {
 
     const _onPress = () => {
         console.log('pressed');
+    }
+
+    const onAlbumPressed = () => {
+        navigation.navigate('List');
     }
 
     return (
@@ -26,24 +30,24 @@ const Album = () => {
             <View style = {viewStyles.container}>
                 <View style = {viewStyles.row}>
                     <AlbumButton
-                        onPress = {_onPress}
+                        onPress = {onAlbumPressed}
                         text = 'All'
                         color = {theme.light_blue}
                     />
                     <AlbumButton
-                        onPress = {_onPress}
+                        onPress = {onAlbumPressed}
                         text = 'Diary'
                         color = {theme.light_pink}
                     />
                 </View>
                 <View style = {viewStyles.row}>
                     <AlbumButton
-                        onPress = {_onPress}
+                        onPress = {onAlbumPressed}
                         text = 'Todo'
                         color = {theme.magenta_pink}
                     />
                     <AlbumButton
-                        onPress = {_onPress}
+                        onPress = {onAlbumPressed}
                         text = 'Study'
                         color = {theme.light_blue}
                     />

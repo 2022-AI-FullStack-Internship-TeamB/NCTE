@@ -7,7 +7,7 @@ import CustomButton from '../components/CustomButton';
 import TextArea from '../components/TextArea';
 import CustomPicker from '../components/CustomPicker';
 
-const UploadScreen = () => {
+const UploadScreen = ({ navigation }) => {
 
     const [title, setTitle] = useState('');
     const [contents, setContents] = useState('');
@@ -21,7 +21,7 @@ const UploadScreen = () => {
     ]);
 
     const _onPress = () => {
-        console.log('saved');
+        navigation.navigate('Note');
     }
 
     return (

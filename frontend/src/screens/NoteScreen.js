@@ -12,8 +12,8 @@ const NoteScreen = ({ navigation }) => {
     const [_title, _setTitle] = useState('');
     const [copiedText, setCopiedText] = useState('');
 
-    const back = () => {
-        console.log('back');
+    const onBackPressed = () => {
+        navigation.navigate('List');
     }
 
     const copyToClipboard = () => {
@@ -22,11 +22,11 @@ const NoteScreen = ({ navigation }) => {
     }
     
     const _modify = () => {
-        console.log('modify');
+        navigation.navigate('Modify');
     }
 
-    const _delete = () => {
-        console.log('delete');
+    const onDeletePressed = () => {
+        navigation.navigate('List');
     }
 
     return (
@@ -35,7 +35,7 @@ const NoteScreen = ({ navigation }) => {
                 <View style = {viewStyles.row}>
                     <IconButton
                         image = {images.back}
-                        onPress = {back}
+                        onPress = {onBackPressed}
                         marginLeft = {10}
                         marginTop = {60}
                     />
@@ -58,7 +58,7 @@ const NoteScreen = ({ navigation }) => {
                         />
                         <IconButton 
                             image = {images.delete_}
-                            onPress = {_delete}
+                            onPress = {onDeletePressed}
                             marginLeft = {10}
                         />
                     </View>

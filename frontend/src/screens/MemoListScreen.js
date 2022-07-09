@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Image } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
+import IconButton from '../components/IconButton';
 
-
-const MemoListScreen = () => {
+const MemoListScreen = ({ navigation }) => {
 
   const [writeMode, setWriteMode] = useState(false); 
   const [txt, setTxt] = useState(''); 
@@ -13,16 +13,26 @@ const MemoListScreen = () => {
   var year = today.getFullYear();
   var month = ('0' + (today.getMonth() + 1)).slice(-2);
   var day = ('0' + today.getDate()).slice(-2);
-  console.log(today)  
+  //console.log(today)  
   var dateString = year + '년 ' + month  + '월 ' + day + '일';
 
-  const orimemo = [
-
-  ];
+  const orimemo = [];
 
   const [memos, setMemos] = useState(orimemo); 
   const [Idx, setIdx] = useState(1); 
 
+  const add = () => {
+    navigation.navigate('Camera');
+    //console.log('add');
+  }
+
+  const back = () => {
+    navigation.navigate('Album');
+  }
+
+  const _onPress = () => {
+    navigation.navigate('Note');
+  }
 
   const addMemo = () =>{
     let a = {Id:Idx, memo:txt};
@@ -33,7 +43,7 @@ const MemoListScreen = () => {
 
   const renderMemo = ({item}) => {
     return(
-      <View style = {boxStyles.memo}>
+      <TouchableOpacity style = {boxStyles.memo} onPress = {_onPress}>
         <View style ={textStyles.InBox}>
           <TouchableOpacity style = {boxStyles.important}></TouchableOpacity>
           <Text style = {{
@@ -50,13 +60,13 @@ const MemoListScreen = () => {
           {dateString}
         </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
   if(writeMode){
     return (
-      <View  style={boxStyles.top}>        
+      <View style={boxStyles.top}>        
         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
           <TouchableOpacity style={{padding:15, }} onPress={()=>setWriteMode(false)}>
             <Text style={{fontSize:18, }} >취소</Text>
@@ -83,13 +93,23 @@ const MemoListScreen = () => {
 
     <View>
         <View style={boxStyles.top}>
-            <Text style = {textStyles.title}>
-                <Text onPress={()=>setWriteMode(true)}></Text> 
-                <Image 
-                    source = {images.add} 
-                />
-                Diary
-            </Text> 
+          <View style = {viewStyles.row}>
+            <IconButton
+              image = {images.back}
+              onPress = {back}
+              marginLeft = {10}
+              marginTop = {50}
+            />
+            <Text style = {textStyles.title} onPress={()=>setWriteMode(true)}>
+              Diary
+            </Text>
+            <IconButton
+              image = {images.add}
+              onPress = {add}
+              marginLeft = {240}
+              marginTop = {50}
+            />
+          </View> 
         </View>
         
         <View>
