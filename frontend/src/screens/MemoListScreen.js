@@ -4,7 +4,7 @@ import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
 
 
-const MemoList = () => {
+const MemoListScreen = () => {
 
   const [writeMode, setWriteMode] = useState(false); 
   const [txt, setTxt] = useState(''); 
@@ -103,4 +103,4 @@ const MemoList = () => {
   );
 }
 
-export default MemoList;
+export default MemoListScreen;

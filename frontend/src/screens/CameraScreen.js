@@ -97,5 +97,4 @@ const Camera = () => {
         </View>
     )
 }
-
 export default Camera;

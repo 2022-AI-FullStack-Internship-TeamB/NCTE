@@ -5,18 +5,19 @@ import { images } from '../images';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
 
     const onBackPressed = () => {
-        console.warn("Back");
+        //console.warn("Back");
+        navigation.navigate('SignIn');
     };
 
     const onConfirmPressed = () => {
-        console.warn("Confirm");
+        navigation.navigate('SignIn');
     };
 
 	return (

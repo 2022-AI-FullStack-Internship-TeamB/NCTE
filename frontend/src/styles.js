@@ -52,6 +52,13 @@ export const textStyles = StyleSheet.create ({
         padding: 15,
     },
 
+    hashtag: {
+        fontSize: 20,
+        fontStyle: 'italic',
+        alignSelf: 'flex-start',
+        marginLeft: 10
+    },
+
     InBox: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -73,17 +80,16 @@ export const viewStyles = StyleSheet.create ({
         margin: 10,
     },
 
+    center: {
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        marginTop: 10,
+    },
+
     SI_row: {
         flexDirection: 'row',
         margin: 10,
         marginLeft: 40,
-    }
-})
-
-export const lineStyles = StyleSheet.create ({
-    line: {
-        width: 70,
-        color: theme.light_grey,
     }
 })
 
@@ -126,7 +132,6 @@ export const boxStyles = StyleSheet.create ({
 })
 
 export const imageStyles = StyleSheet.create ({
-
     logo: {
         height: 100,
         width: 300,
