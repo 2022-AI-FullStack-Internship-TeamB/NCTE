@@ -5,7 +5,7 @@ import { images } from '../images';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 
-const MyPage = () => {
+const MyPageScreen = () => {
 
 
     const onDeleteAccountPressed = () => {
@@ -49,4 +49,4 @@ const MyPage = () => {
     );
 }
 
-export default MyPage;
+export default MyPageScreen;

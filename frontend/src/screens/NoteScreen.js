@@ -7,10 +7,14 @@ import { styles } from '../styles';
 import IconButton from '../components/IconButton';
 import TextArea from '../components/TextArea';
 
-const NoteScreen = ({ title }) => {
+const NoteScreen = ({ navigation }) => {
 
     const [_title, _setTitle] = useState('');
     const [copiedText, setCopiedText] = useState('');
+
+    const back = () => {
+        console.log('back');
+    }
 
     const copyToClipboard = () => {
         //Clipboard.setString('hello world');
@@ -29,6 +33,12 @@ const NoteScreen = ({ title }) => {
         <View>
             <View style = {boxStyles.top}>
                 <View style = {viewStyles.row}>
+                    <IconButton
+                        image = {images.back}
+                        onPress = {back}
+                        marginLeft = {10}
+                        marginTop = {60}
+                    />
                     <Text style = {textStyles.title}>
                         실리콘밸리 인턴십
                     </Text>
