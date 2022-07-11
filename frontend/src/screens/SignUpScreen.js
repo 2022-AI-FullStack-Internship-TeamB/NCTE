@@ -15,18 +15,17 @@ const SignUpScreen = () => {
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
 
+    const onBackPressed = () => {
+        console.warn("Back");
+    };
     const data = {
-        //id: id,
+        //id: id,c
         username: nickname,
         email: email,
         password: password,
     }
 
-    const onBackPressed = () => {
-        console.warn("Back");
-    };
-
-    const emulator = 'https://172.30.1.81:8000'
+    const emulator = 'http://127.0.0.1:8000'
     const onConfirmPressed = async () => {
         // console.warn("Confirm");
         if (email == "" || nickname == "" || password == "") {
