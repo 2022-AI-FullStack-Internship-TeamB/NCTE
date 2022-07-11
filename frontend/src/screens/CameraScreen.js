@@ -5,13 +5,13 @@ import * as ImagePicker from 'expo-image-picker';
 import { images } from '../images';
 import IconButton from '../components/IconButton';
 
-const Camera = () => {
+const Camera = ({ navigation }) => {
     const width = Dimensions.get('window').width;
     const height = Dimensions.get('window').height;
 
     const [pickedImagePath, setPickedImagePath] = useState('');
     const _onPress = () => {
-        console.log('saved');
+        navigation.navigate('Upload');
     }
 
     const showImagePicker = async () => {

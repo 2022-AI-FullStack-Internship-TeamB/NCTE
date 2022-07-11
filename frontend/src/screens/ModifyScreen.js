@@ -7,7 +7,7 @@ import CustomButton from '../components/CustomButton';
 import TextArea from '../components/TextArea';
 import CustomPicker from '../components/CustomPicker';
 
-const UploadScreen = () => {
+const UploadScreen = ({ navigation }) => {
 
     const [title, setTitle] = useState('');
     const [contents, setContents] = useState('');
@@ -20,8 +20,12 @@ const UploadScreen = () => {
         { label: 'Study', value: 'study' },
     ]);
 
-    const _onPress = () => {
-        console.log('saved');
+    const onBackPressed = () => {
+        navigation.navigate('Note');
+    }
+
+    const onConfirmPressed = () => {
+        navigation.navigate('Note');
     }
 
     return (
@@ -85,14 +89,14 @@ const UploadScreen = () => {
                 }}>
                     <View style = {viewStyles.row}>
                         <CustomButton 
-                            onPress = {_onPress}
+                            onPress = {onBackPressed}
                             text = "Back"
                         />
                         <View style = {{
                             marginLeft: 100,
                         }}>
                             <CustomButton
-                                onPress = {_onPress}
+                                onPress = {onConfirmPressed}
                                 text = "Confirm"
                             />
                         </View>

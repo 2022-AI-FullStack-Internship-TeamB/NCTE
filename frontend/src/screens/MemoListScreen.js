@@ -2,38 +2,40 @@ import React, { useEffect, useState } from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Image } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
+import IconButton from '../components/IconButton';
 
-
-const MemoListScreen = () => {
-
-  const [writeMode, setWriteMode] = useState(false); 
-  const [txt, setTxt] = useState(''); 
+const MemoListScreen = ({ navigation }) => {
 
   var today = new Date();
   var year = today.getFullYear();
   var month = ('0' + (today.getMonth() + 1)).slice(-2);
   var day = ('0' + today.getDate()).slice(-2);
-  console.log(today)  
   var dateString = year + '년 ' + month  + '월 ' + day + '일';
 
   const orimemo = [
-
+    {
+      id: '1',
+      memo: '실리콘밸리 AI 인턴십'
+    }
   ];
 
-  const [memos, setMemos] = useState(orimemo); 
-  const [Idx, setIdx] = useState(1); 
+  const [memos, setMemos] = useState(orimemo);
 
-
-  const addMemo = () =>{
-    let a = {Id:Idx, memo:txt};
-    setMemos(prev=>[...prev,a]); 
-    setWriteMode(false); 
-    setIdx(prev=>prev+1); 
+  const add = () => {
+    navigation.navigate('CameraStack');
   }
 
-  const renderMemo = ({item}) => {
+  const back = () => {
+    navigation.navigate('Album');
+  }
+
+  const _onPress = () => {
+    navigation.navigate('Note');
+  }
+
+  const renderMemo = ({ item }) => {
     return(
-      <View style = {boxStyles.memo}>
+      <TouchableOpacity style = {boxStyles.memo} onPress = {_onPress}>
         <View style ={textStyles.InBox}>
           <TouchableOpacity style = {boxStyles.important}></TouchableOpacity>
           <Text style = {{
@@ -43,53 +45,38 @@ const MemoListScreen = () => {
             {item.memo}
           </Text>
         </View>
+
         <View>
-        <Text 
-          style = {{ marginLeft: 35, }}
-        >
-          {dateString}
-        </Text>
+          <Text 
+            style = {{ marginLeft: 35, }}
+          >
+            {dateString}
+          </Text>
         </View>
-      </View>
-    );
-  }
-
-  if(writeMode){
-    return (
-      <View  style={boxStyles.top}>        
-        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-          <TouchableOpacity style={{padding:15, }} onPress={()=>setWriteMode(false)}>
-            <Text style={{fontSize:18, }} >취소</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={{padding:15, }}     onPress={()=>addMemo()} >
-            <Text style={{fontSize:18, }}>저장</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{flex:1, backgroundColor:'#fff', }}>
-        <TextInput
-            style={{  backgroundColor: '#eee',flex:1, padding:10,  }}
-            onChangeText={text => setTxt(text)}
-            multiline 
-            
-          />
-        </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
   return (
-
     <View>
         <View style={boxStyles.top}>
-            <Text style = {textStyles.title}>
-                <Text onPress={()=>setWriteMode(true)}></Text> 
-                <Image 
-                    source = {images.add} 
-                />
-                Diary
-            </Text> 
+          <View style = {viewStyles.row}>
+            <IconButton
+              image = {images.back}
+              onPress = {back}
+              marginLeft = {10}
+              marginTop = {50}
+            />
+            <Text style = {textStyles.title} onPress={()=>setWriteMode(true)}>
+              Diary
+            </Text>
+            <IconButton
+              image = {images.add}
+              onPress = {add}
+              marginLeft = {240}
+              marginTop = {50}
+            />
+          </View>
         </View>
         
         <View>
