@@ -16,8 +16,8 @@ class UserCreate(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
+            return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
+        return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserDetail(APIView):
@@ -28,21 +28,30 @@ class UserDetail(APIView):
             user = Users.objects.get(pk=pk)
             return user
         except Users.DoesNotExist:
-            return Response(data={"data": "not found"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data=Util.response(False, "NOT FOUND", 400), status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk):
         serializer = UserInfoSerializer(self.get_object(pk))
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
 
     def put(self, request, pk):
         user = self.get_object(pk)
         serializer = UserInfoSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(data={"data": "fail"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
+        return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
+
+
+class Util():
+    def response(success, data, status):
+        return {
+            "success": success,
+            "result": data,
+            "status": status
+        }

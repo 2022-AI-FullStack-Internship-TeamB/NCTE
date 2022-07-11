@@ -2,42 +2,37 @@ import React from 'react';
 import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { images } from './images';
-import { theme } from './theme';
+import { images } from '../images';
+import { theme } from '../theme';
 
-import CameraScreen from './screens/CameraScreen';
-import AlbumScreen from './screens/AlbumScreen';
-import MyPageScreen from './screens/MyPageScreen';
-import Album from './screens/AlbumScreen';
-
-const CameraName = 'Camera';
-const AlbumName = 'Album';
-const MyPageName = 'MyPage';
+import { CameraStack, AlbumStack } from './StackNavigator';
+import MyPageScreen from '../screens/MyPageScreen';
 
 const Tab = createBottomTabNavigator();
 
 export default function Navigation(){
     return(
-        <NavigationContainer>
+        <NavigationContainer
+            independent = {true}>
             <Tab.Navigator
                 screenOptions = {{ headerShown: false }}
-                initialRouteName = {AlbumName}
+                initialRouteName = 'AlbumStack'
             >
-                <Tab.Screen name = {CameraName} component = {CameraScreen} 
+                <Tab.Screen name = 'CameraStack' component = {CameraStack} 
                     options = {{
                         tabBarShowLabel: false,
                         tabBarIcon: () => (
                             <Image source = {images.camera} />
                         )
                     }} />
-                <Tab.Screen name = {AlbumName} component = {AlbumScreen} 
+                <Tab.Screen name = 'AlbumStack' component = {AlbumStack} 
                     options = {{
                         tabBarShowLabel: false,
                         tabBarIcon: () => (
                             <Image source = {images.list} />
                         )
                     }} />
-                <Tab.Screen name = {MyPageName} component = {MyPageScreen}
+                <Tab.Screen name = 'MyPageScreen' component = {MyPageScreen}
                     options = {{
                         tabBarShowLabel: false,
                         tabBarIcon: () => (

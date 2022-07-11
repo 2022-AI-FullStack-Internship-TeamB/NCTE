@@ -20,7 +20,7 @@ export const textStyles = StyleSheet.create ({
         borderBottomColor: theme.light_grey,
         borderBottomWidth: 1,
         margin: 10,
-        width: 240,
+        width: 250,
     },
 
     button: {
@@ -57,6 +57,13 @@ export const textStyles = StyleSheet.create ({
         fontStyle: 'italic',
         alignSelf: 'flex-start',
         marginLeft: 10
+    },
+
+    InBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+
     }
 })
 
@@ -77,15 +84,12 @@ export const viewStyles = StyleSheet.create ({
         alignItems: 'center',
         justifyContent: 'flex-start',
         marginTop: 10,
-    }
-})
+    },
 
-export const iconStyles = StyleSheet.create ({
-    add: {
-        width: 15,
-        height: 15,
-        marginTop: 60,
-        marginLeft: 20,
+    SI_row: {
+        flexDirection: 'row',
+        margin: 10,
+        marginLeft: 40,
     }
 })
 
@@ -107,7 +111,44 @@ export const boxStyles = StyleSheet.create ({
         borderRadius: 15,
     },
 
-    textbox: {
+    memo: {
+        width: 311,
+        height: 77,
+        justifyContent: 'center',
+        textAlign: 'center',
+        borderRadius: 15,
+        backgroundColor: '#EBDFE5',
+        marginLeft: 40,
+        margin:10
+    },
 
+    important: {
+        width: 25,
+        height: 16,
+        backgroundColor: '#9CA4A3',
+        opacity: 0.4,
+    },
+
+})
+
+export const imageStyles = StyleSheet.create ({
+    logo: {
+        height: 100,
+        width: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 190,
+        marginLeft: 40,
+        margin:50
+    }
+})
+
+
+export const iconStyles = StyleSheet.create ({
+    add: {
+        width: 15,
+        height: 15,
+        marginTop: 60,
+        marginLeft: 20,
     }
 })

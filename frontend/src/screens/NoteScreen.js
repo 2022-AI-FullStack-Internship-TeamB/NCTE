@@ -7,10 +7,14 @@ import { styles } from '../styles';
 import IconButton from '../components/IconButton';
 import TextArea from '../components/TextArea';
 
-const NoteScreen = ({ title }) => {
+const NoteScreen = ({ navigation }) => {
 
     const [_title, _setTitle] = useState('');
     const [copiedText, setCopiedText] = useState('');
+
+    const onBackPressed = () => {
+        navigation.navigate('List');
+    }
 
     const copyToClipboard = () => {
         //Clipboard.setString('hello world');
@@ -18,17 +22,23 @@ const NoteScreen = ({ title }) => {
     }
     
     const _modify = () => {
-        console.log('modify');
+        navigation.navigate('Modify');
     }
 
-    const _delete = () => {
-        console.log('delete');
+    const onDeletePressed = () => {
+        navigation.navigate('List');
     }
 
     return (
         <View>
             <View style = {boxStyles.top}>
                 <View style = {viewStyles.row}>
+                    <IconButton
+                        image = {images.back}
+                        onPress = {onBackPressed}
+                        marginLeft = {10}
+                        marginTop = {60}
+                    />
                     <Text style = {textStyles.title}>
                         실리콘밸리 인턴십
                     </Text>
@@ -48,7 +58,7 @@ const NoteScreen = ({ title }) => {
                         />
                         <IconButton 
                             image = {images.delete_}
-                            onPress = {_delete}
+                            onPress = {onDeletePressed}
                             marginLeft = {10}
                         />
                     </View>

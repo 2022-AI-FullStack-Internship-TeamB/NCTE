@@ -20,7 +20,11 @@ const UploadScreen = ({ navigation }) => {
         { label: 'Study', value: 'study' },
     ]);
 
-    const _onPress = () => {
+    const onBackPressed = () => {
+        navigation.navigate('Note');
+    }
+
+    const onConfirmPressed = () => {
         navigation.navigate('Note');
     }
 
@@ -83,10 +87,20 @@ const UploadScreen = ({ navigation }) => {
                 <View style = {{
                     marginTop: 10,
                 }}>
-                    <CustomButton 
-                        onPress = {_onPress}
-                        text = "Save"
-                    />
+                    <View style = {viewStyles.row}>
+                        <CustomButton 
+                            onPress = {onBackPressed}
+                            text = "Back"
+                        />
+                        <View style = {{
+                            marginLeft: 100,
+                        }}>
+                            <CustomButton
+                                onPress = {onConfirmPressed}
+                                text = "Confirm"
+                            />
+                        </View>
+                    </View>
                 </View>
             </View> 
         </InputScrollView>

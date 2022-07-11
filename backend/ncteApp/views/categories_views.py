@@ -11,5 +11,14 @@ class CreateCategory(APIView):
         serializer = CategorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status.HTTP_201_CREATED)
-        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
+            return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
+        return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+
+
+class Util():
+    def response(success, data, status):
+        return {
+            "success": success,
+            "result": data,
+            "status": status
+        }

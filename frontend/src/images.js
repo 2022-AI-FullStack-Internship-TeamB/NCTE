@@ -12,6 +12,7 @@ import logo from '../assets/logo.png';
 import mypage from '../assets/mypage.png';
 import update from '../assets/update.png';
 import camera_green from '../assets/camera_green.png';
+import back from '../assets/back.png';
 
 export const images = {
     email: email,
@@ -28,4 +29,5 @@ export const images = {
     mypage: mypage,
     modify: update,
     camera_green: camera_green,
+    back: back,
 }

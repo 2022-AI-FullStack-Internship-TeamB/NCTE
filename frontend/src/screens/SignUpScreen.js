@@ -7,7 +7,7 @@ import { images } from '../images';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }) => {
 
     const { manifest } = Constants;
 
@@ -16,7 +16,8 @@ const SignUpScreen = () => {
     const [password, setPassword] = useState('');
 
     const onBackPressed = () => {
-        console.warn("Back");
+        //console.warn("Back");
+        navigation.navigate('SignIn');
     };
     const data = {
         //id: id,c
@@ -25,6 +26,7 @@ const SignUpScreen = () => {
         password: password,
     }
 
+<<<<<<< HEAD
     const emulator = 'http://127.0.0.1:8000'
     const onConfirmPressed = async () => {
         // console.warn("Confirm");
@@ -41,6 +43,7 @@ const SignUpScreen = () => {
             .then(function (response) {
                 if (response.data['success'] == true) {
                     alert('회원가입되었습니다.');
+                    navigation.navigate('SignIn');
                 } else {
                     alert('중복된 아이디가 존재합니다.');
                 }
@@ -51,8 +54,7 @@ const SignUpScreen = () => {
         } catch (error) {
             console.log(error);
         }
-        
-    };
+    }
 
     // device id로 로그인하는 방법 찾아보기
     // user verification도 진행
