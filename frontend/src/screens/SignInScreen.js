@@ -74,6 +74,7 @@ const SignInScreen = ({ navigation }) => {
                         value = {password}
                         setValue = {setPassword}
                         placeholder="Password"
+                        secureTextEntry
                     />
                 </View>
                 <View style = {viewStyles.row}>

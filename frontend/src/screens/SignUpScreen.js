@@ -17,7 +17,7 @@ const SignUpScreen = ({ navigation }) => {
         navigation.navigate('SignIn');
     };
 
-    const onConfirmPressed = async () => {
+    const onSignUpPressed = async () => {
         console.log("Confirm");
         if (email == "" || username == "" || password == "") {
             alert('빈칸없이 다 입력해주세요😊');
@@ -103,8 +103,8 @@ const SignUpScreen = ({ navigation }) => {
                             marginLeft: 100,
                         }}>
                             <CustomButton
-                                onPress = {onConfirmPressed}
-                                text = "Confirm"
+                                onPress = {onSignUpPressed}
+                                text = "SignUp"
                             />
                         </View>
                     </View>
