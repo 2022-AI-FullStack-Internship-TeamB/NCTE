@@ -1,21 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { textStyles, viewStyles, boxStyles, imageStyles } from '../styles';
 import { images } from '../images';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
+import API from '../api';
 
 const SignInScreen = ({ navigation }) => {
-    //const navigation = useNavigation();
 
-    const onSignInPressed = () => {
-        //console.log('login');
-        navigation.navigate('TabNavigator');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [userData, setUserData] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const onSignInPressed = async () => {
+        if (email == "" || password == "") {
+            alert('빈칸없이 다 입력해주세요😊');
+        }
+
+        const data = {
+            email: email,
+            password: password,
+        }
+
+        try {
+            const response = await API.post(
+                `/login`,
+                data
+            )
+            .then(function (response) {
+                if (response.data['success'] == true) {
+                    console.log("SignUp");
+                    alert('로그인 완료');
+                    setUserData(data);
+                    setIsLoggedIn(true);
+                    navigation.navigate('TabNavigator');
+                } else {
+                    alert('이메일 혹은 비밀번호가 일치하지 않습니다');
+                }
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const onSignUpPressed = () => {
-        //console.log("Sign Up");
         navigation.navigate('SignUp');
     };
 
@@ -30,15 +63,18 @@ const SignInScreen = ({ navigation }) => {
             <Text>E-mail</Text>
                 <View style = {viewStyles.row}>
                     <CustomInput 
-                        E-mail
-                        placeholder="Add a Text"
+                        value = {email}
+                        setValue = {setEmail}
+                        placeholder="E-mail address"
                     />
                 </View>
             <Text>Password</Text>
                 <View style = {viewStyles.row}>
                     <CustomInput 
-                        Password
-                        placeholder="Add a Text"
+                        value = {password}
+                        setValue = {setPassword}
+                        placeholder="Password"
+                        secureTextEntry
                     />
                 </View>
                 <View style = {viewStyles.row}>
