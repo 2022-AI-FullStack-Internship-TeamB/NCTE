@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-//import axios from "axios";
-import Constants from "expo-constants";
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
@@ -9,8 +7,6 @@ import CustomButton from '../components/CustomButton';
 import API from '../api';
 
 const SignUpScreen = ({ navigation }) => {
-
-    const { manifest } = Constants;
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -21,7 +17,6 @@ const SignUpScreen = ({ navigation }) => {
         navigation.navigate('SignIn');
     };
 
-    //const emulator = 'http://127.0.0.1:8000';
     const onConfirmPressed = async () => {
         console.log("Confirm");
         if (email == "" || username == "" || password == "") {
@@ -36,8 +31,7 @@ const SignUpScreen = ({ navigation }) => {
 
         try {
             const response = await API.post(
-                //`${emulator}/api/signup`,
-                `http://127.0.0.1:8000/api/signup`,
+                `/signup`,
                 data
             )
             .then(function (response) {
@@ -114,10 +108,6 @@ const SignUpScreen = ({ navigation }) => {
                             />
                         </View>
                     </View>
-                    <CustomButton
-                                onPress = {_onPress}
-                                text = "Confirm"
-                            />
                 </View>
                 
                 
