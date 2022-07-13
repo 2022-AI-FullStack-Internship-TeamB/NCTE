@@ -5,8 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { images } from '../images';
 import { theme } from '../theme';
 
-import { CameraStack, AlbumStack } from './StackNavigator';
-import MyPageScreen from '../screens/MyPageScreen';
+import { CameraStack, AlbumStack, MypageStack } from './StackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +31,7 @@ export default function Navigation(){
                             <Image source = {images.list} />
                         )
                     }} />
-                <Tab.Screen name = 'MyPageScreen' component = {MyPageScreen}
+                <Tab.Screen name = 'MyPageStack' component = {MypageStack}
                     options = {{
                         tabBarShowLabel: false,
                         tabBarIcon: () => (
