@@ -1,3 +1,4 @@
+from typing_extensions import Required
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import Users, Categories, Summary
 from .models import Users, Notes
@@ -59,6 +60,7 @@ class MyTokenObtainPairSerializer(EmailTokenObtainPairSerializer):
 
 
 class NoteSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(format="%Y-%m-%d %H:%M", required=False)
 
     class Meta:
         model = Notes
