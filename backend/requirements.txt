@@ -6,3 +6,5 @@ djangorestframework-simplejwt
 drf-yasg
 torch
 transformers
+konlpy
+sentence_transformers
