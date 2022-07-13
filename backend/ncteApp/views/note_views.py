@@ -1,8 +1,9 @@
-from ..models import Notes
+from ..models import Notes, Summary
+from ml.summary_model import get_summary
 from rest_framework import permissions, status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ..serializers import NoteSerializer
+from ..serializers import NoteSerializer, SummarySerializer
 from django.db.models import Q, F
 
 
@@ -22,7 +23,15 @@ class CreateNote(APIView):
         serializer = NoteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
+            note_id = serializer.data["note_id"]
+            contents = serializer.data["contents"]
+            summary = get_summary(contents)
+            s_serializer = SummarySerializer(
+                data={"note_id": note_id, "summary": summary})
+            if s_serializer.is_valid():
+                s_serializer.save()
+                return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
+            return Response(Util.response(False, s_serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
         return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -50,7 +59,16 @@ class NoteDetail(APIView):
         serializer = NoteSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
+            note_id = serializer.data["note_id"]
+            contents = serializer.data["contents"]
+            summary = get_summary(contents)
+            s = Summary.objects.filter(note_id=note_id).first()
+            s_serializer = SummarySerializer(s,
+                                             data={"note_id": note_id, "summary": summary})
+            if s_serializer.is_valid():
+                s_serializer.save()
+                return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
+            return Response(Util.response(False, s_serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
         return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):

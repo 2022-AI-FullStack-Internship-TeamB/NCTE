@@ -138,7 +138,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATIOIN_CLASSES': {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    }
+    },
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M"
 }
 
 REST_USE_JWT = True
