@@ -18,7 +18,7 @@ const MyPageScreen = ({ navigation }) => {
         try {
             const user_id = await AsyncStorage.getItem('user_id');
             setId(user_id);
-            //console.log('getiing id successed' + id);
+            //console.log('getting id successed' + id);
         } catch (e) {
             console.error(e);
         }
@@ -28,26 +28,22 @@ const MyPageScreen = ({ navigation }) => {
         try {
             await API.get(
                 `/user/${id}`
-                //`/user/${id}`
-                // { params: {
-                //     id: user_id,
-                // }}
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
                     console.log('getting user successed');
                     setUser(response.data);
                     setEmail(response.data.result.email);
-                    setId(response.data.result.id);
+                    //setId(response.data.result.id);
                     console.log(id);
                     console.log(email);
                 }
             })
             .catch(function (error) {
-                //console.log(error);
+                console.log(error.response);
             })
         } catch (error) {
-            //console.log(error);
+            console.log(error);
         }
     }
 
