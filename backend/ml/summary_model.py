@@ -15,7 +15,7 @@ def get_summary(text):
         raw_input_ids + [tokenizer.eos_token_id]
 
     summary_ids = model.generate(torch.tensor(
-        [input_ids]),  num_beams=4,  max_length=512,  eos_token_id=1)
+        [input_ids]),  num_beams=4,  max_length=512, min_length=32, eos_token_id=1, length_penalty=1.0)
     result = tokenizer.decode(
         summary_ids.squeeze().tolist(), skip_special_tokens=True)
     return result
