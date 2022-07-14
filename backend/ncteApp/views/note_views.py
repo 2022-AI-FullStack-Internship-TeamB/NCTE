@@ -47,12 +47,11 @@ class NoteDetail(APIView):
 
     def get(self, request, pk):
         note = Notes.objects.filter(note_id=pk)
-        querysest = note.select_related(
-            "category_id", "user_id").values('category_id__category', 'user_id__username')
-        querysest = querysest.values(category=F(
-            'category_id__category'), username=F('user_id__username'))
-
-        return Response(data=Util.response(True, querysest.values("note_id", "username", "title", "contents", "date", "category"), status.HTTP_200_OK), status=status.HTTP_200_OK)
+        queryset = note.select_related(
+            "category_id").values('category_id__category').prefetch_related("summary_set")
+        queryset = queryset.values(category=F(
+            'category_id__category'), summary=F('summary__summary'))
+        return Response(data=Util.response(True, queryset.values('note_id', 'title', 'contents', 'date', 'summary', 'category'), status.HTTP_200_OK), status=status.HTTP_200_OK)
 
     def put(self, request, pk):
         user = self.get_object(pk)
