@@ -29,13 +29,15 @@ export default function MainNavigator() {
                 screenOptions = {{ headerShown: false }}
                 initialRouteName = {SignInStack}
             >
-            {
+                <Stack.Screen name = 'SignInStack' component = {SignInStack} />
+                <Stack.Screen name = 'TabNavigator' component = {TabNavigator} />  
+            {/* {
                 isLogin ? (
                     <Stack.Screen name = 'TabNavigator' component = {TabNavigator} />    
                 ) : (
                     <Stack.Screen name = 'SignInStack' component = {SignInStack} />
                 )
-            }
+            } */}
             </Stack.Navigator>
         </NavigationContainer>
     )
