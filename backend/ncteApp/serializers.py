@@ -1,8 +1,5 @@
-from typing_extensions import Required
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Users, Categories, Summary
-from .models import Users, Notes
-from dataclasses import field
+from .models import Users, Categories, Summary, Keywords
 from rest_framework import serializers
 from .models import Users, Categories, Summary, Notes
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -78,3 +75,9 @@ class SummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Summary
         fields = ('summary_id', 'note_id', 'summary')
+
+
+class KeywordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Keywords
+        fields = ('keyword_id', 'note_id', 'keyword')
