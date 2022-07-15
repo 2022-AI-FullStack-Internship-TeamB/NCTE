@@ -12,9 +12,10 @@ const Tab = createBottomTabNavigator();
 export default function Navigation(){
     return(
         <NavigationContainer
-            independent = {true}>
+            independent = {true}
+        >
             <Tab.Navigator
-                screenOptions = {{ headerShown: false }}
+                screenOptions = {({ route }) => ({ headerShown: false })}
                 initialRouteName = 'AlbumStack'
             >
                 <Tab.Screen name = 'CameraStack' component = {CameraStack} 

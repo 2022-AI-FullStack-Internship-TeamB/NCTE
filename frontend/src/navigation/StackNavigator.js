@@ -28,7 +28,7 @@ const Stack = createNativeStackNavigator();
 export function SignInStack() {
     return (
         <Stack.Navigator
-            screenOptions = {{ headerShown: false }}
+            screenOptions = {({ route }) => ({ headerShown: false })}
         >
             <Stack.Screen name = {SignInName} component = {SignInScreen} />
             <Stack.Screen name = {SignUpName} component = {SignUpScreen} />
@@ -39,7 +39,7 @@ export function SignInStack() {
 export function CameraStack() {
     return (
         <Stack.Navigator
-            screenOptions = {{ headerShown: false }}
+            screenOptions = {({ route }) => ({ headerShown: false })}
         >
             <Stack.Screen name = {CameraName} component = {CameraScreen} />
             <Stack.Screen name = {UploadName} component = {UploadScreen} />
@@ -52,7 +52,7 @@ export function CameraStack() {
 export function AlbumStack() {
     return (
         <Stack.Navigator
-            screenOptions = {{ headerShown: false }}
+            screenOptions = {({ route }) => ({ headerShown: false })}
         >
             <Stack.Screen name = {AlbumName} component = {AlbumScreen} />
             <Stack.Screen name = {ListName} component = {MemoListScreen} />
@@ -66,7 +66,7 @@ export function AlbumStack() {
 export function MypageStack() {
     return (
         <Stack.Navigator
-            screenOptions = {{ headerShown: false }}
+            screenOptions = {({ route }) => ({ headerShown: false })}
         >
             <Stack.Screen name = {MypageName} component = {MyPageScreen} />
             <Stack.Screen name = 'SignInStack' component = {SignInStack} />
