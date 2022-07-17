@@ -18,6 +18,8 @@ const UploadScreen = ({ navigation }) => {
     const [date, setDate] = useState('');
     const [categoryId, setCategoryId] = useState('');
 
+    const [noteId, setNoteId] = useState('');
+
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState([]);
     const [items, setItems] = useState ([
@@ -49,6 +51,16 @@ const UploadScreen = ({ navigation }) => {
         }
     }
 
+    const saveNoteId = async (id) => {
+        try {
+            console.log('saving note id');
+            await AsyncStorage.setItem('note_id', JSON.stringify(id));
+            //setNoteId(noteId);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     const saveNote = async () => {
         const data = {
             user_id: userId,
@@ -65,7 +77,7 @@ const UploadScreen = ({ navigation }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    
+                    //saveNoteId(response.data.result[0]['note_id']);
                     navigation.navigate('Note');
                 }
             })
