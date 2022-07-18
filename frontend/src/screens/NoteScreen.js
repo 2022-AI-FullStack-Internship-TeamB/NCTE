@@ -9,10 +9,11 @@ import TextArea from '../components/TextArea';
 import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const NoteScreen = ({ navigation }) => {
+const NoteScreen = ({ navigation, route }) => {
 
     const [note, setNote] = useState([]);
     const [noteId, setNoteId] = useState('');
+    const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
     //const [copiedText, setCopiedText] = useState('');
     const [contents, setContents] = useState('');
@@ -23,7 +24,7 @@ const NoteScreen = ({ navigation }) => {
         try {
             const note_id = AsyncStorage.getItem('note_id');
             setNoteId(note_id);
-            console.log('getting id successed' + noteId);
+            console.log('getting note id successed' + noteId);
         } catch (e) {
             console.error(e);
         }
@@ -32,8 +33,8 @@ const NoteScreen = ({ navigation }) => {
     const getNotes = async () => {
         try {
             await API.get(
-                //`/notes/${noteId}`
-                `/notes/1`
+                `/notes/${noteId}`
+                //`/notes/1`
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
@@ -41,10 +42,11 @@ const NoteScreen = ({ navigation }) => {
                     setTitle(response.data.result[0]['title']);
                     setContents(response.data.result[0]['contents']);
                     setSummary(response.data.result[0]['summary']);
+                    //setCategory(response.data.result[0]['category']);
                     console.log(title);
                     console.log(contents);
                     console.log(summary);
-                    console.log(response.data.result[0]['category']);
+                    //console.log(category);
                 }
             })
             .catch(function (error) {
@@ -56,16 +58,20 @@ const NoteScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        //setNote('set note');
-        //getNoteId();
+        setUserId(route.params.userId);
+        setCategory(route.params.categoryName);
+        console.log(category); 
+        setNoteId(route.params.noteId);
+        console.log(noteId);
         getNotes();
-        //console.log(noteId);
-        //console.log(note);
     }, []);
 
     const onBackPressed = () => {
-        navigation.navigate('List');
-    }
+        navigation.navigate('List', {
+            categoryName: category,
+            userId: userId
+        });
+    } 
 
     const copyToClipboard = () => {
         Clipboard.setString('hello');
