@@ -1,0 +1,75 @@
+{
+	"info": {
+		"name": "Korean OCR Data Set",
+		"description": "Korean OCR Data Set (word handwrite)",
+		"date_created": "2021-01-31 14:13:21"
+	},
+	"image": {
+		"file_name": "12340097012.jpg",
+		"width": 592,
+		"height": 108,
+		"dpi": 300,
+		"bit": 24
+	},
+	"text": {
+		"type": "word",
+		"output": "handwrite",
+		"word": [
+			{
+				"charbox": [
+					39,
+					4,
+					110,
+					77
+				],
+				"value": "외"
+			},
+			{
+				"charbox": [
+					164,
+					14,
+					241,
+					103
+				],
+				"value": "할"
+			},
+			{
+				"charbox": [
+					276,
+					17,
+					360,
+					91
+				],
+				"value": "아"
+			},
+			{
+				"charbox": [
+					388,
+					22,
+					460,
+					91
+				],
+				"value": "버"
+			},
+			{
+				"charbox": [
+					485,
+					21,
+					559,
+					105
+				],
+				"value": "지"
+			}
+		]
+	},
+	"license": {
+		"output": "handwrite",
+		"font": "",
+		"font_no": "",
+		"font_license": "",
+		"font_url": "",
+		"writer_no": "123",
+		"writer_gender": "female",
+		"writer_age": "50"
+	}
+}
