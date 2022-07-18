@@ -6,13 +6,24 @@ import { images } from '../images';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import API from '../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignInScreen = ({ navigation }) => {
 
+    const [id, setId] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userData, setUserData] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const saveId = async id => {
+        try {
+            console.log('saving id');
+            await AsyncStorage.setItem('user_id', JSON.stringify(id));
+            setId(id);
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
     const onSignInPressed = async () => {
         if (email == "" || password == "") {
@@ -32,16 +43,23 @@ const SignInScreen = ({ navigation }) => {
             .then(function (response) {
                 if (response.data['success'] == true) {
                     console.log("SignUp");
+                    console.log(response.data.id);
                     alert('로그인 완료');
                     setUserData(data);
-                    setIsLoggedIn(true);
+                    //setIsLoggedIn(true);
+                    saveId(response.data.id);
+                    // AsyncStorage.setItem('user_id', JSON.stringify(
+                    //     response.data.result.id
+                    // ));
+                    AsyncStorage.setItem('isLogin', JSON.stringify(true));
                     navigation.navigate('TabNavigator');
+                    //AsyncStorage.setItem('login', isLoggedIn);
                 } else {
                     alert('이메일 혹은 비밀번호가 일치하지 않습니다');
                 }
             })
             .catch(function (error) {
-                console.log(error.response);
+                //console.log(error.response);
             });
         } catch (error) {
             console.log(error);

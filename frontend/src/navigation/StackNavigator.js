@@ -69,7 +69,7 @@ export function MypageStack() {
             screenOptions = {{ headerShown: false }}
         >
             <Stack.Screen name = {MypageName} component = {MyPageScreen} />
-            <Stack.Screen name = {SignInName} component = {SignInScreen} />
+            <Stack.Screen name = 'SignInStack' component = {SignInStack} />
         </Stack.Navigator>
     )
 }
