@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { viewStyles, textStyles, boxStyles } from '../styles';
 //import Clipboard from '@react-native-clipboard/clipboard';
 import { images } from '../images';
@@ -82,11 +82,46 @@ const NoteScreen = ({ navigation, route }) => {
         navigation.navigate('Modify');
     }
 
-    const onDeletePressed = () => {
-        navigation.navigate('List');
-    }
+    const onDeletePressed = async () => {
 
-    return (
+        try{
+            Alert.alert(
+                'Delete',
+                '삭제하시겠습니까 ?',
+                [
+                  {text: '취소', style: 'cancel'}, 
+                  {
+                    text: '삭제',
+                    
+                    onPress: () => { 
+                        const response = API.delete(
+                            `/notes/${noteId}`
+                        )
+                        .then(function(response) {
+                            console.log('delete');
+                        }
+                            
+                        )
+                        .catch(function (error) {
+                            console.log(error.response);
+                        });
+                    },
+                    style: 'destructive',
+                  },
+                ],
+                {
+                  cancelable: true,
+                },
+              );
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+       
+        };        
+
+        return (
         <View>
             <View style = {boxStyles.top}>
                 <View style = {viewStyles.row}>
