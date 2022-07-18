@@ -11,6 +11,7 @@ import UploadScreen from '../screens/UploadScreen';
 import NoteScreen from '../screens/NoteScreen';
 import MemoListScreen from '../screens/MemoListScreen';
 import ModifyScreen from '../screens/ModifyScreen';
+import MyPageScreen from '../screens/MyPageScreen';
 
 const SignInName = 'SignIn';
 const SignUpName = 'SignUp';
@@ -20,13 +21,14 @@ const UploadName = 'Upload';
 const NoteName = 'Note';
 const ListName = 'List';
 const ModifyName = 'Modify';
+const MypageName = 'Mypage';
 
 const Stack = createNativeStackNavigator();
 
 export function SignInStack() {
     return (
         <Stack.Navigator
-            screenOptions = {{ headerShown: false }}
+            screenOptions = {({ route }) => ({ headerShown: false })}
         >
             <Stack.Screen name = {SignInName} component = {SignInScreen} />
             <Stack.Screen name = {SignUpName} component = {SignUpScreen} />
@@ -37,7 +39,7 @@ export function SignInStack() {
 export function CameraStack() {
     return (
         <Stack.Navigator
-            screenOptions = {{ headerShown: false }}
+            screenOptions = {({ route }) => ({ headerShown: false })}
         >
             <Stack.Screen name = {CameraName} component = {CameraScreen} />
             <Stack.Screen name = {UploadName} component = {UploadScreen} />
@@ -50,13 +52,24 @@ export function CameraStack() {
 export function AlbumStack() {
     return (
         <Stack.Navigator
-            screenOptions = {{ headerShown: false }}
+            screenOptions = {({ route }) => ({ headerShown: false })}
         >
             <Stack.Screen name = {AlbumName} component = {AlbumScreen} />
             <Stack.Screen name = {ListName} component = {MemoListScreen} />
             <Stack.Screen name = 'CameraStack' component = {CameraStack} />
             <Stack.Screen name = {NoteName} component = {NoteScreen} />
             <Stack.Screen name = {ModifyName} component = {ModifyScreen} />
+        </Stack.Navigator>
+    )
+}
+
+export function MypageStack() {
+    return (
+        <Stack.Navigator
+            screenOptions = {({ route }) => ({ headerShown: false })}
+        >
+            <Stack.Screen name = {MypageName} component = {MyPageScreen} />
+            <Stack.Screen name = 'SignInStack' component = {SignInStack} />
         </Stack.Navigator>
     )
 }

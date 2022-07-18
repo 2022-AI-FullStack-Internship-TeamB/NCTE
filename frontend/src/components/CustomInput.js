@@ -12,6 +12,7 @@ const CustomInput = ({ value, setValue, placeholder, secureTextEntry }) => {
             placeholder = {placeholder}
             style = {textStyles.input}
             secureTextEntry = {secureTextEntry}
+            autoCapitalize = {'none'}
         />
     );
 }

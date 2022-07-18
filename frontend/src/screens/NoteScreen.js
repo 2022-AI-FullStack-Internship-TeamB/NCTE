@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { viewStyles, textStyles, boxStyles } from '../styles';
 //import Clipboard from '@react-native-clipboard/clipboard';
@@ -6,18 +6,75 @@ import { images } from '../images';
 import { styles } from '../styles';
 import IconButton from '../components/IconButton';
 import TextArea from '../components/TextArea';
+import API from '../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const NoteScreen = ({ navigation }) => {
+const NoteScreen = ({ navigation, route }) => {
 
-    const [_title, _setTitle] = useState('');
-    const [copiedText, setCopiedText] = useState('');
+    const [note, setNote] = useState([]);
+    const [noteId, setNoteId] = useState('');
+    const [userId, setUserId] = useState('');
+    const [title, setTitle] = useState('');
+    //const [copiedText, setCopiedText] = useState('');
+    const [contents, setContents] = useState('');
+    const [category, setCategory] = useState('');
+    const [summary, setSummary] = useState('');
 
-    const onBackPressed = () => {
-        navigation.navigate('List');
+    const getNoteId = async () => {
+        try {
+            const note_id = AsyncStorage.getItem('note_id');
+            setNoteId(note_id);
+            console.log('getting note id successed' + noteId);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
+    const getNotes = async () => {
+        try {
+            await API.get(
+                `/notes/${noteId}`
+                //`/notes/1`
+            )
+            .then(function (response) {
+                if (response.data['success'] == true) {
+                    setNote(response.data);
+                    setTitle(response.data.result[0]['title']);
+                    setContents(response.data.result[0]['contents']);
+                    setSummary(response.data.result[0]['summary']);
+                    //setCategory(response.data.result[0]['category']);
+                    console.log(title);
+                    console.log(contents);
+                    console.log(summary);
+                    //console.log(category);
+                }
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        setUserId(route.params.userId);
+        setCategory(route.params.categoryName);
+        console.log(category); 
+        setNoteId(route.params.noteId);
+        console.log(noteId);
+        getNotes();
+    }, []);
+
+    const onBackPressed = () => {
+        navigation.navigate('List', {
+            categoryName: category,
+            userId: userId
+        });
+    } 
+
     const copyToClipboard = () => {
-        //Clipboard.setString('hello world');
+        Clipboard.setString('hello');
         console.log('copy');
     }
     
@@ -40,7 +97,7 @@ const NoteScreen = ({ navigation }) => {
                         marginTop = {60}
                     />
                     <Text style = {textStyles.title}>
-                        실리콘밸리 인턴십
+                        {title}
                     </Text>
                     <View style = {{
                         alignItems: 'flex-end',
@@ -66,8 +123,8 @@ const NoteScreen = ({ navigation }) => {
             </View>
 
             <View style = {viewStyles.center}>
-                <Text style = {textStyles.textArea}></Text>
-                <Text style = {textStyles.textArea}></Text>
+                <Text style = {textStyles.textArea}>{contents}</Text>
+                <Text style = {textStyles.textArea}>{summary}</Text>
             </View>
             <View style = {viewStyles.row}>
                 <Text style = {textStyles.hashtag}>#Hashtag</Text>

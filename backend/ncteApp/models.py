@@ -33,14 +33,14 @@ class Notes(models.Model):
     date = models.DateTimeField(default=now, null=True)
     category_id = models.ForeignKey(
         Categories, on_delete=models.CASCADE, db_column="category_id")
-    contents = models.CharField(max_length=400, null=False)
+    contents = models.TextField(verbose_name="contents", null=False)
 
 
 class Summary(models.Model):
     summary_id = models.AutoField(primary_key=True, db_column='summary_id')
     note_id = models.ForeignKey(
         Notes, on_delete=models.CASCADE, db_column='note_id')
-    summary = models.CharField(max_length=100, null=False)
+    summary = models.TextField(verbose_name="summary", null=False)
 
 
 class Keywords(models.Model):

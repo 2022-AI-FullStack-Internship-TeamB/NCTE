@@ -26,8 +26,7 @@ SECRET_KEY = 'django-insecure-ab&!z_x+n10y(1)0-s8j^8ovcd!oy+h+pp&_*3@o#-kvuv+%kk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -139,7 +138,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATIOIN_CLASSES': {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    }
+    },
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M"
 }
 
 REST_USE_JWT = True
