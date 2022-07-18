@@ -1,3 +1,4 @@
+from unicodedata import category
 from ..models import Categories, Notes, Summary
 from ml.summary_model import get_summary
 from rest_framework import permissions, status, generics
@@ -12,11 +13,13 @@ class NotesList(APIView):
 
     def get(self, request, pk):
         category_pk = request.GET.get('category')
-        if category_pk == 'all':
+        if category_pk == 'all' or category_pk == None:
             queryset = Notes.objects.filter(user_id=pk)
         else:
+            print(Categories.objects.get(
+                category=category_pk).category_id)
             category_id = Categories.objects.get(
-                category=category_pk)[0]['category_id']
+                category=category_pk).category_id
             queryset = Notes.objects.filter(
                 user_id=pk, category_id=category_id)
         queryset = queryset.order_by('-date')
