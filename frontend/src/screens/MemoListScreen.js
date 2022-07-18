@@ -66,7 +66,7 @@ const MemoListScreen = ({ navigation, route }) => {
     console.log(categoryName);
     console.log(userId);
     getNotes();
-  }, []);
+  }, [userId, category]);
    
   const add = () => {
     navigation.navigate('CameraStack');
@@ -81,7 +81,8 @@ const MemoListScreen = ({ navigation, route }) => {
       <TouchableOpacity style = {boxStyles.memo}
         onPress = {() => navigation.navigate('Note', {
           noteId: item.id,
-          categoryName: category
+          categoryName: category,
+          userId: userId
           })}>
         <View style ={textStyles.InBox}>
           <TouchableOpacity style = {boxStyles.important}></TouchableOpacity>

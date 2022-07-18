@@ -51,7 +51,7 @@ const MyPageScreen = ({ navigation, route, props }) => {
     useEffect(() => {
         getId();
         getUser();
-    }, []);
+    }, [userId]);
 
 
     const onChangeProfile = async () => {
@@ -94,9 +94,8 @@ const MyPageScreen = ({ navigation, route, props }) => {
        <View>
             <View style = {boxStyles.top}>
                 <Text style = {textStyles.title}>
-                    <Image source = {images.nickname} />
-                    {userName}
-                </Text>    
+                    Profile
+                </Text>
             </View>
 
             <View style = {viewStyles.container}>
@@ -122,7 +121,7 @@ const MyPageScreen = ({ navigation, route, props }) => {
                 </View>
 
                 <View style = {{
-                    marginTop: 150,
+                    marginTop: 100,
                     marginLeft: 110
                 }}>
                     <CustomButton
@@ -130,7 +129,7 @@ const MyPageScreen = ({ navigation, route, props }) => {
                         text = "Confirm Change"
                     />
                     <View style = {{
-                        marginTop: 40,
+                        marginTop: 20,
                     }} />
                     <CustomButton
                         onPress = {onLogoutPressed}
