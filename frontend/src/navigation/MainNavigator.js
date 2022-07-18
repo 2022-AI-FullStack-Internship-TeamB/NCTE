@@ -26,7 +26,7 @@ export default function MainNavigator() {
             independent = {true}
         >
             <Stack.Navigator
-                screenOptions = {{ headerShown: false }}
+                screenOptions = {({ route }) => ({ headerShown: false })}
                 initialRouteName = {SignInStack}
             >
                 <Stack.Screen name = 'SignInStack' component = {SignInStack} />

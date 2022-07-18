@@ -7,18 +7,19 @@ import CustomButton from '../components/CustomButton';
 import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const MyPageScreen = ({ navigation }) => {
-    
-    //const getId = AsyncStorage.getItem('id');
+const MyPageScreen = ({ navigation, route, props }) => {
+
     const [user, setUser] = useState([]);
     const [email, setEmail] = useState('');
-    const [id, setId] = useState('');
+    //const [id, setId] = useState('');  
+    const [userId, setUserId] = useState('');
+    const [userName, setUserName] = useState('');
 
     const getId = async () => {
         try {
             const user_id = await AsyncStorage.getItem('user_id');
-            setId(user_id);
-            //console.log('getting id successed' + id);
+            setUserId(user_id);
+            //console.log('getting id successed' + userId);
         } catch (e) {
             console.error(e);
         }
@@ -27,16 +28,16 @@ const MyPageScreen = ({ navigation }) => {
     const getUser = async () => {
         try {
             await API.get(
-                `/user/${id}`
+                `/user/${userId}`
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    console.log('getting user successed');
+                    //console.log('getting user successed');
                     setUser(response.data);
                     setEmail(response.data.result.email);
-                    //setId(response.data.result.id);
-                    console.log(id);
-                    console.log(email);
+                    setUserName(response.data.result.username);
+                    //console.log(userId);
+                    //console.log(email);
                 }
             })
             .catch(function (error) {
@@ -53,32 +54,37 @@ const MyPageScreen = ({ navigation }) => {
     }, []);
 
 
-    const onChangeEmail = async () => {
+    const onChangeProfile = async () => {
         try {
             const response = await API.put(
-                `/user/${id}`,
-                {
-                    email: email
+                `/user/${userId}`,
+                {   
+                    id: userId,
+                    email: email,
+                    username: userName,
                 }
             )
             .then(function (response) {
+                console.log('프로필 수정 성공');
                 setEmail(email);
             })
             .catch(function (error) {
                 console.log('갱신 실패');
-                //console.log(error.response);
+                console.log(error.response);
             })
         } catch (error) {
-            //console.log(error);
+            console.log(error);
         }
     }
 
     const onLogoutPressed = async () => {
         try {
-            AsyncStorage.removeItem('user_id');
-            AsyncStorage.setItem('isLogin', JSON.stringify(false));
+            //AsyncStorage.removeItem('user_id');
+            //AsyncStorage.setItem('isLogin', JSON.stringify(false));
             //navigation.navigate('SignInStack');
-            navigation.navigate('SignIn');
+            navigation.navigate('SignInStack', {
+                screen: 'SignIn'
+            });
         } catch (error) {
             console.log(error);
         }
@@ -89,7 +95,7 @@ const MyPageScreen = ({ navigation }) => {
             <View style = {boxStyles.top}>
                 <Text style = {textStyles.title}>
                     <Image source = {images.nickname} />
-                    Nickname
+                    {userName}
                 </Text>    
             </View>
 
@@ -98,10 +104,19 @@ const MyPageScreen = ({ navigation }) => {
                     marginTop: 30,
                 }}>
                     <View style = {viewStyles.row}>
+                        <Image source = {images.nickname} />
+                        <CustomInput
+                            value = {userName}
+                            setValue = {setUserName}
+                            placeholder = 'Nickname'
+                        />
+                    </View>
+                    <View style = {viewStyles.row}>
                         <Image source = {images.email} />
                         <CustomInput
                             value = {email}
                             setValue = {setEmail}
+                            plaeholder = 'Email'
                         />
                     </View>
                 </View>
@@ -111,7 +126,7 @@ const MyPageScreen = ({ navigation }) => {
                     marginLeft: 110
                 }}>
                     <CustomButton
-                        onPress = {onChangeEmail}
+                        onPress = {onChangeProfile}
                         text = "Confirm Change"
                     />
                     <View style = {{

@@ -8,9 +8,8 @@ import TextArea from '../components/TextArea';
 import CustomPicker from '../components/CustomPicker';
 import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import moment from 'moment';
 
-const UploadScreen = ({ navigation }) => {
+const UploadScreen = ({ navigation, route }) => {
 
     const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
@@ -18,13 +17,16 @@ const UploadScreen = ({ navigation }) => {
     const [date, setDate] = useState('');
     const [categoryId, setCategoryId] = useState('');
 
+    const [noteId, setNoteId] = useState('');
+
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState([]);
     const [items, setItems] = useState ([
-        { label: 'Diary', value: 'diary' },
-        { label: 'Todo', value: 'todo' },
-        { label: 'Study', value: 'study' },
+        { label: 'Diary', value: 'Diary' },
+        { label: 'Todo', value: 'Todo' },
+        { label: 'Study', value: 'Study' },
     ]);
+    const [categoryName, setCategoryName] = useState('');
 
     const getId = async () => {
         try {
@@ -49,6 +51,16 @@ const UploadScreen = ({ navigation }) => {
         }
     }
 
+    const saveNoteId = async (id) => {
+        try {
+            console.log('saving note id');
+            await AsyncStorage.setItem('note_id', JSON.stringify(id));
+            //setNoteId(noteId);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     const saveNote = async () => {
         const data = {
             user_id: userId,
@@ -65,13 +77,16 @@ const UploadScreen = ({ navigation }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    
-                    navigation.navigate('Note');
+                    console.log(response.data.result['note_id']);
+                    navigation.navigate('Note', {
+                        noteId: response.data.result['note_id'],
+                        categoryName: category,
+                        userId: userId
+                    });
                 }
             })
             .catch(function (error) {
                 console.log(error.response);
-                //console.log(date);
             });
         } catch (error) {
             console.log(error);
