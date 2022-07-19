@@ -8,17 +8,18 @@ import IconButton from '../components/IconButton';
 import TextArea from '../components/TextArea';
 import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Clipboard from 'expo-clipboard';
 
 const NoteScreen = ({ navigation, route }) => {
 
-    const [note, setNote] = useState([]);
     const [noteId, setNoteId] = useState('');
     const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
-    //const [copiedText, setCopiedText] = useState('');
     const [contents, setContents] = useState('');
     const [category, setCategory] = useState('');
     const [summary, setSummary] = useState('');
+
+    const [copiedText, setCopiedText] = useState('');
 
     const getNoteId = async () => {
         try {
@@ -34,11 +35,9 @@ const NoteScreen = ({ navigation, route }) => {
         try {
             await API.get(
                 `/notes/${noteId}`
-                //`/notes/1`
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    setNote(response.data);
                     setTitle(response.data.result[0]['title']);
                     setContents(response.data.result[0]['contents']);
                     setSummary(response.data.result[0]['summary']);
@@ -60,30 +59,32 @@ const NoteScreen = ({ navigation, route }) => {
     useEffect(() => {
         setUserId(route.params.userId);
         setCategory(route.params.categoryName);
-        console.log(category); 
         setNoteId(route.params.noteId);
-        console.log(noteId);
         getNotes();
-    }, []);
+    }, [noteId]);
 
     const onBackPressed = () => {
         navigation.navigate('List', {
             categoryName: category,
             userId: userId
         });
-    } 
+    }
 
-    const copyToClipboard = () => {
-        Clipboard.setString('hello');
+    const copyToClipboard = async () => {
+        await Clipboard.setStringAsync('클립보드 복사');
         console.log('copy');
+        //console.log(contents);
     }
     
     const _modify = () => {
-        navigation.navigate('Modify');
+        navigation.navigate('Modify', {
+            categoryName: category,
+            userId: userId,
+            noteId: noteId
+        });
     }
 
-    const onDeletePressed = async () => {
-
+    const onDeletePressed = () => {
         try{
             Alert.alert(
                 'Delete',
@@ -99,6 +100,10 @@ const NoteScreen = ({ navigation, route }) => {
                         )
                         .then(function(response) {
                             console.log('delete');
+                            navigation.navigate('List', {
+                                categoryName: category,
+                                userId: userId
+                            });
                         }
                             
                         )
@@ -117,11 +122,9 @@ const NoteScreen = ({ navigation, route }) => {
         } catch (error) {
             console.log(error);
         }
+    }
 
-       
-        };        
-
-        return (
+    return (
         <View>
             <View style = {boxStyles.top}>
                 <View style = {viewStyles.row}>
@@ -156,7 +159,6 @@ const NoteScreen = ({ navigation, route }) => {
                     </View>
                 </View>
             </View>
-
             <View style = {viewStyles.center}>
                 <Text style = {textStyles.textArea}>{contents}</Text>
                 <Text style = {textStyles.textArea}>{summary}</Text>
@@ -167,7 +169,7 @@ const NoteScreen = ({ navigation, route }) => {
                 <Text style = {textStyles.hashtag}>#Hashtag</Text>
             </View>
         </View>
-    );
+    )
 }
 
 export default NoteScreen;

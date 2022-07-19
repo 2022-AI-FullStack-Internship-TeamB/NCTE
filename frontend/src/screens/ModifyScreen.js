@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import { viewStyles, textStyles, boxStyles } from '../styles';
 import InputScrollView from 'react-native-input-scroll-view';
@@ -6,33 +6,123 @@ import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import TextArea from '../components/TextArea';
 import CustomPicker from '../components/CustomPicker';
+import API from '../api';
 
-const UploadScreen = ({ navigation }) => {
+const UploadScreen = ({ navigation, route }) => {
 
+    const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
     const [contents, setContents] = useState('');
+    const [date, setDate] = useState('');
+    const [categoryId, setCategoryId] = useState('');
+
+    const [noteId, setNoteId] = useState('');
 
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState([]);
     const [items, setItems] = useState ([
-        { label: 'Diary', value: 'diary' },
-        { label: 'Todo', value: 'todo' },
-        { label: 'Study', value: 'study' },
+        { label: 'Diary', value: 'Diary' },
+        { label: 'Todo', value: 'Todo' },
+        { label: 'Study', value: 'Study' },
     ]);
+    const [categoryName, setCategoryName] = useState('');
 
-    const onBackPressed = () => {
-        navigation.navigate('Note');
+    const getIndex = (value) => {
+        for (let i = 0; i < items.length; i++) { 
+            let b = items.findIndex(item => item.value === value);
+            setCategoryId(b);
+            console.log(value);
+            console.log(b);
+        }
     }
 
-    const onConfirmPressed = () => {
-        navigation.navigate('Note');
+    const getNotes = async () => {
+        try {
+            await API.get(
+                `/notes/${noteId}`
+            )
+            .then(function (response) {
+                if (response.data['success'] == true) {
+                    setTitle(response.data.result[0]['title']);
+                    setContents(response.data.result[0]['contents']);
+                    setCategory(response.data.result[0]['category_id']);
+                }
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const modifyNote = async () => {
+        const data = {
+            user_id: userId,
+            //noteId: noteId,
+            title: title,
+            date: new Date(),
+            contents: contents,
+            //category: category,
+            category_id: categoryId + 1,
+        }
+
+        try {
+            const response = await API.put(
+                `/notes/${noteId}`,
+                {
+                    user_id: userId,
+                    note_id: noteId,
+                    title: title,
+                    contents: contents,
+                    date: new Date(),
+                    category: category,
+                    category_id: categoryId + 1,
+                }
+            )
+            .then(function (response) {
+                if (response.data['success'] == true) {
+                    console.log('수정 성공');
+                    setTitle(title);
+                    setContents(contents);
+                    setCategory(category);
+                    navigation.navigate('Note', {
+                        noteId: noteId,
+                        categoryName: category,
+                        userId: userId
+                    });
+                }
+            })
+            .catch(function (error) {
+                console.log('수정 실패');
+                console.log(error.response);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        setUserId(route.params.userId);
+        console.log(userId);
+        setNoteId(route.params.noteId);
+        setCategoryName(route.params.categoryName);
+        getNotes();
+    }, [noteId]);
+
+    const onBackPressed = () => {
+        navigation.navigate('Note', {
+            categoryName: category,
+            userId: userId,
+            noteId: noteId
+        });
     }
 
     return (
         <InputScrollView nestedScrollEnabled = {true}>
             <View style = {boxStyles.top}>
                 <Text style = {textStyles.title}>
-                    Note
+                    {title}
                 </Text>
             </View>
             
@@ -80,7 +170,9 @@ const UploadScreen = ({ navigation }) => {
                             setOpen = {setOpen}
                             setValue = {setCategory}
                             setItems = {setItems}
-                            placeholder = "Select a category"
+                            onChangeValue = {() => getIndex(category)}
+                            defaultValue = {categoryName}
+                            //placeholder = {category}
                         />
                     </View>
                 </View>
@@ -96,7 +188,7 @@ const UploadScreen = ({ navigation }) => {
                             marginLeft: 100,
                         }}>
                             <CustomButton
-                                onPress = {onConfirmPressed}
+                                onPress = {modifyNote}
                                 text = "Confirm"
                             />
                         </View>

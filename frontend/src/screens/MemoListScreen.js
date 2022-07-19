@@ -3,24 +3,73 @@ import {StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Image } f
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
 import IconButton from '../components/IconButton';
+import API from '../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const MemoListScreen = ({ navigation }) => {
+const MemoListScreen = ({ navigation, route }) => {
 
-  var today = new Date();
-  var year = today.getFullYear();
-  var month = ('0' + (today.getMonth() + 1)).slice(-2);
-  var day = ('0' + today.getDate()).slice(-2);
-  var dateString = year + '년 ' + month  + '월 ' + day + '일';
+  const _title = [];
+  const _date = [];
+  const _noteId = [];
+  const [userId, setUserId] = useState('');
+  const [categoryName, setCategoryName] = useState('');
+  const [category, setCategory] = useState('');
+  const [notes, setNotes] = useState('');
+  const memos = [];
 
-  const orimemo = [
-    {
-      id: '1',
-      memo: '실리콘밸리 AI 인턴십'
+  const setMemos = (i) => {
+    memos.push({
+      id: _noteId[i], 
+      title: _title[i], 
+      date: _date[i]
+    });
+  }
+
+  const getCategory = () => {
+    if(categoryName == 'NCTE')
+      setCategory('all');
+    else{
+      setCategory(categoryName);
     }
-  ];
+  }
 
-  const [memos, setMemos] = useState(orimemo);
+  const getNotes = async () => {
+    try {
+      await API.get(
+        `/notes/${userId}/all?category=${category}`
+      )
+      .then(function (response) {
+        if(response.data['success'] == true) {
+          console.log('getting notes successed');
+          for(let i = 0; i < response.data.result.length; i++){
+            if(response.data.result[i]['title']){
+              _title.push(response.data.result[i]['title']);
+              _date.push(response.data.result[i]['date']);
+              _noteId.push(response.data.result[i]['note_id']);
+              setMemos(i);
+            }
+          }
+            setNotes(memos);
+        }
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(()=> {
+    setCategoryName(route.params.categoryName);
+    getCategory();
+    setUserId(route.params.userId);
+    console.log(category); 
+    console.log(categoryName);
+    console.log(userId);
+    getNotes();
+  }, [userId, category]);
+   
   const add = () => {
     navigation.navigate('CameraStack');
   }
@@ -29,20 +78,21 @@ const MemoListScreen = ({ navigation }) => {
     navigation.navigate('Album');
   }
 
-  const _onPress = () => {
-    navigation.navigate('Note');
-  }
-
   const renderMemo = ({ item }) => {
     return(
-      <TouchableOpacity style = {boxStyles.memo} onPress = {_onPress}>
+      <TouchableOpacity style = {boxStyles.memo}
+        onPress = {() => navigation.navigate('Note', {
+          noteId: item.id,
+          categoryName: category,
+          userId: userId
+          })}>
         <View style ={textStyles.InBox}>
           <TouchableOpacity style = {boxStyles.important}></TouchableOpacity>
           <Text style = {{
             marginLeft: 10,
             fontWeight: 'bold',
           }}>
-            {item.memo}
+            {item.title}
           </Text>
         </View>
 
@@ -50,7 +100,7 @@ const MemoListScreen = ({ navigation }) => {
           <Text 
             style = {{ marginLeft: 35, }}
           >
-            {dateString}
+            {item.date}
           </Text>
         </View>
       </TouchableOpacity>
@@ -67,8 +117,8 @@ const MemoListScreen = ({ navigation }) => {
               marginLeft = {10}
               marginTop = {50}
             />
-            <Text style = {textStyles.title} onPress={()=>setWriteMode(true)}>
-              Diary
+            <Text style = {textStyles.title}>
+              {categoryName}
             </Text>
             <IconButton
               image = {images.add}
@@ -81,7 +131,7 @@ const MemoListScreen = ({ navigation }) => {
         
         <View>
             <FlatList
-                data={memos}
+                data={notes}
                 renderItem = {renderMemo}
                 keyExtractor={(item) => item.id}
             />
