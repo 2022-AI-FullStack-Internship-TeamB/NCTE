@@ -15,10 +15,11 @@ const NoteScreen = ({ navigation, route }) => {
     const [noteId, setNoteId] = useState('');
     const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
-    const [copiedText, setCopiedText] = useState('');
     const [contents, setContents] = useState('');
     const [category, setCategory] = useState('');
     const [summary, setSummary] = useState('');
+
+    const [copiedText, setCopiedText] = useState('');
 
     const getNoteId = async () => {
         try {
@@ -70,9 +71,9 @@ const NoteScreen = ({ navigation, route }) => {
     }
 
     const copyToClipboard = async () => {
-        await Clipboard.setStringAsync(contents);
+        await Clipboard.setStringAsync('클립보드 복사');
         console.log('copy');
-        console.log(contents);
+        //console.log(contents);
     }
 
     const fetchCopiedText = async () => {
@@ -90,8 +91,7 @@ const NoteScreen = ({ navigation, route }) => {
         });
     }
 
-    const onDeletePressed = async () => {
-
+    const onDeletePressed = () => {
         try{
             Alert.alert(
                 'Delete',
@@ -107,6 +107,10 @@ const NoteScreen = ({ navigation, route }) => {
                         )
                         .then(function(response) {
                             console.log('delete');
+                            navigation.navigate('List', {
+                                categoryName: category,
+                                userId: userId
+                            });
                         }
                             
                         )
@@ -125,11 +129,9 @@ const NoteScreen = ({ navigation, route }) => {
         } catch (error) {
             console.log(error);
         }
+    }
 
-       
-        };        
-
-        return (
+    return (
         <View>
             <View style = {boxStyles.top}>
                 <View style = {viewStyles.row}>
@@ -164,7 +166,6 @@ const NoteScreen = ({ navigation, route }) => {
                     </View>
                 </View>
             </View>
-
             <View style = {viewStyles.center}>
                 <Text style = {textStyles.textArea}>{contents}</Text>
                 <Text style = {textStyles.textArea}>{summary}</Text>
@@ -181,7 +182,7 @@ const NoteScreen = ({ navigation, route }) => {
                         />
             <Text style = {textStyles.textArea}>{copiedText}</Text>
         </View>
-    );
+    )
 }
 
 export default NoteScreen;

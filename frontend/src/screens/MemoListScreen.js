@@ -42,10 +42,12 @@ const MemoListScreen = ({ navigation, route }) => {
         if(response.data['success'] == true) {
           console.log('getting notes successed');
           for(let i = 0; i < response.data.result.length; i++){
-            _title.push(response.data.result[i]['title']);
-            _date.push(response.data.result[i]['date']);
-            _noteId.push(response.data.result[i]['note_id']);
-            setMemos(i);
+            if(response.data.result[i]['title']){
+              _title.push(response.data.result[i]['title']);
+              _date.push(response.data.result[i]['date']);
+              _noteId.push(response.data.result[i]['note_id']);
+              setMemos(i);
+            }
           }
             setNotes(memos);
         }
