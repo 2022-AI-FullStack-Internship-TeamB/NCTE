@@ -6,5 +6,7 @@ djangorestframework-simplejwt
 drf-yasg
 torch
 transformers
-konlpy
-sentence_transformers
+sklearn
+# jpype1
+# konlpy
+# sentence_transformers

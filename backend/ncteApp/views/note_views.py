@@ -4,7 +4,7 @@ from ml.keyword_model import get_keyword
 from rest_framework import permissions, status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ..serializers import NoteSerializer, SummarySerializer
+from ..serializers import KeywordSerializer, NoteSerializer, SummarySerializer
 from django.db.models import Q, F
 
 
@@ -34,13 +34,33 @@ class CreateNote(APIView):
             serializer.save()
             note_id = serializer.data["note_id"]
             contents = serializer.data["contents"]
+
+            # 요약
             summary = get_summary(contents)
             s_serializer = SummarySerializer(
                 data={"note_id": note_id, "summary": summary})
+            s_check = True
             if s_serializer.is_valid():
                 s_serializer.save()
+            else:
+                s_check = False
+
+            # 키워드
+            keywords = get_keyword(contents)
+            k_check = True
+            for i in range(len(keywords)):
+                k_serializer = KeywordSerializer(
+                    data={"note_id": note_id, "keyword": keywords[i]})
+                if k_serializer.is_valid():
+                    k_serializer.save()
+                else:
+                    k_check = False
+            if s_check and k_check:
                 return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
-            return Response(Util.response(False, s_serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+            if not s_check:
+                return Response(Util.response(False, s_serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+            if not k_check:
+                return Response(Util.response(False, k_serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
         return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -73,6 +93,7 @@ class NoteDetail(APIView):
             s = Summary.objects.filter(note_id=note_id).first()
             s_serializer = SummarySerializer(s,
                                              data={"note_id": note_id, "summary": summary})
+
             if s_serializer.is_valid():
                 s_serializer.save()
                 return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)

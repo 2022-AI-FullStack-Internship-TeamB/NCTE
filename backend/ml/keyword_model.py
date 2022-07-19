@@ -26,6 +26,7 @@ def get_keyword(doc):
     candidate_embeddings = model.encode(candidates)
     words = mmr(doc_embedding, candidate_embeddings,
                 candidates, top_n=5, diversity=0.7)
+    print(words)
     return words
 
 
