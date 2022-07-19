@@ -75,13 +75,6 @@ const NoteScreen = ({ navigation, route }) => {
         console.log('copy');
         //console.log(contents);
     }
-
-    const fetchCopiedText = async () => {
-        const text = await Clipboard.getStringAsync();
-        console.log('text', text);
-        setCopiedText(text);
-        console.log(copiedText);
-    };
     
     const _modify = () => {
         navigation.navigate('Modify', {
@@ -175,12 +168,6 @@ const NoteScreen = ({ navigation, route }) => {
                 <Text style = {textStyles.hashtag}>#Keyword</Text>
                 <Text style = {textStyles.hashtag}>#Hashtag</Text>
             </View>
-            <IconButton 
-                            image = {images.copy}
-                            onPress = {fetchCopiedText}
-                            marginLeft = {10}
-                        />
-            <Text style = {textStyles.textArea}>{copiedText}</Text>
         </View>
     )
 }
