@@ -32,5 +32,5 @@ urlpatterns = [
 
     # 키워드
     path('keyword/<int:pk>/all', keyword_views.KeywordList.as_view()),
-    path('keyword', keyword_views.KeywordDetail.as_view()),
+    path('keyword/<int:pk>', keyword_views.KeywordDetail.as_view()),
 ]

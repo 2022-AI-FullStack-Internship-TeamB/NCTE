@@ -18,17 +18,13 @@ class KeywordList(APIView):
 class KeywordDetail(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def get(self, request):
-        keyword = request.GET.get('keyword')
-        note_id = request.GET.get('id')
-        queryset = Keywords.objects.filter(note_id=note_id, keyword=keyword)
+    def get(self, request, pk):
+        queryset = Keywords.objects.filter(keyword_id=pk)
         serializer = KeywordSerializer(queryset, many=True)
         return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
 
-    def delete(self, request):
-        keyword = request.GET.get('keyword')
-        note_id = request.GET.get('id')
-        note = Keywords.objects.filter(note_id=note_id, keyword=keyword)
+    def delete(self, request, pk):
+        note = Keywords.objects.filter(keyword_id=pk)
         note.delete()
         return Response(Util.response(True, "", 204), status=status.HTTP_204_NO_CONTENT)
 
