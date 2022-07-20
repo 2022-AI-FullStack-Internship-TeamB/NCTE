@@ -115,7 +115,7 @@ class NoteDetail(APIView):
             keywords = get_keyword(contents)
             k_check = True
             for i in range(len(keywords)):
-                k = Keywords.objects.filter(note_id=note_id, keyword=keywords[i])
+                k = Keywords.objects.filter(note_id=note_id, keyword=keywords[i]).first()
                 k_serializer = KeywordSerializer(k,
                     data={"note_id": note_id, "keyword": keywords[i]})
                 if k_serializer.is_valid():
