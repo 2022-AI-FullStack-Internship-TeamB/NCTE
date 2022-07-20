@@ -1,4 +1,4 @@
-from ..models import Categories, Notes, Summary
+from ..models import Categories, Notes, Summary, Keywords
 from ml.summary_model import get_summary
 from ml.keyword_model import get_keyword
 from rest_framework import permissions, status, generics
@@ -80,7 +80,19 @@ class NoteDetail(APIView):
             "category_id").values('category_id__category').prefetch_related("summary_set")
         queryset = queryset.values(category=F(
             'category_id__category'), summary=F('summary__summary'))
-        return Response(data=Util.response(True, queryset.values('note_id', 'title', 'contents', 'date', 'summary', 'category'), status.HTTP_200_OK), status=status.HTTP_200_OK)
+        values = queryset.values('note_id', 'title', 'contents', 'date', 'summary', 'category')
+        keywords = Keywords.objects.filter(note_id=pk)
+        data = {
+            "note_id": values[0]["note_id"],
+            "title": values[0]["title"],
+            "contents": values[0]["contents"],
+            "date": values[0]["date"],
+            "summary": values[0]["summary"],
+            "category": values[0]["category"],
+            "keywords": keywords.values('keyword', 'keyword_id')
+            }
+        
+        return Response(data=Util.response(True, data, status.HTTP_200_OK), status=status.HTTP_200_OK)
 
     def put(self, request, pk):
         user = self.get_object(pk)
@@ -93,11 +105,31 @@ class NoteDetail(APIView):
             s = Summary.objects.filter(note_id=note_id).first()
             s_serializer = SummarySerializer(s,
                                              data={"note_id": note_id, "summary": summary})
-
+            s_check = True
             if s_serializer.is_valid():
                 s_serializer.save()
-                return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
-            return Response(Util.response(False, s_serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+            else:
+                s_check = False
+
+            # 키워드
+            keywords = get_keyword(contents)
+            k_check = True
+            for i in range(len(keywords)):
+                k = Keywords.objects.filter(note_id=note_id, keyword=keywords[i])
+                k_serializer = KeywordSerializer(k,
+                    data={"note_id": note_id, "keyword": keywords[i]})
+                if k_serializer.is_valid():
+                    k_serializer.save()
+                else:
+                    k_check = False
+
+            if s_check and k_check:
+                return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
+            if not s_check:
+                return Response(Util.response(False, s_serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+            if not k_check:
+                return Response(Util.response(False, k_serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+            
         return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
