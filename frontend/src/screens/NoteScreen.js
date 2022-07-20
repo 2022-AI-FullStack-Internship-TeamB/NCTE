@@ -12,12 +12,14 @@ import * as Clipboard from 'expo-clipboard';
 
 const NoteScreen = ({ navigation, route }) => {
 
+    const _keyword = [];
     const [noteId, setNoteId] = useState('');
     const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
     const [contents, setContents] = useState('');
     const [category, setCategory] = useState('');
     const [summary, setSummary] = useState('');
+    const [keywords, setKeywords] = useState([]);
 
     const [copiedText, setCopiedText] = useState('');
 
@@ -38,14 +40,28 @@ const NoteScreen = ({ navigation, route }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    setTitle(response.data.result[0]['title']);
-                    setContents(response.data.result[0]['contents']);
-                    setSummary(response.data.result[0]['summary']);
-                    //setCategory(response.data.result[0]['category']);
-                    console.log(title);
-                    console.log(contents);
-                    console.log(summary);
-                    //console.log(category);
+                    setTitle(response.data.result['title']);
+                    setContents(response.data.result['contents']);
+                    setSummary(response.data.result['summary']);
+                    // keywords.map(keyword => (
+                    //     <Text style = {textStyles.hashtag}>#{keyword}</Text>
+                    // ))
+                    // keywords.map(i => (
+                    //     setKeywords(keywords.concat(response.data.result.keywords[i]['keyword']))
+                    // ))
+                    for(let i = 0; i < response.data.result.keywords.length; i++){
+                        _keyword.push(response.data.result.keywords[i]['keyword']);
+                        //console.log(_keyword[i]);
+                    }
+                    // if(keywords.length <= 5)
+                    //     setKeywords(keywords.concat(_keyword));
+                    console.log(keywords.length)
+                    setKeywords(setKeywords(keywords.concat(_keyword)));
+                    console.log(keywords);
+                    //setKeywords([...keywords, response.data.result.keywords['keyword']]);
+                    //console.log(response.data.result['title'])
+                    //console.log('keyword', response.data.result.keywords[0]['keyword'])
+                    //console.log(keywords);
                 }
             })
             .catch(function (error) {
@@ -163,10 +179,17 @@ const NoteScreen = ({ navigation, route }) => {
                 <Text style = {textStyles.textArea}>{contents}</Text>
                 <Text style = {textStyles.textArea}>{summary}</Text>
             </View>
-            <View style = {viewStyles.row}>
-                <Text style = {textStyles.hashtag}>#Hashtag</Text>
+            <View style = {{
+                flexDirection: 'row',
+                //flex: 1,
+                flexWrap: 'wrap'
+            }}>
+                {keywords.map(keyword => (
+                    <Text style = {textStyles.hashtag}>#{keyword}</Text>
+                ))}
+                {/* <Text style = {textStyles.hashtag}>#{keywords[0]}</Text>
                 <Text style = {textStyles.hashtag}>#Keyword</Text>
-                <Text style = {textStyles.hashtag}>#Hashtag</Text>
+                <Text style = {textStyles.hashtag}>#Hashtag</Text> */}
             </View>
         </View>
     )

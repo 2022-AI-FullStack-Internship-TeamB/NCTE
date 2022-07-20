@@ -56,7 +56,7 @@ export const textStyles = StyleSheet.create ({
         fontSize: 20,
         fontStyle: 'italic',
         alignSelf: 'flex-start',
-        marginLeft: 10
+        marginLeft: 10,
     },
 
     InBox: {
