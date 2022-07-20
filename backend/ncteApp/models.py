@@ -34,7 +34,10 @@ class Notes(models.Model):
     category_id = models.ForeignKey(
         Categories, on_delete=models.CASCADE, db_column="category_id")
     contents = models.TextField(verbose_name="contents", null=False)
+    image = models.ImageField(null=True, upload_to="", blank=True)
 
+class NotesImage(models.Model):
+    image = models.ImageField(null=True, upload_to="", blank=True)
 
 class Summary(models.Model):
     summary_id = models.AutoField(primary_key=True, db_column='summary_id')
