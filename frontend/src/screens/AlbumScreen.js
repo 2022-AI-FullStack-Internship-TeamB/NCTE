@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import { textStyles, viewStyles, boxStyles, iconStyles } from '../styles';
 import { images } from '../images';
 import { theme } from '../theme';
@@ -8,6 +8,7 @@ import IconButton from '../components/IconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Album = ({ navigation }) => {
+    const { width, height, scale, fontScale } = Dimensions.get('screen');
 
     const [categoryName, setCategoryName] = useState('');
     const [userId, setUserId] = useState('');
@@ -16,7 +17,7 @@ const Album = ({ navigation }) => {
         try {
             const user_id = await AsyncStorage.getItem('user_id');
             setUserId(user_id);
-            console.log('getting id successed in album screen', userId);
+            //console.log('getting id successed in album screen', userId);
         } catch (e) {
             console.error(e);
         }
@@ -66,15 +67,13 @@ const Album = ({ navigation }) => {
     return (
         <View>
             <View style = {boxStyles.top}>
-                <IconButton 
-                    image = {images.add} 
-                    onPress = {_onPress}
-                    marginLeft = {20}
-                    marginTop = {50}
-                    />
+                <Text style = {textStyles.title}>NCTE</Text>
             </View>
             
-            <View style = {viewStyles.container}>
+            <View style = {{
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+            }}>
                 <View style = {viewStyles.row}>
                     <AlbumButton
                         onPress = {onAllPressed}

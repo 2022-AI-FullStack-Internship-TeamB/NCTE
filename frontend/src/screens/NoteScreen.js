@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert } from 'react-native';
-import { viewStyles, textStyles, boxStyles } from '../styles';
+import { ScrollView, View, Text, Alert, Dimensions, Platform } from 'react-native';
+import { viewStyles, textStyles, boxStyles, noteStyles } from '../styles';
 //import Clipboard from '@react-native-clipboard/clipboard';
 import { images } from '../images';
 import { styles } from '../styles';
@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
 
 const NoteScreen = ({ navigation, route }) => {
+    const { width, height, scale, fontScale } = Dimensions.get('screen');
 
     const [noteId, setNoteId] = useState('');
     const [userId, setUserId] = useState('');
@@ -42,9 +43,9 @@ const NoteScreen = ({ navigation, route }) => {
                     setContents(response.data.result[0]['contents']);
                     setSummary(response.data.result[0]['summary']);
                     //setCategory(response.data.result[0]['category']);
-                    console.log(title);
-                    console.log(contents);
-                    console.log(summary);
+                    //console.log(title);
+                    //console.log(contents);
+                    //console.log(summary);
                     //console.log(category);
                 }
             })
@@ -127,24 +128,37 @@ const NoteScreen = ({ navigation, route }) => {
     return (
         <View>
             <View style = {boxStyles.top}>
-                <View style = {viewStyles.row}>
+                <View style = {{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    padding: 10,
+                    alignSelf: 'stretch'
+                }}>
                     <IconButton
                         image = {images.back}
                         onPress = {onBackPressed}
                         marginLeft = {10}
-                        marginTop = {60}
+                        marginTop = {47}
                     />
-                    <Text style = {textStyles.title}>
+                    <Text style = {{
+                        fontSize: Platform.OS == 'ios' ? 30 : 26,
+                        justifyContent: 'center',
+                        marginTop: 35,
+                        marginLeft: 10,
+                    }}>
                         {title}
                     </Text>
                     <View style = {{
-                        alignItems: 'flex-end',
-                        flexDirection: 'row'
+                        flex: 1,
+                        justifyContent: 'flex-end',
+                        flexDirection: 'row',
+                        paddingRight: 10,
+                        marginTop: 45,
                     }}>
                         <IconButton 
                             image = {images.modify}
                             onPress = {_modify}
-                            marginLeft = {30}
+                            marginLeft = {10}
                         />
                         <IconButton 
                             image = {images.copy}
@@ -160,13 +174,26 @@ const NoteScreen = ({ navigation, route }) => {
                 </View>
             </View>
             <View style = {viewStyles.center}>
-                <Text style = {textStyles.textArea}>{contents}</Text>
-                <Text style = {textStyles.textArea}>{summary}</Text>
-            </View>
-            <View style = {viewStyles.row}>
-                <Text style = {textStyles.hashtag}>#Hashtag</Text>
-                <Text style = {textStyles.hashtag}>#Keyword</Text>
-                <Text style = {textStyles.hashtag}>#Hashtag</Text>
+                <View style = {noteStyles.contents}>
+                    <ScrollView>
+                        <Text style = {textStyles.textArea}>{contents}</Text>
+                    </ScrollView>
+                </View>
+                <View style = {noteStyles.summary}>
+                    <ScrollView>
+                        <Text style = {textStyles.textArea}>{summary}</Text>
+                    </ScrollView>
+                </View>
+                <View style = {{
+                    flexDirection: 'row',
+                    width: width * 0.8,
+                    padding: 10,
+                    marginBottom: 10,
+                }}>
+                    <Text style = {textStyles.hashtag}>#Hashtag</Text>
+                    <Text style = {textStyles.hashtag}>#Keyword</Text>
+                    <Text style = {textStyles.hashtag}>#Hashtag</Text>
+                </View>
             </View>
         </View>
     )
