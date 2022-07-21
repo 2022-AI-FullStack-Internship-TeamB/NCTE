@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
 import CustomInput from '../components/CustomInput';
@@ -7,6 +7,9 @@ import CustomButton from '../components/CustomButton';
 import API from '../api';
 
 const SignUpScreen = ({ navigation }) => {
+
+    const width = Dimensions.get('window').width;
+    const height = Dimensions.get('window').height;
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -61,7 +64,7 @@ const SignUpScreen = ({ navigation }) => {
 
             <View style = {viewStyles.container}>
                 <View style = {{
-                    marginTop: 100,
+                    marginTop: height / 12,
                 }}>
                     <View style = {viewStyles.row}>
                         <Image source = {images.email} />
@@ -91,7 +94,7 @@ const SignUpScreen = ({ navigation }) => {
                 </View>
 
                 <View style = {{
-                    marginTop: 200,
+                    marginTop: height / 3.5,
                 }}>
                     <View style = {viewStyles.row}>    
                             <CustomButton

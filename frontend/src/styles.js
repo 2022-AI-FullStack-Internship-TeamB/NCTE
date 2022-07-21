@@ -2,13 +2,15 @@ import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { theme } from './theme';
 
 const { width, height, scale, fontScale } = Dimensions.get('screen');
+
 export const textStyles = StyleSheet.create ({
     title : {
         fontSize: 30,
+        // fontWeight: 'bold',
         color: 'black',
         alignItems: 'flex-start',
-        marginTop: 30,
-        marginLeft: 30,
+        marginTop: width/10,
+        marginLeft: width/20,
     },
 
     input: {
@@ -59,13 +61,14 @@ export const viewStyles = StyleSheet.create ({
     container: {
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
-        marginLeft: 15,
-        padding: 15,
+        margin: width/20,
+        marginLeft: width/30,
+        padding: width/16,
     },
 
     row: {
         flexDirection: 'row',
-        margin: 10,
+        margin: height/55,
     },
 
     center: {
@@ -75,18 +78,20 @@ export const viewStyles = StyleSheet.create ({
     },
 
     SI_row: {
+        alignItems: 'center',
         flexDirection: 'row',
-        margin: 10,
-        marginLeft: 40,
+        height: height/10,
+        width: width/20,
+        marginLeft: width/18
     }
 })
 
 export const boxStyles = StyleSheet.create ({
-    top: {
-        height: 130,
+    top: {        
+        height: height/7,
         backgroundColor: theme.light_green,
         justifyContent: 'center',
-        marginBottom: 10,
+        // marginBottom: 10,
     },
 
     button: {
@@ -141,13 +146,13 @@ export const boxStyles = StyleSheet.create ({
 
 export const imageStyles = StyleSheet.create ({
     logo: {
-        height: 100,
-        width: 300,
+        height: height/8,
+        width: width/1.15,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 190,
-        marginLeft: 40,
-        margin:50
+        marginTop: height/5,
+        marginBottom: height/10
+    
     }
 })
 
