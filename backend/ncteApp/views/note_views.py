@@ -1,3 +1,4 @@
+import numpy
 from django.db.models import F
 from ml.ocr_model import text_conversion
 from ml.summary_model import get_summary
@@ -36,8 +37,8 @@ class NoteTextConversion(APIView):
         if(form.is_valid()):
             form.save()
             image = NotesImage.image
-            image_path = image.read()
-            converted_text = text_conversion(image_path)
+            np_image = numpy.array(image)
+            converted_text = text_conversion(np_image)
             serializer = NoteSerializer(converted_text)
             if serializer.is_valid():
                 serializer.save()
