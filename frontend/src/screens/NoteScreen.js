@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, Share } from 'react-native';
 import { viewStyles, textStyles, boxStyles } from '../styles';
 //import Clipboard from '@react-native-clipboard/clipboard';
 import { images } from '../images';
@@ -43,25 +43,10 @@ const NoteScreen = ({ navigation, route }) => {
                     setTitle(response.data.result['title']);
                     setContents(response.data.result['contents']);
                     setSummary(response.data.result['summary']);
-                    // keywords.map(keyword => (
-                    //     <Text style = {textStyles.hashtag}>#{keyword}</Text>
-                    // ))
-                    // keywords.map(i => (
-                    //     setKeywords(keywords.concat(response.data.result.keywords[i]['keyword']))
-                    // ))
                     for(let i = 0; i < response.data.result.keywords.length; i++){
                         _keyword.push(response.data.result.keywords[i]['keyword']);
-                        //console.log(_keyword[i]);
                     }
-                    // if(keywords.length <= 5)
-                    //     setKeywords(keywords.concat(_keyword));
-                    console.log(keywords.length)
-                    setKeywords(setKeywords(keywords.concat(_keyword)));
-                    console.log(keywords);
-                    //setKeywords([...keywords, response.data.result.keywords['keyword']]);
-                    //console.log(response.data.result['title'])
-                    //console.log('keyword', response.data.result.keywords[0]['keyword'])
-                    //console.log(keywords);
+                    setKeywords(keywords.concat(_keyword));
                 }
             })
             .catch(function (error) {
@@ -86,11 +71,30 @@ const NoteScreen = ({ navigation, route }) => {
         });
     }
 
-    const copyToClipboard = async () => {
-        await Clipboard.setStringAsync('클립보드 복사');
-        console.log('copy');
-        //console.log(contents);
-    }
+    const onShare = async () => {
+        try {
+          const result = await Share.share({
+            message:
+              'React Native | A framework for building native apps using React',
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // shared with activity type of result.activityType
+            } else {
+              // shared
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // dismissed
+          }
+        } catch (error) {
+          alert(error.message);
+        }
+      };
+    // const copyToClipboard = async () => {
+    //     await Clipboard.setStringAsync({contents});
+    //     console.log('copy');
+    //     //console.log(contents);
+    // }
     
     const _modify = () => {
         navigation.navigate('Modify', {
@@ -139,6 +143,13 @@ const NoteScreen = ({ navigation, route }) => {
             console.log(error);
         }
     }
+    
+    var hashtag = [];
+    for(let i = 0; i < 5; i++){
+        hashtag.push(
+            <Text style = {textStyles.hashtag}>#{keywords[i]}</Text>
+        )
+    }
 
     return (
         <View>
@@ -164,7 +175,7 @@ const NoteScreen = ({ navigation, route }) => {
                         />
                         <IconButton 
                             image = {images.copy}
-                            onPress = {copyToClipboard}
+                            onPress = {onShare}
                             marginLeft = {10}
                         />
                         <IconButton 
@@ -182,14 +193,11 @@ const NoteScreen = ({ navigation, route }) => {
             <View style = {{
                 flexDirection: 'row',
                 //flex: 1,
-                flexWrap: 'wrap'
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                marginLeft: 4
             }}>
-                {keywords.map(keyword => (
-                    <Text style = {textStyles.hashtag}>#{keyword}</Text>
-                ))}
-                {/* <Text style = {textStyles.hashtag}>#{keywords[0]}</Text>
-                <Text style = {textStyles.hashtag}>#Keyword</Text>
-                <Text style = {textStyles.hashtag}>#Hashtag</Text> */}
+                { hashtag }
             </View>
         </View>
     )

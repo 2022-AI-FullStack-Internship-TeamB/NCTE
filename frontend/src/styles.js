@@ -53,10 +53,10 @@ export const textStyles = StyleSheet.create ({
     },
 
     hashtag: {
-        fontSize: 20,
+        fontSize: 18,
         fontStyle: 'italic',
-        alignSelf: 'flex-start',
-        marginLeft: 10,
+        alignSelf: 'stretch',
+        padding: 3,
     },
 
     InBox: {
