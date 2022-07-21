@@ -6,9 +6,11 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 
+# jvm path 지정: m1 용
+JVM_PATH = '/Library/Java/JavaVirtualMachines/zulu-15.jdk/Contents/Home/lib/libjli.dylib'
 
 def get_keyword(doc):
-    okt = Okt()
+    okt = Okt(jvmpath=JVM_PATH)
 
     tokenized_doc = okt.pos(doc)
     tokenized_nouns = ' '.join(
