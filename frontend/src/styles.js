@@ -6,7 +6,6 @@ const { width, height, scale, fontScale } = Dimensions.get('screen');
 export const textStyles = StyleSheet.create ({
     title : {
         fontSize: 30,
-        // fontWeight: 'bold',
         color: 'black',
         alignItems: 'flex-start',
         marginTop: width/10,
@@ -43,12 +42,6 @@ export const textStyles = StyleSheet.create ({
         color: 'black',
     },
 
-    leftAlignText: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        
-    },
-
     textArea: {
         alignSelf: 'stretch',
         justifyContent: 'flex-start',
@@ -57,9 +50,10 @@ export const textStyles = StyleSheet.create ({
     },
 
     hashtag: {
-        fontSize: 18,
+        fontSize: Platform.OS == 'ios'? 18 : 16,
         fontStyle: 'italic',
         alignSelf: 'stretch',
+        justifyContent: 'center',
         padding: 3,
     },
 })
@@ -88,9 +82,6 @@ export const viewStyles = StyleSheet.create ({
         alignItems: 'center',
         flexDirection: 'row',
         padding: 15,
-        //height: height/10,
-        //width: width/20,
-        //marginLeft: width/18
     }
 })
 
@@ -99,7 +90,7 @@ export const boxStyles = StyleSheet.create ({
         height: height/7,
         backgroundColor: theme.light_green,
         justifyContent: 'center',
-        // marginBottom: 10,
+        marginBottom: 5,
     },
 
     button: {
@@ -147,7 +138,7 @@ export const boxStyles = StyleSheet.create ({
         borderRadius: 20,
         width: width * 0.75,
         height: height * 0.3,
-        padding: 15,
+        padding: 10,
     },
 
 })
@@ -160,9 +151,6 @@ export const imageStyles = StyleSheet.create ({
         alignItems: 'center',
         marginLeft: 30,
         marginVertical: 50,
-        //marginTop: height/5,
-        //marginBottom: height/10
-    
     }
 })
 
@@ -184,7 +172,7 @@ export const noteStyles = StyleSheet.create ({
         borderWidth: 1,
         borderRadius: 20,
         width: width * 0.8,
-        height: Platform.OS === 'ios' ? height * 0.52 : height * 0.45,
+        height: Platform.OS === 'ios' ? height * 0.52 : height * 0.47,
         padding: 15,
     },
 
@@ -192,7 +180,8 @@ export const noteStyles = StyleSheet.create ({
         alignItems: 'center',
         alignSelf: 'center',
         justifyContent: 'flex-start',
-        margin: 20,
+        marginTop: 20,
+        marginBottom: 10,
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 20,

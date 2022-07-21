@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import { viewStyles, textStyles, boxStyles } from '../styles';
-import InputScrollView from 'react-native-input-scroll-view';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import TextArea from '../components/TextArea';
@@ -43,9 +42,9 @@ const UploadScreen = ({ navigation, route }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    setTitle(response.data.result[0]['title']);
-                    setContents(response.data.result[0]['contents']);
-                    setCategory(response.data.result[0]['category_id']);
+                    setTitle(response.data.result['title']);
+                    setContents(response.data.result['contents']);
+                    setCategory(response.data.result['category_id']);
                 }
             })
             .catch(function (error) {
@@ -104,7 +103,6 @@ const UploadScreen = ({ navigation, route }) => {
 
     useEffect(() => {
         setUserId(route.params.userId);
-        console.log(userId);
         setNoteId(route.params.noteId);
         setCategoryName(route.params.categoryName);
         getNotes();

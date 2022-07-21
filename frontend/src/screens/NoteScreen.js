@@ -19,10 +19,17 @@ const NoteScreen = ({ navigation, route }) => {
     const [title, setTitle] = useState('');
     const [contents, setContents] = useState('');
     const [category, setCategory] = useState('');
+    const [categoryName, setCategoryName] = useState('');
     const [summary, setSummary] = useState('');
     const [keywords, setKeywords] = useState([]);
 
-    const [copiedText, setCopiedText] = useState('');
+    const getCategory = async () => {
+        if (category == 'all')
+            setCategoryName('NCTE');
+        else {
+            setCategoryName(category);
+        }
+    }
 
     const getNoteId = async () => {
         try {
@@ -61,41 +68,37 @@ const NoteScreen = ({ navigation, route }) => {
     useEffect(() => {
         setUserId(route.params.userId);
         setCategory(route.params.categoryName);
+        getCategory();
         setNoteId(route.params.noteId);
         getNotes();
     }, [noteId]);
 
     const onBackPressed = () => {
+        console.log(categoryName);
         navigation.navigate('List', {
-            categoryName: category,
+            categoryName: categoryName,
             userId: userId
         });
     }
 
     const onShare = async () => {
         try {
-          const result = await Share.share({
-            message:
-              'React Native | A framework for building native apps using React',
-          });
-          if (result.action === Share.sharedAction) {
-            if (result.activityType) {
+            const result = await Share.share({
+                message: 'NCTE',
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
               // shared with activity type of result.activityType
-            } else {
+                } else {
               // shared
-            }
-          } else if (result.action === Share.dismissedAction) {
+                }
+            } else if (result.action === Share.dismissedAction) {
             // dismissed
-          }
+            }
         } catch (error) {
           alert(error.message);
         }
-      };
-    // const copyToClipboard = async () => {
-    //     await Clipboard.setStringAsync({contents});
-    //     console.log('copy');
-    //     //console.log(contents);
-    // }
+    };
     
     const _modify = () => {
         navigation.navigate('Modify', {
@@ -201,15 +204,23 @@ const NoteScreen = ({ navigation, route }) => {
                 </View>
             </View>
             <View style = {viewStyles.center}>
-                <Text style = {textStyles.textArea}>{contents}</Text>
-                <Text style = {textStyles.textArea}>{summary}</Text>
+                <View style = {noteStyles.contents}>
+                    <ScrollView>
+                        <Text style = {textStyles.textArea}>{contents}</Text>
+                    </ScrollView>
+                </View>
+                <View style = {noteStyles.summary}>
+                    <ScrollView>
+                        <Text style = {textStyles.textArea}>{summary}</Text>
+                    </ScrollView>
+                </View>
             </View>
             <View style = {{
                 flexDirection: 'row',
-                //flex: 1,
                 flexWrap: 'wrap',
                 alignItems: 'center',
-                marginLeft: 4
+                justifyContent: 'center',
+                padding: 10,
             }}>
                 { hashtag }
             </View>

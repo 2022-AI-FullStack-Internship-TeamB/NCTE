@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Dimensions } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Dimensions } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
 import IconButton from '../components/IconButton';
@@ -64,9 +64,6 @@ const MemoListScreen = ({ navigation, route }) => {
     setCategoryName(route.params.categoryName);
     getCategory();
     setUserId(route.params.userId);
-    console.log(category); 
-    console.log(categoryName);
-    console.log(userId);
     getNotes();
   }, [userId, category]);
    
@@ -87,7 +84,7 @@ const MemoListScreen = ({ navigation, route }) => {
           userId: userId
           })}>
         <View style ={boxStyles.InBox}>
-          <TouchableOpacity style = {boxStyles.important}></TouchableOpacity>
+          <View style = {boxStyles.important}></View>
           <Text style = {{
             marginLeft: 10,
             fontWeight: 'bold',
