@@ -32,15 +32,18 @@ class NoteTextConversion(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        image = request.GET.get("image")
-        image_path = image.read()
-        converted_text = text_conversion(image_path)
-
-        serializer = NoteSerializer(converted_text)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
-        return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+        form = FileUploadForm(request.POST, request.FILES)
+        if(form.is_valid()):
+            form.save()
+            image = NotesImage.image
+            image_path = image.read()
+            converted_text = text_conversion(image_path)
+            serializer = NoteSerializer(converted_text)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
+            return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+        return Response(Util.response(False, form.errors, 400), status=status.HTTP_400_BAD_REQUEST)
 
 class CreateNote(APIView):
     permission_classes = [permissions.AllowAny]
