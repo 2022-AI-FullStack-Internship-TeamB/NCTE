@@ -14,7 +14,7 @@ export const textStyles = StyleSheet.create ({
     },
 
     input: {
-        fontSize: 15,
+        fontSize: 17,
         fontWeight: '300',
         color: theme.light_grey,
         alignItems: 'flex-start',
@@ -23,6 +23,7 @@ export const textStyles = StyleSheet.create ({
         borderBottomWidth: 1,
         margin: 10,
         width: 250,
+        padding: 1
     },
 
     button: {
@@ -40,6 +41,12 @@ export const textStyles = StyleSheet.create ({
     text: {
         fontSize: 15,
         color: 'black',
+    },
+
+    leftAlignText: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        
     },
 
     textArea: {
@@ -80,9 +87,10 @@ export const viewStyles = StyleSheet.create ({
     SI_row: {
         alignItems: 'center',
         flexDirection: 'row',
-        height: height/10,
-        width: width/20,
-        marginLeft: width/18
+        padding: 15,
+        //height: height/10,
+        //width: width/20,
+        //marginLeft: width/18
     }
 })
 
@@ -146,12 +154,14 @@ export const boxStyles = StyleSheet.create ({
 
 export const imageStyles = StyleSheet.create ({
     logo: {
-        height: height/8,
-        width: width/1.15,
+        height: height / 8,
+        width: width * 0.9,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: height/5,
-        marginBottom: height/10
+        marginLeft: 30,
+        marginVertical: 50,
+        //marginTop: height/5,
+        //marginBottom: height/10
     
     }
 })
