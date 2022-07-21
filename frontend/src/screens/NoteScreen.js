@@ -42,11 +42,6 @@ const NoteScreen = ({ navigation, route }) => {
                     setTitle(response.data.result[0]['title']);
                     setContents(response.data.result[0]['contents']);
                     setSummary(response.data.result[0]['summary']);
-                    //setCategory(response.data.result[0]['category']);
-                    //console.log(title);
-                    //console.log(contents);
-                    //console.log(summary);
-                    //console.log(category);
                 }
             })
             .catch(function (error) {

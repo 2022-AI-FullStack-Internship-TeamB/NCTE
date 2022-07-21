@@ -6,8 +6,7 @@ import { images } from '../images';
 import IconButton from '../components/IconButton';
 
 const Camera = ({ navigation }) => {
-    const width = Dimensions.get('window').width;
-    const height = Dimensions.get('window').height;
+    const { width, height, scale, fontScale } = Dimensions.get('screen');
 
     const [pickedImagePath, setPickedImagePath] = useState('');
     const _onPress = () => {
@@ -58,12 +57,23 @@ const Camera = ({ navigation }) => {
                     Picture
                 </Text>
             </View>
-            <View>
+            <View style = {{
+                width: width,
+                height: Platform.OS == 'ios' ? height * 0.65 : height * 0.6
+            }}>
                 { pickedImagePath !== (null) ? (
                     <Image source = {{ uri: pickedImagePath }}
+                        // style = {{
+                        //     width: width,
+                        //     height: height * 0.6,
+                        // }}
                         style = {{
                             width: width,
-                            height: height - 250,
+                            height: height,
+                            //height: undefined,
+                            //aspectRatio: 1,
+                            resizeMode: 'contain',
+                            flex: 1,
                         }}
                     />
                 ) : (
@@ -74,25 +84,31 @@ const Camera = ({ navigation }) => {
                     </View>
                 )}
             </View>
-            <View style = {viewStyles.row}>
+            <View style = {{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                marginTop: 20,
+            }}>
                 <IconButton
                     onPress = {showImagePicker}
                     image = {images.album}
-                    marginTop = {height/30}
-                    marginLeft = {width/8.5}
+                    marginTop = {20}
+                    //marginTop = {height/30}
+                    //marginLeft = {width/8.5}
                 />
                 <IconButton
                     onPress = {openCamera}
                     image = {images.camera_green}
-                    marginTop = {height/46}
-                    marginLeft = {83}
+                    //marginTop = {height/46}
+                    //marginLeft = {83}
                 />        
                 <IconButton
                     onPress = {_onPress}
                     image = {images.check}
-                    marginTop = {height/27}
-                    marginLeft = {width/5}
-                />                
+                    marginTop = {20}
+                    //marginTop = {height/27}
+                    //marginLeft = {width/5}
+                />
             </View>
         </View>
     )
