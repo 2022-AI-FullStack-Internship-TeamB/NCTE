@@ -78,20 +78,20 @@ const Camera = ({ navigation }) => {
                 <IconButton
                     onPress = {showImagePicker}
                     image = {images.album}
-                    marginTop = {25}
-                    marginLeft = {40}
+                    marginTop = {height/30}
+                    marginLeft = {width/8.5}
                 />
                 <IconButton
                     onPress = {openCamera}
                     image = {images.camera_green}
-                    marginTop = {10}
+                    marginTop = {height/46}
                     marginLeft = {83}
                 />        
                 <IconButton
                     onPress = {_onPress}
                     image = {images.check}
-                    marginTop = {30}
-                    marginLeft = {80}
+                    marginTop = {height/27}
+                    marginLeft = {width/5}
                 />                
             </View>
         </View>

@@ -119,7 +119,7 @@ const UploadScreen = ({ navigation, route }) => {
     }
 
     return (
-        <InputScrollView nestedScrollEnabled = {true}>
+        <View>
             <View style = {boxStyles.top}>
                 <Text style = {textStyles.title}>
                     {title}
@@ -195,7 +195,7 @@ const UploadScreen = ({ navigation, route }) => {
                     </View>
                 </View>
             </View> 
-        </InputScrollView>
+        </View>
     );
 }
 

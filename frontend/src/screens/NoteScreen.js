@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, Share } from 'react-native';
-import { viewStyles, textStyles, boxStyles } from '../styles';
+import { ScrollView, View, Text, Alert, Share, Dimensions, Platform } from 'react-native';
+import { viewStyles, textStyles, boxStyles, noteStyles } from '../styles';
 //import Clipboard from '@react-native-clipboard/clipboard';
 import { images } from '../images';
 import { styles } from '../styles';
@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
 
 const NoteScreen = ({ navigation, route }) => {
+    const { width, height, scale, fontScale } = Dimensions.get('screen');
 
     const _keyword = [];
     const [noteId, setNoteId] = useState('');
@@ -154,24 +155,37 @@ const NoteScreen = ({ navigation, route }) => {
     return (
         <View>
             <View style = {boxStyles.top}>
-                <View style = {viewStyles.row}>
+                <View style = {{
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    padding: 10,
+                    alignSelf: 'stretch'
+                }}>
                     <IconButton
                         image = {images.back}
                         onPress = {onBackPressed}
                         marginLeft = {10}
-                        marginTop = {60}
+                        marginTop = {47}
                     />
-                    <Text style = {textStyles.title}>
+                    <Text style = {{
+                        fontSize: Platform.OS == 'ios' ? 30 : 26,
+                        justifyContent: 'center',
+                        marginTop: 35,
+                        marginLeft: 10,
+                    }}>
                         {title}
                     </Text>
                     <View style = {{
-                        alignItems: 'flex-end',
-                        flexDirection: 'row'
+                        flex: 1,
+                        justifyContent: 'flex-end',
+                        flexDirection: 'row',
+                        paddingRight: 10,
+                        marginTop: 45,
                     }}>
                         <IconButton 
                             image = {images.modify}
                             onPress = {_modify}
-                            marginLeft = {30}
+                            marginLeft = {10}
                         />
                         <IconButton 
                             image = {images.copy}

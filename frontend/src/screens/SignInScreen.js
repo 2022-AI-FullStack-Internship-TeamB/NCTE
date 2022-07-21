@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
+import { View, Text, Pressable, Image, StyleSheet ,Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { textStyles, viewStyles, boxStyles, imageStyles } from '../styles';
 import { images } from '../images';
@@ -9,6 +9,9 @@ import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignInScreen = ({ navigation }) => {
+
+    const width = Dimensions.get('window').width;
+    const height = Dimensions.get('window').height;
 
     const [id, setId] = useState('');
     const [email, setEmail] = useState('');
@@ -68,23 +71,21 @@ const SignInScreen = ({ navigation }) => {
     };
 
    return ( 
-        <View style = {{
-            margin: 20,
-        }}>
+        <View style ={{ margin: width /10 }}>
             <Image
                 source = {images.logo}
                 style={imageStyles.logo}
             />
-            <Text>E-mail</Text>
-                <View style = {viewStyles.row}>
+            <Text style={{marginLeft:width/20}}>E-mail</Text>
+                <View style = {viewStyles.SI_row}>
                     <CustomInput 
                         value = {email}
                         setValue = {setEmail}
                         placeholder="E-mail address"
                     />
                 </View>
-            <Text>Password</Text>
-                <View style = {viewStyles.row}>
+            <Text style={{marginLeft:width/20}}>Password</Text>
+                <View style = {viewStyles.SI_row}>
                     <CustomInput 
                         value = {password}
                         setValue = {setPassword}
@@ -93,21 +94,27 @@ const SignInScreen = ({ navigation }) => {
                     />
                 </View>
                 <View style = {viewStyles.row}>
-                    <View style = {{
-                        marginLeft: 110
+                    <View 
+                    style = {{
+                        marginLeft: width/6
                     }}>
                         <CustomButton
                             onPress = {onSignInPressed}
                             text = "Sign In"
                         />
+                        
                         <View style = {{
                             margin:10,                           
                         }}>
                         </View>
+
+                        <View style={{marginLeft: width/13}}>
                         <CustomButton
                             onPress = {onSignUpPressed}
                             text = "Sign Up"
                         />
+                        </View>
+                        
                     </View>
                 </View>
         </View>

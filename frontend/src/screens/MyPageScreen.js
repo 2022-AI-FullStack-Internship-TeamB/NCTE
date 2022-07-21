@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
 import CustomInput from '../components/CustomInput';
@@ -8,6 +8,9 @@ import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MyPageScreen = ({ navigation, route, props }) => {
+
+    const width = Dimensions.get('window').width;
+    const height = Dimensions.get('window').height;
 
     const [user, setUser] = useState([]);
     const [email, setEmail] = useState('');
@@ -100,7 +103,7 @@ const MyPageScreen = ({ navigation, route, props }) => {
 
             <View style = {viewStyles.container}>
                 <View style = {{
-                    marginTop: 30,
+                    marginTop: height/20,
                 }}>
                     <View style = {viewStyles.row}>
                         <Image source = {images.nickname} />
@@ -121,7 +124,7 @@ const MyPageScreen = ({ navigation, route, props }) => {
                 </View>
 
                 <View style = {{
-                    marginTop: 100,
+                    marginTop: width/2.5,
                     marginLeft: 110
                 }}>
                     <CustomButton
