@@ -45,14 +45,7 @@ const SignInScreen = ({ navigation }) => {
                 if (response.data['success'] == true) {
                     console.log("SignUp");
                     alert('로그인 완료');
-                    //setIsLoggedIn(true);
                     saveId(response.data.id);
-                    //AsyncStorage.setItem('isLogin', JSON.stringify(true));
-                    // navigation.navigate('TabNavigator', {
-                    //     screen: 'MypageStack',
-                    //     params: { userId: id },
-                    //     }
-                    // );
                     navigation.navigate('TabNavigator');
                 } else {
                     alert('이메일 혹은 비밀번호가 일치하지 않습니다');
@@ -71,12 +64,20 @@ const SignInScreen = ({ navigation }) => {
     };
 
    return ( 
-        <View style ={{ margin: width /10 }}>
+        <View style ={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+        }}>
             <Image
                 source = {images.logo}
                 style={imageStyles.logo}
             />
-            <Text style={{marginLeft:width/20}}>E-mail</Text>
+            <View style = {{
+                alignItems: 'flex-start',
+                //margin: 50,
+            }}>
+            <Text style={textStyles.text}>E-mail</Text>
                 <View style = {viewStyles.SI_row}>
                     <CustomInput 
                         value = {email}
@@ -84,7 +85,7 @@ const SignInScreen = ({ navigation }) => {
                         placeholder="E-mail address"
                     />
                 </View>
-            <Text style={{marginLeft:width/20}}>Password</Text>
+            <Text style={textStyles.text}>Password</Text>
                 <View style = {viewStyles.SI_row}>
                     <CustomInput 
                         value = {password}
@@ -93,30 +94,19 @@ const SignInScreen = ({ navigation }) => {
                         secureTextEntry
                     />
                 </View>
-                <View style = {viewStyles.row}>
-                    <View 
-                    style = {{
-                        marginLeft: width/6
-                    }}>
-                        <CustomButton
-                            onPress = {onSignInPressed}
-                            text = "Sign In"
+            </View>
+                <View style = {viewStyles.center}>
+                    <CustomButton
+                        onPress = {onSignInPressed}
+                        text = "Sign In"
                         />
-                        </View>
-                        
-                        <View style = {{
-                            margin:10,                           
-                        }}>
-                        </View>
-
-                        <View style={{marginLeft: width/13}}>
-                        <CustomButton
-                            onPress = {onSignUpPressed}
-                            text = "Sign Up"
-                        />
-                        </View>
-                        
-                    </View>
+                    <View style = {{
+                        margin: 10,
+                    }} />
+                    <CustomButton
+                        onPress = {onSignUpPressed}
+                        text = "Sign Up"
+                    />
                 </View>
         </View>
     );
