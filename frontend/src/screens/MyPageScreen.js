@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, DevSettings } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import restart from '../restart';
 
 const MyPageScreen = ({ navigation, route, props }) => {
 
@@ -14,15 +15,15 @@ const MyPageScreen = ({ navigation, route, props }) => {
 
     const [user, setUser] = useState([]);
     const [email, setEmail] = useState('');
-    //const [id, setId] = useState('');  
     const [userId, setUserId] = useState('');
     const [userName, setUserName] = useState('');
+
+    const [isReady, setIsReady] = useState('');
 
     const getId = async () => {
         try {
             const user_id = await AsyncStorage.getItem('user_id');
             setUserId(user_id);
-            //console.log('getting id successed' + userId);
         } catch (e) {
             console.error(e);
         }
@@ -82,12 +83,7 @@ const MyPageScreen = ({ navigation, route, props }) => {
 
     const onLogoutPressed = async () => {
         try {
-            //AsyncStorage.removeItem('user_id');
-            //AsyncStorage.setItem('isLogin', JSON.stringify(false));
-            //navigation.navigate('SignInStack');
-            navigation.navigate('SignInStack', {
-                screen: 'SignIn'
-            });
+            restart();
         } catch (error) {
             console.log(error);
         }
