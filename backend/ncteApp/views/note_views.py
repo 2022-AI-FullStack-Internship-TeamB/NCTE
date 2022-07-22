@@ -5,8 +5,9 @@ from ml.summary_model import get_summary
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from PIL import Image
 
-from ..models import Categories, Notes, NotesImage, Summary
+from ..models import Categories, Notes, NoteImages, Summary
 from ..forms import FileUploadForm
 from ..serializers import NoteSerializer, SummarySerializer
 
@@ -36,7 +37,8 @@ class NoteTextConversion(APIView):
         form = FileUploadForm(request.POST, request.FILES)
         if(form.is_valid()):
             form.save()
-            image = NotesImage.image
+            noteimage = NoteImages.objects.last()
+            image = Image.open(noteimage.image)
             np_image = numpy.array(image)
             converted_text = text_conversion(np_image)
             serializer = NoteSerializer(converted_text)
