@@ -7,6 +7,7 @@ import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 
 const SignInScreen = ({ navigation }) => {
 
@@ -17,10 +18,22 @@ const SignInScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [isReady, setIsReady] = useState(false);
+
     const saveId = async id => {
         try {
             console.log('saving id');
             await AsyncStorage.setItem('user_id', JSON.stringify(id));
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    const getId = async () => {
+        try {
+            const user_id = await AsyncStorage.getItem('user_id');
+            setId(user_id);
+            //console.log('getting id successed' + userId);
         } catch (e) {
             console.error(e);
         }
@@ -46,6 +59,7 @@ const SignInScreen = ({ navigation }) => {
                     console.log("SignUp");
                     alert('로그인 완료');
                     saveId(response.data.id);
+                    //saveLogin();
                     navigation.navigate('TabNavigator');
                 } else {
                     alert('이메일 혹은 비밀번호가 일치하지 않습니다');
@@ -110,6 +124,13 @@ const SignInScreen = ({ navigation }) => {
                 </View>
         </View>
     );
+    // ) : (
+    //     <AppLoading
+    //         startAsync={getId}
+    //         onFinish = {() => setIsReady(true)}
+    //         onError = {console.error}
+    //      />
+    // )
 }
 
   

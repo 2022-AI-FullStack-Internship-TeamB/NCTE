@@ -146,10 +146,10 @@ export const boxStyles = StyleSheet.create ({
 export const imageStyles = StyleSheet.create ({
     logo: {
         height: height / 8,
-        width: width * 0.9,
+        width: width * 0.75,
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 30,
+        //marginLeft: 30,
         marginVertical: 50,
     }
 })
