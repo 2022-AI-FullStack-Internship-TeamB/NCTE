@@ -41,7 +41,7 @@ class NoteTextConversion(APIView):
             image = Image.open(noteimage.image)
             np_image = numpy.array(image)
             converted_text = text_conversion(np_image)
-            serializer = NoteSerializer(converted_text)
+            serializer = NoteSerializer(data={"contents": converted_text})
             if serializer.is_valid():
                 serializer.save()
                 return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
