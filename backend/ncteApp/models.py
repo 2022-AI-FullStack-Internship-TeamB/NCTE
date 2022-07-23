@@ -36,7 +36,12 @@ class Notes(models.Model):
     contents = models.TextField(verbose_name="contents", null=False)
 
 class NoteImages(models.Model):
+    noteimage_id = models.AutoField(primary_key=True, db_column='noteimage_id')
     image = models.ImageField(null=True, upload_to="", blank=True)
+
+class ConvertedText(models.Model):
+    convertedText_id = models.AutoField(primary_key=True, db_column='convertedText_id')
+    text = models.TextField(verbose_name="text", null=True)
 
 class Summary(models.Model):
     summary_id = models.AutoField(primary_key=True, db_column='summary_id')

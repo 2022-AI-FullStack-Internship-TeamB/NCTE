@@ -4,4 +4,4 @@ from .models import NoteImages
 class FileUploadForm(ModelForm):
     class Meta:
         model = NoteImages
-        fields = ['image']
+        fields = ['noteimage_id', 'image']

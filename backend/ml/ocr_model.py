@@ -5,5 +5,5 @@ def text_conversion(image):
                             model_storage_directory='model',
                             user_network_directory='user_network',
                             recog_network='custom')
-    result = reader.readtext(image)
+    result = reader.readtext(image, detail=0)
     return result

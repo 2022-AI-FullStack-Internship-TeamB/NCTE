@@ -7,9 +7,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from PIL import Image
 
-from ..models import Categories, Notes, NoteImages, Summary
+from ..models import Categories, Notes, NoteImages, Summary, ConvertedText
 from ..forms import FileUploadForm
-from ..serializers import NoteSerializer, SummarySerializer
+from ..serializers import NoteSerializer, SummarySerializer, ConvertedTextSerializer
 
 
 class NotesList(APIView):
@@ -41,7 +41,8 @@ class NoteTextConversion(APIView):
             image = Image.open(noteimage.image)
             np_image = numpy.array(image)
             converted_text = text_conversion(np_image)
-            serializer = NoteSerializer(data={"contents": converted_text})
+            contents = " ".join(map(str, converted_text))
+            serializer = ConvertedTextSerializer(data={"text": contents})
             if serializer.is_valid():
                 serializer.save()
                 return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
