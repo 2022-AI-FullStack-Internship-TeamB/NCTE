@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Image } from 'react-native';
+import {StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Dimensions } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
 import IconButton from '../components/IconButton';
@@ -86,7 +86,7 @@ const MemoListScreen = ({ navigation, route }) => {
           categoryName: category,
           userId: userId
           })}>
-        <View style ={textStyles.InBox}>
+        <View style ={boxStyles.InBox}>
           <TouchableOpacity style = {boxStyles.important}></TouchableOpacity>
           <Text style = {{
             marginLeft: 10,
@@ -110,26 +110,38 @@ const MemoListScreen = ({ navigation, route }) => {
   return (
     <View>
         <View style={boxStyles.top}>
-          <View style = {viewStyles.row}>
+          <View style = {{
+            alignItems: 'center',
+            flexDirection: 'row',
+            marginLeft: 10,
+            marginRight: 10,
+          }}>
             <IconButton
               image = {images.back}
               onPress = {back}
               marginLeft = {10}
-              marginTop = {50}
+              marginTop = {40}
             />
-            <Text style = {textStyles.title}>
+            <Text style = {{
+              fontSize: 30,
+              marginTop: 35,
+              marginLeft: 15,
+              
+            }}>
               {categoryName}
             </Text>
             <IconButton
               image = {images.add}
               onPress = {add}
-              marginLeft = {240}
-              marginTop = {50}
+              marginLeft = {230}
+              marginTop = {40}
             />
           </View>
         </View>
         
-        <View>
+        <View style = {{
+          alignItems: 'center'
+        }}>
             <FlatList
                 data={notes}
                 renderItem = {renderMemo}

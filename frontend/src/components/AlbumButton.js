@@ -1,7 +1,9 @@
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, Dimensions, Platform } from 'react-native';
 import { textStyles, boxStyles } from '../styles';
 import { theme } from '../theme';
+
+//const { width, height, scale, fontScale } = Dimensions.get('screen');
 
 const AlbumButton = ({ onPress, text, color }) => {
     return (
@@ -18,13 +20,14 @@ const AlbumButton = ({ onPress, text, color }) => {
 
 const styles = (color) => StyleSheet.create({
     album: {
-        width: 120,
-        height: 110,
+        //flex: 1,
+        width: 130,
+        height: 130,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 30,
         backgroundColor: color,
-        margin: 15,
+        margin: 25,
     }
 })
 
