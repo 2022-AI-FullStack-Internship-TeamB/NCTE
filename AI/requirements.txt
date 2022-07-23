@@ -1,0 +1,7 @@
+easyocr
+matplotlib
+numpy
+pandas
+Pillow
+torch
+torchvision

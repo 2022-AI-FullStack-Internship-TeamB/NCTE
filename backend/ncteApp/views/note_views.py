@@ -1,11 +1,15 @@
-from unicodedata import category
-from ..models import Categories, Notes, Summary
+import numpy
+from django.db.models import F
+from ml.ocr_model import text_conversion
 from ml.summary_model import get_summary
-from rest_framework import permissions, status, generics
+from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ..serializers import NoteSerializer, SummarySerializer
-from django.db.models import Q, F
+from PIL import Image
+
+from ..models import Categories, Notes, NoteImages, Summary, ConvertedText
+from ..forms import FileUploadForm
+from ..serializers import NoteSerializer, SummarySerializer, ConvertedTextSerializer
 
 
 class NotesList(APIView):
@@ -26,6 +30,24 @@ class NotesList(APIView):
         serializer = NoteSerializer(queryset, many=True)
         return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
 
+class NoteTextConversion(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        form = FileUploadForm(request.POST, request.FILES)
+        if(form.is_valid()):
+            form.save()
+            noteimage = NoteImages.objects.last()
+            image = Image.open(noteimage.image)
+            np_image = numpy.array(image)
+            converted_text = text_conversion(np_image)
+            contents = " ".join(map(str, converted_text))
+            serializer = ConvertedTextSerializer(data={"text": contents})
+            if serializer.is_valid():
+                serializer.save()
+                return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
+            return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+        return Response(Util.response(False, form.errors, 400), status=status.HTTP_400_BAD_REQUEST)
 
 class CreateNote(APIView):
     permission_classes = [permissions.AllowAny]

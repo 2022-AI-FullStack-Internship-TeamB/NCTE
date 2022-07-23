@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import Users, Categories, Summary, Keywords
 from rest_framework import serializers
-from .models import Users, Categories, Summary, Notes
+from .models import Users, Categories, Summary, Notes, ConvertedText
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
@@ -63,6 +63,11 @@ class NoteSerializer(serializers.ModelSerializer):
         model = Notes
         fields = ['note_id', 'user_id', 'title',
                   'contents', 'category_id', 'date']
+
+class ConvertedTextSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConvertedText
+        fields = ['convertedText_id', 'text']
 
 
 class CategorySerializer(serializers.ModelSerializer):

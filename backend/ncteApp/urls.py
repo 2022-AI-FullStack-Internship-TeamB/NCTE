@@ -21,6 +21,7 @@ urlpatterns = [
 
     # 메모
     path('notes/<int:pk>/all', note_views.NotesList.as_view()),
+    path('notes/textconversion', note_views.NoteTextConversion.as_view()),
     path('notes', note_views.CreateNote.as_view()),
     path('notes/<int:pk>', note_views.NoteDetail.as_view()),
 
