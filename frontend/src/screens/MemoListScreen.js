@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, FlatList, Dimensions } from 'react-native';
 import { textStyles, viewStyles, boxStyles } from '../styles';
 import { images } from '../images';
 import IconButton from '../components/IconButton';
 import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 const MemoListScreen = ({ navigation, route }) => {
 
@@ -60,12 +61,14 @@ const MemoListScreen = ({ navigation, route }) => {
     }
   };
 
-  useEffect(()=> {
-    setCategoryName(route.params.categoryName);
-    getCategory();
-    setUserId(route.params.userId);
-    getNotes();
-  }, [userId, category]);
+  useFocusEffect(
+    useCallback(() => {
+      setCategoryName(route.params.categoryName);
+      getCategory();
+      setUserId(route.params.userId);
+      getNotes();
+    }, [userId, category])
+  );
    
   const add = () => {
     navigation.navigate('CameraStack');

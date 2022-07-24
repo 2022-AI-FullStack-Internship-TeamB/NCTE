@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, Alert, Share, Dimensions, Platform } from 'react-native';
 import { viewStyles, textStyles, boxStyles, noteStyles } from '../styles';
-//import Clipboard from '@react-native-clipboard/clipboard';
 import { images } from '../images';
 import { styles } from '../styles';
 import IconButton from '../components/IconButton';
 import TextArea from '../components/TextArea';
 import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Clipboard from 'expo-clipboard';
 
 const NoteScreen = ({ navigation, route }) => {
     const { width, height, scale, fontScale } = Dimensions.get('screen');
@@ -28,16 +26,6 @@ const NoteScreen = ({ navigation, route }) => {
             setCategoryName('NCTE');
         else {
             setCategoryName(category);
-        }
-    }
-
-    const getNoteId = async () => {
-        try {
-            const note_id = AsyncStorage.getItem('note_id');
-            setNoteId(note_id);
-            console.log('getting note id successed' + noteId);
-        } catch (e) {
-            console.error(e);
         }
     }
 
@@ -108,46 +96,47 @@ const NoteScreen = ({ navigation, route }) => {
         });
     }
 
-    const onDeletePressed = () => {
-        try{
-            Alert.alert(
-                'Delete',
-                '삭제하시겠습니까 ?',
-                [
-                  {text: '취소', style: 'cancel'}, 
-                  {
-                    text: '삭제',
-                    
-                    onPress: () => { 
-                        const response = API.delete(
-                            `/notes/${noteId}`
-                        )
-                        .then(function(response) {
-                            console.log('delete');
-                            navigation.navigate('List', {
-                                categoryName: category,
-                                userId: userId
-                            });
-                        }
-                            
-                        )
-                        .catch(function (error) {
-                            console.log(error.response);
-                        });
-                    },
-                    style: 'destructive',
-                  },
-                ],
-                {
-                  cancelable: true,
-                },
-              );
-            
+    const _delete = async () => {
+        try {
+            await API.delete(
+                `/notes/${noteId}`
+            )
+            .then(response => {
+                if(response.status === 204){
+                    console.log('delete');
+                    navigation.replace('List', {
+                        categoryName: category,
+                        userId: userId
+                    })
+                }
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
-    
+
+    const onDeletePressed = async () => {
+        
+        Alert.alert(
+            'Delete',
+            '삭제하시겠습니까 ?',
+            [
+                {text: '취소', style: 'cancel'}, 
+                {
+                    text: '삭제',    
+                    onPress: _delete,
+                        style: 'destructive',
+                },
+            ],
+                {
+                    cancelable: true,
+                },
+        );
+    }
+
     var hashtag = [];
     for(let i = 0; i < 5; i++){
         hashtag.push(

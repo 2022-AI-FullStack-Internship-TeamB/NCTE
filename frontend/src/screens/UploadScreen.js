@@ -8,6 +8,7 @@ import TextArea from '../components/TextArea';
 import CustomPicker from '../components/CustomPicker';
 import API from '../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CommonActions } from '@react-navigation/native';
 
 const UploadScreen = ({ navigation, route }) => {
 
@@ -96,11 +97,16 @@ const UploadScreen = ({ navigation, route }) => {
             .then(function (response) {
                 if (response.data['success'] == true) {
                     console.log(response.data.result['note_id']);
-                    navigation.navigate('Note', {
-                        noteId: response.data.result['note_id'],
-                        categoryName: category,
-                        userId: userId
-                    });
+                    navigation.dispatch(
+                        CommonActions.navigate({
+                            name: 'Note', 
+                            params: {
+                                noteId: response.data.result['note_id'],
+                                categoryName: category,
+                                userId: userId
+                            }
+                        })
+                    )
                 }
             })
             .catch(function (error) {
