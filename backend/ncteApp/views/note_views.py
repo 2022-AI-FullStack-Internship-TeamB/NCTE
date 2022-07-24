@@ -49,6 +49,12 @@ class NoteTextConversion(APIView):
             return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
         return Response(Util.response(False, form.errors, 400), status=status.HTTP_400_BAD_REQUEST)
 
+    def get(self, request):
+        queryset = ConvertedText.objects.last()
+        serializer = ConvertedTextSerializer(queryset)
+        return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
+
+
 class CreateNote(APIView):
     permission_classes = [permissions.AllowAny]
 
