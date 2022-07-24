@@ -5,5 +5,7 @@ backend/ncteApp/__pycache__
 backend/ncteApp/migrations
 backend/ncteApp/views/__pycache__
 backend/ml/__pycache__
-node_modules/
-.expo/
+backend/user_network/__pycache__
+backend/media
+frontend/node_modules/
+frontend/.expo/
