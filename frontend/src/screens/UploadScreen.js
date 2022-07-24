@@ -36,10 +36,28 @@ const UploadScreen = ({ navigation, route }) => {
         } catch (e) {
             console.error(e);
         }
-    }    
+    }
+    
+    const getText = async () => {
+        try {
+            await API.get(
+                `/notes/textconversion`
+            )
+            .then(function (response) {
+                console.log('get contents');
+                setContents(response.data.result['text']);
+            })
+            .catch(function (error){
+                console.log(error.response);
+            })
+        } catch (error){
+            console.log(error);
+        }
+    }
     
     useEffect(() => {
         getId();
+        getText();
     }, []);
 
     const getIndex = (value) => {
