@@ -1,19 +1,22 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { ScrollView, View, TextInput, Platform } from 'react-native';
 import { textStyles, boxStyles } from '../styles';
 
 const TextArea = ({ value, setValue }) => {
+
     return (
-            <View style = {{
-                height: 180,
-            }}>
-                <TextInput
-                    multiline
-                    numberOfLines = {5}
-                    style = {textStyles.textArea}
-                    value = {value}
-                    onChangeText = {setValue}
-                />
+            <View style = {boxStyles.textArea}>
+                <ScrollView>
+                    <TextInput
+                        multiline = {true}
+                        numberOfLines = {5}
+                        style = {textStyles.textArea}
+                        value = {value}
+                        onChangeText = {setValue}
+                        autoCapitalize = {'none'}
+                        autoCorrect = {false}
+                    />
+                </ScrollView>
             </View>        
     );
 }

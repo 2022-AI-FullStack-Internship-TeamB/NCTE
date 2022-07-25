@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
+import { View, Text, Pressable, Image, StyleSheet ,Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { textStyles, viewStyles, boxStyles, imageStyles } from '../styles';
 import { images } from '../images';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import API from '../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignInScreen = ({ navigation }) => {
 
+    const width = Dimensions.get('window').width;
+    const height = Dimensions.get('window').height;
+
+    const [id, setId] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [userData, setUserData] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const saveId = async id => {
+        try {
+            console.log('saving id');
+            await AsyncStorage.setItem('user_id', JSON.stringify(id));
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
     const onSignInPressed = async () => {
         if (email == "" || password == "") {
@@ -33,8 +45,7 @@ const SignInScreen = ({ navigation }) => {
                 if (response.data['success'] == true) {
                     console.log("SignUp");
                     alert('로그인 완료');
-                    setUserData(data);
-                    setIsLoggedIn(true);
+                    saveId(response.data.id);
                     navigation.navigate('TabNavigator');
                 } else {
                     alert('이메일 혹은 비밀번호가 일치하지 않습니다');
@@ -53,23 +64,29 @@ const SignInScreen = ({ navigation }) => {
     };
 
    return ( 
-        <View style = {{
-            margin: 20,
+        <View style ={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
         }}>
             <Image
                 source = {images.logo}
                 style={imageStyles.logo}
             />
-            <Text>E-mail</Text>
-                <View style = {viewStyles.row}>
+            <View style = {{
+                alignItems: 'flex-start',
+                //margin: 50,
+            }}>
+            <Text style={textStyles.text}>E-mail</Text>
+                <View style = {viewStyles.SI_row}>
                     <CustomInput 
                         value = {email}
                         setValue = {setEmail}
                         placeholder="E-mail address"
                     />
                 </View>
-            <Text>Password</Text>
-                <View style = {viewStyles.row}>
+            <Text style={textStyles.text}>Password</Text>
+                <View style = {viewStyles.SI_row}>
                     <CustomInput 
                         value = {password}
                         setValue = {setPassword}
@@ -77,23 +94,19 @@ const SignInScreen = ({ navigation }) => {
                         secureTextEntry
                     />
                 </View>
-                <View style = {viewStyles.row}>
+            </View>
+                <View style = {viewStyles.center}>
+                    <CustomButton
+                        onPress = {onSignInPressed}
+                        text = "Sign In"
+                        />
                     <View style = {{
-                        marginLeft: 110
-                    }}>
-                        <CustomButton
-                            onPress = {onSignInPressed}
-                            text = "Sign In"
-                        />
-                        <View style = {{
-                            margin:10,                           
-                        }}>
-                        </View>
-                        <CustomButton
-                            onPress = {onSignUpPressed}
-                            text = "Sign Up"
-                        />
-                    </View>
+                        margin: 10,
+                    }} />
+                    <CustomButton
+                        onPress = {onSignUpPressed}
+                        text = "Sign Up"
+                    />
                 </View>
         </View>
     );

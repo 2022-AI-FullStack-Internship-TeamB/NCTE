@@ -1,4 +1,5 @@
 .venv
+.idea
 backend/backend/__pycache__
 backend/ncteApp/__pycache__
 backend/ncteApp/migrations
@@ -6,3 +7,5 @@ backend/ncteApp/views/__pycache__
 backend/ml/__pycache__
 node_modules/
 .expo/
+AI/easyocr_trainer/all_data/en_train_filtered
+AI/easyocr_trainer/all_data/en_val

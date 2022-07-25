@@ -1,7 +1,7 @@
 import DropDownPicker from 'react-native-dropdown-picker';
 import { theme } from '../theme';
 
-const CustomPicker = ({ open, setOpen, value, setValue, items, setItems, placeholder }) => {
+const CustomPicker = ({ open, setOpen, value, setValue, items, setItems, onChangeValue, defaultValue, placeholder }) => {
     return (
         <DropDownPicker
             open = {open}
@@ -10,6 +10,8 @@ const CustomPicker = ({ open, setOpen, value, setValue, items, setItems, placeho
             setOpen = {setOpen}
             setValue = {setValue}
             setItems = {setItems}
+            onChangeValue = {onChangeValue}
+            defaultValue = {defaultValue}
             containerStyle = {{
                 width: 200,
             }}

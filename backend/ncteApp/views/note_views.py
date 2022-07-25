@@ -1,11 +1,16 @@
-from ..models import Categories, Notes, Summary, Keywords
-from ml.summary_model import get_summary
+import numpy
+from django.db.models import F
 from ml.keyword_model import get_keyword
-from rest_framework import permissions, status, generics
+from ml.ocr_model import text_conversion
+from ml.summary_model import get_summary
+from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ..serializers import KeywordSerializer, NoteSerializer, SummarySerializer
-from django.db.models import Q, F
+from PIL import Image
+
+from ..models import Categories, Notes, NoteImages, Summary, ConvertedText
+from ..forms import FileUploadForm
+from ..serializers import NoteSerializer, SummarySerializer, ConvertedTextSerializer
 
 
 class NotesList(APIView):
@@ -13,15 +18,41 @@ class NotesList(APIView):
 
     def get(self, request, pk):
         category_pk = request.GET.get('category')
-        if category_pk == 'all':
+        if category_pk == 'all' or category_pk == None:
             queryset = Notes.objects.filter(user_id=pk)
         else:
+            print(Categories.objects.get(
+                category=category_pk).category_id)
             category_id = Categories.objects.get(
-                category=category_pk)[0]['category_id']
+                category=category_pk).category_id
             queryset = Notes.objects.filter(
                 user_id=pk, category_id=category_id)
         queryset = queryset.order_by('-date')
         serializer = NoteSerializer(queryset, many=True)
+        return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
+
+class NoteTextConversion(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        form = FileUploadForm(request.POST, request.FILES)
+        if(form.is_valid()):
+            form.save()
+            noteimage = NoteImages.objects.last()
+            image = Image.open(noteimage.image)
+            np_image = numpy.array(image)
+            converted_text = text_conversion(np_image)
+            contents = " ".join(map(str, converted_text))
+            serializer = ConvertedTextSerializer(data={"text": contents})
+            if serializer.is_valid():
+                serializer.save()
+                return Response(Util.response(True, serializer.data, 201), status=status.HTTP_201_CREATED)
+            return Response(Util.response(False, serializer.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+        return Response(Util.response(False, form.errors, 400), status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        queryset = ConvertedText.objects.last()
+        serializer = ConvertedTextSerializer(queryset)
         return Response(Util.response(True, serializer.data, 200), status=status.HTTP_200_OK)
 
 
