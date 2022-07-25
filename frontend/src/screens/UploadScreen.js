@@ -5,10 +5,13 @@ import API from '../api';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import CustomPicker from '../components/CustomPicker';
+import CustomModal from '../components/CustomModal';
 import TextArea from '../components/TextArea';
 import { viewStyles, textStyles, boxStyles } from '../styles';
 
 const UploadScreen = ({ navigation, route }) => {
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
@@ -104,6 +107,10 @@ const UploadScreen = ({ navigation, route }) => {
             </View>
             
             <View style = {viewStyles.center}>
+                <CustomModal 
+                    modalVisible = {modalVisible ? true : false}
+                    text = '메모 저장 중입니다! 잠시만 기다려주세요😉'
+                />
                 <View style = {{
                     marginTop: 10,
                 }}>

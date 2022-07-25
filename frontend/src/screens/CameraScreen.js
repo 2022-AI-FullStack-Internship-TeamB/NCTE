@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, Dimensions, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import API from '../api';
+import CustomModal from '../components/CustomModal';
 import IconButton from '../components/IconButton';
 import { viewStyles, textStyles, boxStyles } from '../styles';
 import { images } from '../images';
@@ -11,6 +12,7 @@ const Camera = ({ navigation }) => {
 
     const [pickedImagePath, setPickedImagePath] = useState(null);
     const [textId, setTextId] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
 
     const showImagePicker = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -51,6 +53,7 @@ const Camera = ({ navigation }) => {
     }
 
     const saveImage = async () => {
+        setModalVisible(true)
 
         const fileName = pickedImagePath.split('/').pop();
         const match = /\.(\w+)$/.exec(fileName);
@@ -78,6 +81,7 @@ const Camera = ({ navigation }) => {
             )
             .then(function (response) {
                 if(response.data['success'] == true) {
+                    setModalVisible(false);
                     navigation.navigate('Upload');
                 }
             })
@@ -96,6 +100,10 @@ const Camera = ({ navigation }) => {
                     Picture
                 </Text>
             </View>
+            <CustomModal 
+                modalVisible = {modalVisible ? true : false}
+                text = '텍스트 변환 중입니다! 잠시만 기다려주세요😉'
+            />
             <View style = {{
                 width: width,
                 height: Platform.OS == 'ios' ? height * 0.65 : height * 0.6
@@ -108,7 +116,7 @@ const Camera = ({ navigation }) => {
                         marginBottom: 20
                     }}>
                         <Text style = {textStyles.title}>
-                            Upload your picture!
+                            수평을 맞춰 촬영해주세요!
                         </Text>
                     </View>
                 ) : (
