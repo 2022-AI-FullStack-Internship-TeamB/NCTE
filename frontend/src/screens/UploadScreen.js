@@ -74,7 +74,6 @@ const UploadScreen = ({ navigation, route }) => {
         try {
             console.log('saving note id');
             await AsyncStorage.setItem('note_id', JSON.stringify(id));
-            //setNoteId(noteId);
         } catch (e) {
             console.error(e);
         }
@@ -97,16 +96,21 @@ const UploadScreen = ({ navigation, route }) => {
             .then(function (response) {
                 if (response.data['success'] == true) {
                     console.log(response.data.result['note_id']);
-                    navigation.dispatch(
-                        CommonActions.navigate({
-                            name: 'Note', 
-                            params: {
-                                noteId: response.data.result['note_id'],
-                                categoryName: category,
-                                userId: userId
-                            }
-                        })
-                    )
+                    navigation.navigate('Note', {
+                        noteId: response.data.result['note_id'],
+                        categoryName: category,
+                        userId: userId
+                    })
+                    // navigation.dispatch(
+                    //     CommonActions.navigate({
+                    //         name: 'Note', 
+                    //         params: {
+                    //             noteId: response.data.result['note_id'],
+                    //             categoryName: category,
+                    //             userId: userId
+                    //         }
+                    //     })
+                    // )
                 }
             })
             .catch(function (error) {

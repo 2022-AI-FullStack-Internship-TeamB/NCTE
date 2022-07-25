@@ -105,21 +105,20 @@ const NoteScreen = ({ navigation, route }) => {
                 if(response.status === 204){
                     console.log('delete');
                     navigation.replace('List', {
-                        categoryName: category,
+                        categoryName: categoryName,
                         userId: userId
                     })
                 }
             })
             .catch(function (error) {
-                console.log(error.response);
+                console.log(error);
             });
         } catch (error) {
             console.error(error);
         }
     }
 
-    const onDeletePressed = async () => {
-        
+    const onDeletePressed = () => {
         Alert.alert(
             'Delete',
             '삭제하시겠습니까 ?',

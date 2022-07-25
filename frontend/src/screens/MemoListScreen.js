@@ -61,14 +61,21 @@ const MemoListScreen = ({ navigation, route }) => {
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      setCategoryName(route.params.categoryName);
-      getCategory();
-      setUserId(route.params.userId);
-      getNotes();
-    }, [userId, category])
-  );
+  useEffect(() => {
+    setCategoryName(route.params.categoryName);
+    getCategory();
+    setUserId(route.params.userId);
+    getNotes();
+  }, [userId, category]);
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setCategoryName(route.params.categoryName);
+  //     getCategory();
+  //     setUserId(route.params.userId);
+  //     getNotes();
+  //   }, [userId, category])
+  // );
    
   const add = () => {
     navigation.navigate('CameraStack');

@@ -7,7 +7,7 @@ import TextArea from '../components/TextArea';
 import CustomPicker from '../components/CustomPicker';
 import API from '../api';
 
-const UploadScreen = ({ navigation, route }) => {
+const ModifyScreen = ({ navigation, route }) => {
 
     const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
@@ -58,35 +58,22 @@ const UploadScreen = ({ navigation, route }) => {
     const modifyNote = async () => {
         const data = {
             user_id: userId,
-            //noteId: noteId,
             title: title,
-            date: new Date(),
             contents: contents,
-            //category: category,
+            date: new Date(),
             category_id: categoryId + 1,
         }
 
         try {
             const response = await API.put(
                 `/notes/${noteId}`,
-                {
-                    user_id: userId,
-                    note_id: noteId,
-                    title: title,
-                    contents: contents,
-                    date: new Date(),
-                    category: category,
-                    category_id: categoryId + 1,
-                }
+                data
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
                     console.log('수정 성공');
-                    setTitle(title);
-                    setContents(contents);
-                    setCategory(category);
-                    navigation.navigate('Note', {
-                        noteId: noteId,
+                    navigation.replace('Note', {
+                        noteId: response.data.result['note_id'],
                         categoryName: category,
                         userId: userId
                     });
@@ -170,7 +157,7 @@ const UploadScreen = ({ navigation, route }) => {
                             setItems = {setItems}
                             onChangeValue = {() => getIndex(category)}
                             defaultValue = {categoryName}
-                            //placeholder = {category}
+                            placeholder = 'Select a category'
                         />
                     </View>
                 </View>
@@ -197,4 +184,4 @@ const UploadScreen = ({ navigation, route }) => {
     );
 }
 
-export default UploadScreen;
+export default ModifyScreen;
