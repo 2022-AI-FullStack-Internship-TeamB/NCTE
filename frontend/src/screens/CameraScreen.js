@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity, Platform } from 'react-native';
-import { viewStyles, textStyles, boxStyles } from '../styles';
+import { View, StyleSheet, Text, Image, Dimensions, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { images } from '../images';
-import IconButton from '../components/IconButton';
 import API from '../api';
-import axios from 'axios';
+import IconButton from '../components/IconButton';
+import { viewStyles, textStyles, boxStyles } from '../styles';
+import { images } from '../images';
 
 const Camera = ({ navigation }) => {
     const { width, height, scale, fontScale } = Dimensions.get('screen');

@@ -11,7 +11,6 @@ const CustomButton = ({ onPress, text }) => {
             <Text style = {textStyles.button}>
                 {text}
             </Text>
-
         </Pressable>
     );
 }

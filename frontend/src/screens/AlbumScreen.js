@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
-import { textStyles, viewStyles, boxStyles, iconStyles } from '../styles';
-import { images } from '../images';
-import { theme } from '../theme';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import AlbumButton from '../components/AlbumButton';
 import IconButton from '../components/IconButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { textStyles, viewStyles, boxStyles, iconStyles } from '../styles';
+import { theme } from '../theme';
 
 const Album = ({ navigation }) => {
-    const { width, height, scale, fontScale } = Dimensions.get('screen');
 
     const [categoryName, setCategoryName] = useState('');
     const [userId, setUserId] = useState('');
@@ -17,7 +15,6 @@ const Album = ({ navigation }) => {
         try {
             const user_id = await AsyncStorage.getItem('user_id');
             setUserId(user_id);
-            //console.log('getting id successed in album screen', userId);
         } catch (e) {
             console.error(e);
         }
@@ -25,13 +22,8 @@ const Album = ({ navigation }) => {
     
     useEffect(() => {
         getId();
-        //console.log('userid: ', userId);
     }, []);
 
-    const _onPress = () => {
-        console.log('pressed');
-    }
-    
     const onAllPressed = () => {
         navigation.navigate('List', {
             categoryName: 'NCTE',
@@ -58,10 +50,6 @@ const Album = ({ navigation }) => {
             categoryName: 'Study',
             userId: userId
         });
-    }
-    
-    const onAlbumPressed = () => {
-        navigation.navigate('List');
     }
 
     return (
@@ -102,6 +90,5 @@ const Album = ({ navigation }) => {
         </View>
     )
 }
-
 
 export default Album;

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, Alert, Share, Dimensions, Platform } from 'react-native';
-import { viewStyles, textStyles, boxStyles, noteStyles } from '../styles';
-import { images } from '../images';
-import { styles } from '../styles';
+import API from '../api';
 import IconButton from '../components/IconButton';
 import TextArea from '../components/TextArea';
-import API from '../api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { images } from '../images';
+import { viewStyles, textStyles, boxStyles, noteStyles } from '../styles';
 
 const NoteScreen = ({ navigation, route }) => {
     const { width, height, scale, fontScale } = Dimensions.get('screen');
@@ -72,19 +70,10 @@ const NoteScreen = ({ navigation, route }) => {
     const onShare = async () => {
         try {
             const result = await Share.share({
-                message: 'NCTE',
+                message: contents,
             });
-            if (result.action === Share.sharedAction) {
-                if (result.activityType) {
-              // shared with activity type of result.activityType
-                } else {
-              // shared
-                }
-            } else if (result.action === Share.dismissedAction) {
-            // dismissed
-            }
         } catch (error) {
-          alert(error.message);
+            alert(error.message);
         }
     };
     

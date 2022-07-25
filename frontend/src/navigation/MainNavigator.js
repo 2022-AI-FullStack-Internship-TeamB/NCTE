@@ -1,35 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Image } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createSwtichNavigator } from 'react-navigation';
-import { images } from '../images';
-import { theme } from '../theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import TabNavigator from './TabNavigator';
 import { SignInStack } from './StackNavigator';
+import { theme } from '../theme';
 
 const Stack = createNativeStackNavigator();
-//const Switch = createSwtichNavigator();
 
 export default function MainNavigator() {
-    
-    const [isLogin, setIsLogin] = useState(false);
-
-    // const getLogin = async () => {
-    //     try {
-    //         const login = AsyncStorage.getItem('isLogin');
-    //         setIsLogin(login);
-    //         console.log(isLogin);
-    //     } catch (e) {
-    //         console.error(e);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getLogin();
-    // })
 
     const getLogin = async () => {
         if(AsyncStorage.getItem('user_id')!== null){

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
-import { viewStyles, textStyles, boxStyles } from '../styles';
-import InputScrollView from 'react-native-input-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import API from '../api';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import TextArea from '../components/TextArea';
 import CustomPicker from '../components/CustomPicker';
-import API from '../api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CommonActions } from '@react-navigation/native';
+import TextArea from '../components/TextArea';
+import { viewStyles, textStyles, boxStyles } from '../styles';
 
 const UploadScreen = ({ navigation, route }) => {
 
@@ -45,7 +43,6 @@ const UploadScreen = ({ navigation, route }) => {
                 `/notes/textconversion`
             )
             .then(function (response) {
-                console.log('get contents');
                 setContents(response.data.result['text']);
             })
             .catch(function (error){
@@ -65,17 +62,6 @@ const UploadScreen = ({ navigation, route }) => {
         for (let i = 0; i < items.length; i++) { 
             let b = items.findIndex(item => item.value === value);
             setCategoryId(b);
-            console.log(value);
-            console.log(b);
-        }
-    }
-
-    const saveNoteId = async (id) => {
-        try {
-            console.log('saving note id');
-            await AsyncStorage.setItem('note_id', JSON.stringify(id));
-        } catch (e) {
-            console.error(e);
         }
     }
 
@@ -95,22 +81,11 @@ const UploadScreen = ({ navigation, route }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    console.log(response.data.result['note_id']);
                     navigation.navigate('Note', {
                         noteId: response.data.result['note_id'],
                         categoryName: category,
                         userId: userId
                     })
-                    // navigation.dispatch(
-                    //     CommonActions.navigate({
-                    //         name: 'Note', 
-                    //         params: {
-                    //             noteId: response.data.result['note_id'],
-                    //             categoryName: category,
-                    //             userId: userId
-                    //         }
-                    //     })
-                    // )
                 }
             })
             .catch(function (error) {

@@ -1,39 +1,23 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, Image, StyleSheet ,Dimensions} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { textStyles, viewStyles, boxStyles, imageStyles } from '../styles';
-import { images } from '../images';
+import { View, Text, Image, Dimensions} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import API from '../api';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import API from '../api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import AppLoading from 'expo-app-loading';
+import { images } from '../images';
+import { textStyles, viewStyles, boxStyles, imageStyles } from '../styles';
 
 const SignInScreen = ({ navigation }) => {
-
-    const width = Dimensions.get('window').width;
-    const height = Dimensions.get('window').height;
+    const { width, height, scale, fontScale } = Dimensions.get('screen');
 
     const [id, setId] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [isReady, setIsReady] = useState(false);
-
     const saveId = async id => {
         try {
             console.log('saving id');
             await AsyncStorage.setItem('user_id', JSON.stringify(id));
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    const getId = async () => {
-        try {
-            const user_id = await AsyncStorage.getItem('user_id');
-            setId(user_id);
-            //console.log('getting id successed' + userId);
         } catch (e) {
             console.error(e);
         }
@@ -59,7 +43,6 @@ const SignInScreen = ({ navigation }) => {
                     console.log("SignUp");
                     alert('로그인 완료');
                     saveId(response.data.id);
-                    //saveLogin();
                     navigation.navigate('TabNavigator');
                 } else {
                     alert('이메일 혹은 비밀번호가 일치하지 않습니다');
@@ -89,7 +72,6 @@ const SignInScreen = ({ navigation }) => {
             />
             <View style = {{
                 alignItems: 'flex-start',
-                //margin: 50,
             }}>
             <Text style={textStyles.text}>E-mail</Text>
                 <View style = {viewStyles.SI_row}>
@@ -124,14 +106,6 @@ const SignInScreen = ({ navigation }) => {
                 </View>
         </View>
     );
-    // ) : (
-    //     <AppLoading
-    //         startAsync={getId}
-    //         onFinish = {() => setIsReady(true)}
-    //         onError = {console.error}
-    //      />
-    // )
 }
 
-  
 export default SignInScreen;

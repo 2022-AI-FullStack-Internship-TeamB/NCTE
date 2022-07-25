@@ -149,7 +149,6 @@ export const imageStyles = StyleSheet.create ({
         width: width * 0.75,
         justifyContent: 'center',
         alignItems: 'center',
-        //marginLeft: 30,
         marginVertical: 50,
     }
 })
