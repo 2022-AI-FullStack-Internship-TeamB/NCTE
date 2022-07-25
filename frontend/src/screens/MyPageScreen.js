@@ -61,12 +61,10 @@ const MyPageScreen = ({ navigation, route, props }) => {
                 }
             )
             .then(function (response) {
-                console.log('프로필 수정 성공');
                 setUserName(userName);
                 setEmail(email);
             })
             .catch(function (error) {
-                console.log('갱신 실패');
                 console.log(error.response);
             })
         } catch (error) {

@@ -31,7 +31,6 @@ const UploadScreen = ({ navigation, route }) => {
         try {
             const user_id = await AsyncStorage.getItem('user_id');
             setUserId(user_id);
-            console.log('getting id successed' + userId);
         } catch (e) {
             console.error(e);
         }
@@ -56,7 +55,7 @@ const UploadScreen = ({ navigation, route }) => {
     useEffect(() => {
         getId();
         getText();
-    }, []);
+    }, [userId]);
 
     const getIndex = (value) => {
         for (let i = 0; i < items.length; i++) { 

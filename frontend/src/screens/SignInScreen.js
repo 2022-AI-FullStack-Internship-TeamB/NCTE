@@ -16,7 +16,6 @@ const SignInScreen = ({ navigation }) => {
 
     const saveId = async id => {
         try {
-            console.log('saving id');
             await AsyncStorage.setItem('user_id', JSON.stringify(id));
         } catch (e) {
             console.error(e);
@@ -40,7 +39,6 @@ const SignInScreen = ({ navigation }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    console.log("SignUp");
                     alert('로그인 완료');
                     saveId(response.data.id);
                     navigation.navigate('TabNavigator');

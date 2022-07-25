@@ -39,7 +39,6 @@ const MemoListScreen = ({ navigation, route }) => {
       )
         .then(function (response) {
           if (response.data['success'] == true) {
-            console.log('getting notes successed');
             for (let i = 0; i < response.data.result.length; i++) {
               if (response.data.result[i]['title']) {
                 _title.push(response.data.result[i]['title']);
