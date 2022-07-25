@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,11 +10,17 @@ const Stack = createNativeStackNavigator();
 
 export default function MainNavigator() {
 
+    const [isLogin, setIsLogin] = useState(false);
+
     const getLogin = async () => {
-        if(AsyncStorage.getItem('user_id')!== null){
+        if(await AsyncStorage.getItem('user_id')!== null){
             setIsLogin(true);
         }
     }
+
+    useEffect(() => {
+        getLogin();
+    });
 
     return (
         <NavigationContainer
@@ -24,9 +30,7 @@ export default function MainNavigator() {
                 screenOptions = {({ route }) => ({ headerShown: false })}
                 initialRouteName = {SignInStack}
             >
-                <Stack.Screen name = 'SignInStack' component = {SignInStack} />
-                <Stack.Screen name = 'TabNavigator' component = {TabNavigator} />  
-            {/* {
+            {
                 isLogin ? (
                     <>
                     <Stack.Screen name = 'TabNavigator' component = {TabNavigator} /> 
@@ -34,9 +38,10 @@ export default function MainNavigator() {
                 ) : (
                     <>
                     <Stack.Screen name = 'SignInStack' component = {SignInStack} />
+                    <Stack.Screen name = 'TabNavigator' component = {TabNavigator} />
                     </>
                 )
-            } */}
+            }
             </Stack.Navigator>
         </NavigationContainer>
     )

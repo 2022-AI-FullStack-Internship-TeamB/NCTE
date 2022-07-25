@@ -74,6 +74,7 @@ const MyPageScreen = ({ navigation, route, props }) => {
 
     const onLogoutPressed = async () => {
         try {
+            AsyncStorage.clear();
             restart();
         } catch (error) {
             console.log(error);
