@@ -68,6 +68,7 @@ const UploadScreen = ({ navigation, route }) => {
     }
 
     const saveNote = async () => {
+        setModalVisible(true);
         const data = {
             user_id: userId,
             title: title,
@@ -83,6 +84,7 @@ const UploadScreen = ({ navigation, route }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
+                    setModalVisible(false);
                     navigation.navigate('Note', {
                         noteId: response.data.result['note_id'],
                         categoryName: category,
