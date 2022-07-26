@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
-import { viewStyles, textStyles, boxStyles } from '../styles';
-import InputScrollView from 'react-native-input-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import API from '../api';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import TextArea from '../components/TextArea';
 import CustomPicker from '../components/CustomPicker';
-import API from '../api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomModal from '../components/CustomModal';
+import TextArea from '../components/TextArea';
+import { viewStyles, textStyles, boxStyles } from '../styles';
 
 const UploadScreen = ({ navigation, route }) => {
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
@@ -32,36 +34,41 @@ const UploadScreen = ({ navigation, route }) => {
         try {
             const user_id = await AsyncStorage.getItem('user_id');
             setUserId(user_id);
-            console.log('getting id successed' + userId);
         } catch (e) {
             console.error(e);
         }
-    }    
+    }
+    
+    const getText = async () => {
+        try {
+            await API.get(
+                `/notes/textconversion`
+            )
+            .then(function (response) {
+                setContents(response.data.result['text']);
+            })
+            .catch(function (error){
+                console.log(error.response);
+            })
+        } catch (error){
+            console.log(error);
+        }
+    }
     
     useEffect(() => {
         getId();
-    }, []);
+        getText();
+    }, [userId]);
 
     const getIndex = (value) => {
         for (let i = 0; i < items.length; i++) { 
             let b = items.findIndex(item => item.value === value);
             setCategoryId(b);
-            console.log(value);
-            console.log(b);
-        }
-    }
-
-    const saveNoteId = async (id) => {
-        try {
-            console.log('saving note id');
-            await AsyncStorage.setItem('note_id', JSON.stringify(id));
-            //setNoteId(noteId);
-        } catch (e) {
-            console.error(e);
         }
     }
 
     const saveNote = async () => {
+        setModalVisible(true);
         const data = {
             user_id: userId,
             title: title,
@@ -77,12 +84,12 @@ const UploadScreen = ({ navigation, route }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    console.log(response.data.result['note_id']);
+                    setModalVisible(false);
                     navigation.navigate('Note', {
                         noteId: response.data.result['note_id'],
                         categoryName: category,
                         userId: userId
-                    });
+                    })
                 }
             })
             .catch(function (error) {
@@ -102,6 +109,10 @@ const UploadScreen = ({ navigation, route }) => {
             </View>
             
             <View style = {viewStyles.center}>
+                <CustomModal 
+                    modalVisible = {modalVisible ? true : false}
+                    text = '메모 저장 중입니다! 잠시만 기다려주세요😉'
+                />
                 <View style = {{
                     marginTop: 10,
                 }}>

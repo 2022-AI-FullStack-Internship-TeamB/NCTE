@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
-import { viewStyles, textStyles, boxStyles } from '../styles';
+import { View, StyleSheet, Text, Image, Dimensions, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { images } from '../images';
+import API from '../api';
+import CustomModal from '../components/CustomModal';
 import IconButton from '../components/IconButton';
+import { viewStyles, textStyles, boxStyles } from '../styles';
+import { images } from '../images';
 
 const Camera = ({ navigation }) => {
     const { width, height, scale, fontScale } = Dimensions.get('screen');
 
-    const [pickedImagePath, setPickedImagePath] = useState('');
-    const _onPress = () => {
-        navigation.navigate('Upload');
-    }
+    const [pickedImagePath, setPickedImagePath] = useState(null);
+    const [textId, setTextId] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
 
     const showImagePicker = async () => {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -21,13 +22,14 @@ const Camera = ({ navigation }) => {
             return;
         }
 
-        const result = await ImagePicker.launchImageLibraryAsync();
+        const result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+        });
 
         if(result.uri != null) {
             if (!result.cancelled) {
                 setPickedImagePath(result.uri);
-                console.log(result.uri);
-                //setImageURL(result.uri);
             }
         }
     }
@@ -40,13 +42,54 @@ const Camera = ({ navigation }) => {
             return;
         }
 
-        const result = await ImagePicker.launchCameraAsync();
+        const result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+        });
 
-        console.log(result);
         if(!result.cancelled) {
             setPickedImagePath(result.uri);
-            console.log(result.uri);
-            //setImageURL(result.uri);
+        }
+    }
+
+    const saveImage = async () => {
+        setModalVisible(true)
+
+        const fileName = pickedImagePath.split('/').pop();
+        const match = /\.(\w+)$/.exec(fileName);
+        const type = match ? `image/${match[1]}` : `image`;
+        
+        const formData = new FormData();
+        formData.append('image', {
+            uri: Platform.OS === 'android' ? pickedImagePath : pickedImagePath.replace('file://', ''),
+            name: fileName,
+            type: type
+        })
+
+        try {
+            const response = await API.post(
+                `/notes/textconversion`,
+                formData, {
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-type': 'multipart/form-data',
+                    },
+                    transformRequest: (data, headers) => {
+                        return formData;
+                    }
+                }
+            )
+            .then(function (response) {
+                if(response.data['success'] == true) {
+                    setModalVisible(false);
+                    navigation.navigate('Upload');
+                }
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            })
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -57,31 +100,34 @@ const Camera = ({ navigation }) => {
                     Picture
                 </Text>
             </View>
+            <CustomModal 
+                modalVisible = {modalVisible ? true : false}
+                text = '텍스트 변환 중입니다! 잠시만 기다려주세요😉'
+            />
             <View style = {{
                 width: width,
                 height: Platform.OS == 'ios' ? height * 0.65 : height * 0.6
             }}>
-                { pickedImagePath !== (null) ? (
+                { pickedImagePath === (null) ? (
+                    <View style = {{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flex: 1,
+                        marginBottom: 20
+                    }}>
+                        <Text style = {textStyles.title}>
+                            수평을 맞춰 촬영해주세요!
+                        </Text>
+                    </View>
+                ) : (
                     <Image source = {{ uri: pickedImagePath }}
-                        // style = {{
-                        //     width: width,
-                        //     height: height * 0.6,
-                        // }}
                         style = {{
                             width: width,
                             height: height,
-                            //height: undefined,
-                            //aspectRatio: 1,
                             resizeMode: 'contain',
                             flex: 1,
                         }}
                     />
-                ) : (
-                    <View>
-                       <Text style = {textStyles.title}>
-                            Upload your picture!
-                        </Text>
-                    </View>
                 )}
             </View>
             <View style = {{
@@ -93,24 +139,19 @@ const Camera = ({ navigation }) => {
                     onPress = {showImagePicker}
                     image = {images.album}
                     marginTop = {20}
-                    //marginTop = {height/30}
-                    //marginLeft = {width/8.5}
                 />
                 <IconButton
                     onPress = {openCamera}
                     image = {images.camera_green}
-                    //marginTop = {height/46}
-                    //marginLeft = {83}
                 />        
                 <IconButton
-                    onPress = {_onPress}
+                    onPress = {saveImage}
                     image = {images.check}
                     marginTop = {20}
-                    //marginTop = {height/27}
-                    //marginLeft = {width/5}
                 />
             </View>
         </View>
     )
 }
+
 export default Camera;

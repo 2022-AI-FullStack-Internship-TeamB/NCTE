@@ -1,34 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, Alert, Dimensions, Platform } from 'react-native';
-import { viewStyles, textStyles, boxStyles, noteStyles } from '../styles';
-//import Clipboard from '@react-native-clipboard/clipboard';
-import { images } from '../images';
-import { styles } from '../styles';
+import { ScrollView, View, Text, Alert, Share, Dimensions, Platform } from 'react-native';
+import API from '../api';
 import IconButton from '../components/IconButton';
 import TextArea from '../components/TextArea';
-import API from '../api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Clipboard from 'expo-clipboard';
+import { images } from '../images';
+import { viewStyles, textStyles, boxStyles, noteStyles } from '../styles';
 
 const NoteScreen = ({ navigation, route }) => {
     const { width, height, scale, fontScale } = Dimensions.get('screen');
 
+    const _keyword = [];
     const [noteId, setNoteId] = useState('');
     const [userId, setUserId] = useState('');
     const [title, setTitle] = useState('');
     const [contents, setContents] = useState('');
     const [category, setCategory] = useState('');
+    const [categoryName, setCategoryName] = useState('');
     const [summary, setSummary] = useState('');
+    const [keywords, setKeywords] = useState([]);
 
-    const [copiedText, setCopiedText] = useState('');
-
-    const getNoteId = async () => {
-        try {
-            const note_id = AsyncStorage.getItem('note_id');
-            setNoteId(note_id);
-            console.log('getting note id successed' + noteId);
-        } catch (e) {
-            console.error(e);
+    const getCategory = async () => {
+        if (category == 'all')
+            setCategoryName('NCTE');
+        else {
+            setCategoryName(category);
         }
     }
 
@@ -39,9 +34,13 @@ const NoteScreen = ({ navigation, route }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    setTitle(response.data.result[0]['title']);
-                    setContents(response.data.result[0]['contents']);
-                    setSummary(response.data.result[0]['summary']);
+                    setTitle(response.data.result['title']);
+                    setContents(response.data.result['contents']);
+                    setSummary(response.data.result['summary']);
+                    for(let i = 0; i < response.data.result.keywords.length; i++){
+                        _keyword.push(response.data.result.keywords[i]['keyword']);
+                    }
+                    setKeywords(keywords.concat(_keyword));
                 }
             })
             .catch(function (error) {
@@ -55,22 +54,28 @@ const NoteScreen = ({ navigation, route }) => {
     useEffect(() => {
         setUserId(route.params.userId);
         setCategory(route.params.categoryName);
+        getCategory();
         setNoteId(route.params.noteId);
         getNotes();
     }, [noteId]);
 
     const onBackPressed = () => {
+        console.log(categoryName);
         navigation.navigate('List', {
-            categoryName: category,
+            categoryName: categoryName,
             userId: userId
         });
     }
 
-    const copyToClipboard = async () => {
-        await Clipboard.setStringAsync('클립보드 복사');
-        console.log('copy');
-        //console.log(contents);
-    }
+    const onShare = async () => {
+        try {
+            const result = await Share.share({
+                message: contents,
+            });
+        } catch (error) {
+            alert(error.message);
+        }
+    };
     
     const _modify = () => {
         navigation.navigate('Modify', {
@@ -80,44 +85,51 @@ const NoteScreen = ({ navigation, route }) => {
         });
     }
 
-    const onDeletePressed = () => {
-        try{
-            Alert.alert(
-                'Delete',
-                '삭제하시겠습니까 ?',
-                [
-                  {text: '취소', style: 'cancel'}, 
-                  {
-                    text: '삭제',
-                    
-                    onPress: () => { 
-                        const response = API.delete(
-                            `/notes/${noteId}`
-                        )
-                        .then(function(response) {
-                            console.log('delete');
-                            navigation.navigate('List', {
-                                categoryName: category,
-                                userId: userId
-                            });
-                        }
-                            
-                        )
-                        .catch(function (error) {
-                            console.log(error.response);
-                        });
-                    },
-                    style: 'destructive',
-                  },
-                ],
-                {
-                  cancelable: true,
-                },
-              );
-            
+    const _delete = async () => {
+        try {
+            await API.delete(
+                `/notes/${noteId}`
+            )
+            .then(response => {
+                if(response.status === 204){
+                    console.log('delete');
+                    navigation.replace('List', {
+                        categoryName: categoryName,
+                        userId: userId
+                    })
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
+    }
+
+    const onDeletePressed = () => {
+        Alert.alert(
+            'Delete',
+            '삭제하시겠습니까 ?',
+            [
+                {text: '취소', style: 'cancel'}, 
+                {
+                    text: '삭제',    
+                    onPress: _delete,
+                        style: 'destructive',
+                },
+            ],
+                {
+                    cancelable: true,
+                },
+        );
+    }
+
+    var hashtag = [];
+    for(let i = 0; i < 5; i++){
+        hashtag.push(
+            <Text style = {textStyles.hashtag}>#{keywords[i]}</Text>
+        )
     }
 
     return (
@@ -157,7 +169,7 @@ const NoteScreen = ({ navigation, route }) => {
                         />
                         <IconButton 
                             image = {images.copy}
-                            onPress = {copyToClipboard}
+                            onPress = {onShare}
                             marginLeft = {10}
                         />
                         <IconButton 
@@ -179,16 +191,15 @@ const NoteScreen = ({ navigation, route }) => {
                         <Text style = {textStyles.textArea}>{summary}</Text>
                     </ScrollView>
                 </View>
-                <View style = {{
-                    flexDirection: 'row',
-                    width: width * 0.8,
-                    padding: 10,
-                    marginBottom: 10,
-                }}>
-                    <Text style = {textStyles.hashtag}>#Hashtag</Text>
-                    <Text style = {textStyles.hashtag}>#Keyword</Text>
-                    <Text style = {textStyles.hashtag}>#Hashtag</Text>
-                </View>
+            </View>
+            <View style = {{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 10,
+            }}>
+                { hashtag }
             </View>
         </View>
     )

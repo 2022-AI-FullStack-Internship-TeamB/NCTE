@@ -1,5 +1,4 @@
 import React from 'react';
-import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -44,7 +43,9 @@ export function CameraStack() {
             <Stack.Screen name = {CameraName} component = {CameraScreen} />
             <Stack.Screen name = {UploadName} component = {UploadScreen} />
             <Stack.Screen name = {NoteName} component = {NoteScreen} />
+            <Stack.Screen name = {ModifyName} component = {ModifyScreen} />
             <Stack.Screen name = {ListName} component = {MemoListScreen} />
+            <Stack.Screen name = {AlbumName} component = {AlbumScreen} />
         </Stack.Navigator>
     )
 }

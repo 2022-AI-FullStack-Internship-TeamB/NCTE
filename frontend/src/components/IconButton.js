@@ -1,7 +1,5 @@
 import React from 'react';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { theme } from '../theme';
-import { images } from '../images';
 
 const IconButton = ({ onPress, image, marginTop, marginLeft }) => {
     return (

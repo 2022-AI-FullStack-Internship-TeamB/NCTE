@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
-import { textStyles, viewStyles, boxStyles } from '../styles';
-import { images } from '../images';
+import { View, Text, Image, Dimensions } from 'react-native';
+import API from '../api';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import API from '../api';
+import { images } from '../images';
+import { textStyles, viewStyles, boxStyles } from '../styles';
 
 const SignUpScreen = ({ navigation }) => {
 
-    const width = Dimensions.get('window').width;
-    const height = Dimensions.get('window').height;
+    const { width, height, scale, fontScale } = Dimensions.get('screen');
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -21,7 +20,6 @@ const SignUpScreen = ({ navigation }) => {
     };
 
     const onSignUpPressed = async () => {
-        console.log("Confirm");
         if (email == "" || username == "" || password == "") {
             alert('빈칸없이 다 입력해주세요😊');
         }
@@ -101,7 +99,6 @@ const SignUpScreen = ({ navigation }) => {
                                 onPress = {onBackPressed}
                                 text = "Back"
                             />
-                        
                         <View style = {{
                             marginLeft: 100,
                         }}>
@@ -112,8 +109,6 @@ const SignUpScreen = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
-                
-                
             </View>
         </View>
     );

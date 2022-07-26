@@ -1,9 +1,8 @@
 import React from 'react';
-import { ScrollView, View, TextInput, Platform } from 'react-native';
+import { ScrollView, View, TextInput } from 'react-native';
 import { textStyles, boxStyles } from '../styles';
 
 const TextArea = ({ value, setValue }) => {
-
     return (
             <View style = {boxStyles.textArea}>
                 <ScrollView>

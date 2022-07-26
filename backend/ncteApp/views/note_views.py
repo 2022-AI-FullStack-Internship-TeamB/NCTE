@@ -3,14 +3,15 @@ from django.db.models import F
 from ml.keyword_model import get_keyword
 from ml.ocr_model import text_conversion
 from ml.summary_model import get_summary
+from ml.keyword_model import get_keyword
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from PIL import Image
 
-from ..models import Categories, Notes, NoteImages, Summary, ConvertedText
+from ..models import Categories, Notes, NoteImages, Summary, Keywords, ConvertedText
 from ..forms import FileUploadForm
-from ..serializers import NoteSerializer, SummarySerializer, ConvertedTextSerializer
+from ..serializers import KeywordSerializer, NoteSerializer, SummarySerializer, ConvertedTextSerializer
 
 
 class NotesList(APIView):

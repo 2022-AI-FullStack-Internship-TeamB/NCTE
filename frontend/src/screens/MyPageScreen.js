@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
-import { textStyles, viewStyles, boxStyles } from '../styles';
-import { images } from '../images';
+import { View, Text, Image, StyleSheet, Dimensions, DevSettings } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import API from '../api';
+import restart from '../restart';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import API from '../api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { images } from '../images';
+import { textStyles, viewStyles, boxStyles } from '../styles';
 
 const MyPageScreen = ({ navigation, route, props }) => {
-
-    const width = Dimensions.get('window').width;
-    const height = Dimensions.get('window').height;
+    const { width, height } = Dimensions.get('screen');
 
     const [user, setUser] = useState([]);
     const [email, setEmail] = useState('');
-    //const [id, setId] = useState('');  
     const [userId, setUserId] = useState('');
     const [userName, setUserName] = useState('');
 
@@ -22,7 +20,6 @@ const MyPageScreen = ({ navigation, route, props }) => {
         try {
             const user_id = await AsyncStorage.getItem('user_id');
             setUserId(user_id);
-            //console.log('getting id successed' + userId);
         } catch (e) {
             console.error(e);
         }
@@ -35,12 +32,8 @@ const MyPageScreen = ({ navigation, route, props }) => {
             )
             .then(function (response) {
                 if (response.data['success'] == true) {
-                    //console.log('getting user successed');
-                    setUser(response.data);
                     setEmail(response.data.result.email);
                     setUserName(response.data.result.username);
-                    //console.log(userId);
-                    //console.log(email);
                 }
             })
             .catch(function (error) {
@@ -68,11 +61,10 @@ const MyPageScreen = ({ navigation, route, props }) => {
                 }
             )
             .then(function (response) {
-                console.log('프로필 수정 성공');
+                setUserName(userName);
                 setEmail(email);
             })
             .catch(function (error) {
-                console.log('갱신 실패');
                 console.log(error.response);
             })
         } catch (error) {
@@ -82,12 +74,8 @@ const MyPageScreen = ({ navigation, route, props }) => {
 
     const onLogoutPressed = async () => {
         try {
-            //AsyncStorage.removeItem('user_id');
-            //AsyncStorage.setItem('isLogin', JSON.stringify(false));
-            //navigation.navigate('SignInStack');
-            navigation.navigate('SignInStack', {
-                screen: 'SignIn'
-            });
+            AsyncStorage.clear();
+            restart();
         } catch (error) {
             console.log(error);
         }
