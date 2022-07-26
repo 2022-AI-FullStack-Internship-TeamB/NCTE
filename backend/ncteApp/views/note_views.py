@@ -1,5 +1,6 @@
 import numpy
 from django.db.models import F
+from ml.keyword_model import get_keyword
 from ml.ocr_model import text_conversion
 from ml.summary_model import get_summary
 from ml.keyword_model import get_keyword
