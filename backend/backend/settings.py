@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'NCTE_database',
         'USER': 'root',
         'PASSWORD': '0000',
-        'HOST': 'localhost',
+        'HOST': 'mysql',
         'PORT': '3306',
     }
 }

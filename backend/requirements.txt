@@ -4,5 +4,4 @@ pymysql
 djangorestframework
 djangorestframework-simplejwt
 drf-yasg
-torch
-transformers
+# transformers
