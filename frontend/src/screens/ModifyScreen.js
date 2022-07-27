@@ -16,6 +16,7 @@ const ModifyScreen = ({ navigation, route }) => {
     const [categoryId, setCategoryId] = useState('');
 
     const [noteId, setNoteId] = useState('');
+    const [fromUpload, setFromUpload] = useState(false);
 
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState([]);
@@ -72,7 +73,8 @@ const ModifyScreen = ({ navigation, route }) => {
                         navigation.replace('Note', {
                             noteId: response.data.result['note_id'],
                             categoryName: category,
-                            userId: userId
+                            userId: userId,
+                            fromUpload: fromUpload
                         });
                     }
                 })
@@ -88,6 +90,7 @@ const ModifyScreen = ({ navigation, route }) => {
         setUserId(route.params.userId);
         setNoteId(route.params.noteId);
         setCategoryName(route.params.categoryName);
+        setFromUpload(route.params.fromUpload);
         getNotes();
     }, [noteId]);
 
@@ -95,7 +98,8 @@ const ModifyScreen = ({ navigation, route }) => {
         navigation.navigate('Note', {
             categoryName: category,
             userId: userId,
-            noteId: noteId
+            noteId: noteId,
+            fromUpload: fromUpload
         });
     }
 

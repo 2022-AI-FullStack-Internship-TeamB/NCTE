@@ -88,7 +88,8 @@ const UploadScreen = ({ navigation, route }) => {
                     navigation.navigate('Note', {
                         noteId: response.data.result['note_id'],
                         categoryName: category,
-                        userId: userId
+                        userId: userId,
+                        fromUpload: true
                     })
                 }
             })

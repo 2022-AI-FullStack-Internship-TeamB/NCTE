@@ -9,7 +9,7 @@ import { CameraStack, AlbumStack, MypageStack } from './StackNavigator';
 
 const Tab = createBottomTabNavigator();
 
-export default function Navigation(){
+export default function TabNavigator(){
     return(
         <NavigationContainer
             independent = {true}

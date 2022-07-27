@@ -18,6 +18,7 @@ const NoteScreen = ({ navigation, route }) => {
     const [categoryName, setCategoryName] = useState('');
     const [summary, setSummary] = useState('');
     const [keywords, setKeywords] = useState([]);
+    const [fromUpload, setFromUpload] = useState(false);
 
     const getCategory = async () => {
         if (category == 'all')
@@ -56,11 +57,12 @@ const NoteScreen = ({ navigation, route }) => {
         setCategory(route.params.categoryName);
         getCategory();
         setNoteId(route.params.noteId);
+        setFromUpload(route.params.fromUpload);
+        console.log(fromUpload);
         getNotes();
     }, [noteId]);
 
     const onBackPressed = () => {
-        console.log(categoryName);
         navigation.navigate('List', {
             categoryName: categoryName,
             userId: userId
@@ -81,7 +83,8 @@ const NoteScreen = ({ navigation, route }) => {
         navigation.navigate('Modify', {
             categoryName: category,
             userId: userId,
-            noteId: noteId
+            noteId: noteId,
+            fromUpload: fromUpload
         });
     }
 
@@ -93,10 +96,14 @@ const NoteScreen = ({ navigation, route }) => {
             .then(response => {
                 if(response.status === 204){
                     console.log('delete');
-                    navigation.replace('List', {
-                        categoryName: categoryName,
-                        userId: userId
-                    })
+                    fromUpload ? (
+                        navigation.navigate('Camera')
+                    ) : (
+                        navigation.navigate('List', {
+                            categoryName: categoryName,
+                            userId: userId
+                        })
+                    )
                 }
             })
             .catch(function (error) {
@@ -141,12 +148,14 @@ const NoteScreen = ({ navigation, route }) => {
                     padding: 10,
                     alignSelf: 'stretch'
                 }}>
-                    <IconButton
-                        image = {images.back}
-                        onPress = {onBackPressed}
-                        marginLeft = {10}
-                        marginTop = {47}
-                    />
+                    {fromUpload ? <></> : 
+                        <IconButton
+                            image = {images.back}
+                            onPress = {onBackPressed}
+                            marginLeft = {10}
+                            marginTop = {47}
+                        />
+                    }
                     <Text style = {{
                         fontSize: Platform.OS == 'ios' ? 30 : 26,
                         justifyContent: 'center',
