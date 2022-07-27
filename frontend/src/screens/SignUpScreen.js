@@ -13,7 +13,7 @@ const SignUpScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [userData, setUserData] = useState(null);
+    const category = [ 'Diary', 'Todo', 'Study' ];
 
     const onBackPressed = () => {
         navigation.navigate('SignIn');
@@ -38,7 +38,19 @@ const SignUpScreen = ({ navigation }) => {
             .then(function (response) {
                 if (response.data['success'] == true) {
                     alert('회원가입되었습니다.');
-                    setUserData(data);
+                    try {
+                    for(let i = 0; i < 3; i++){
+                        API.post(
+                            `/category/${response.data.result.id}`,
+                            category[i]
+                        )
+                        .then(function (res){
+                            console.log('category created')
+                        })
+                    }
+                } catch (err) {
+                    console.error(err)
+                }
                     navigation.navigate('SignIn');
                 } else {
                     alert('중복된 아이디가 존재합니다.');
