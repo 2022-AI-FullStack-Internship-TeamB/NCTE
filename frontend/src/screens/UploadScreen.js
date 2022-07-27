@@ -23,11 +23,8 @@ const UploadScreen = ({ navigation, route }) => {
 
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState([]);
-    const [items, setItems] = useState ([
-        { label: 'Diary', value: 'Diary' },
-        { label: 'Todo', value: 'Todo' },
-        { label: 'Study', value: 'Study' },
-    ]);
+    const _categoryName = [];
+    const [items, setItems] = useState ([]);
     const [categoryName, setCategoryName] = useState('');
 
     const getId = async () => {
@@ -54,10 +51,34 @@ const UploadScreen = ({ navigation, route }) => {
             console.log(error);
         }
     }
+
+    const getCategory = async (j) => {
+        try {
+            for (let i = (j-1)*3+1; i <= (j-1)*3+3; i++){
+                await API.get(
+                    `category/${userId}/${i}`
+                )
+                .then(function (response) {
+                    _categoryName.push(response.data.result[0].category);
+                })
+                .catch(function (error) {
+                    console.log(error.response);
+                })
+            }
+            setItems([
+                { label: _categoryName[0], value: _categoryName[0] },
+                { label: _categoryName[1], value: _categoryName[1] },
+                { label: _categoryName[2], value: _categoryName[2] }
+            ])
+        } catch (error) {
+            console.error(error);
+        }
+    }
     
     useEffect(() => {
         getId();
         getText();
+        getCategory(userId);
     }, [userId]);
 
     const getIndex = (value) => {
@@ -67,14 +88,14 @@ const UploadScreen = ({ navigation, route }) => {
         }
     }
 
-    const saveNote = async () => {
+    const saveNote = async (j) => {
         setModalVisible(true);
         const data = {
             user_id: userId,
             title: title,
             date: new Date(),
             contents: contents,
-            category_id: categoryId + 1,
+            category_id: categoryId + 3*(j-1) + 1,
         }
 
         try {
@@ -166,7 +187,7 @@ const UploadScreen = ({ navigation, route }) => {
                     marginTop: 10,
                 }}>
                     <CustomButton 
-                        onPress = {saveNote}
+                        onPress = {() => saveNote(userId)}
                         text = "Save"
                     />
                 </View>

@@ -3,10 +3,11 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { textStyles } from '../styles';
 import { theme } from '../theme';
 
-const AlbumButton = ({ onPress, text, color }) => {
+const AlbumButton = ({ onPress, onLongPress, text, color }) => {
     return (
         <TouchableOpacity 
             onPress = {onPress}
+            onLongPress = {onLongPress}
             style = {styles(color).album}
         >
             <Text style = {textStyles.album}>

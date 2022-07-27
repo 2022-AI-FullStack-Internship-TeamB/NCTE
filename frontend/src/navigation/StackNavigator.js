@@ -44,9 +44,6 @@ export function CameraStack() {
             <Stack.Screen name = {UploadName} component = {UploadScreen} />
             <Stack.Screen name = {NoteName} component = {NoteScreen} />
             <Stack.Screen name = {ModifyName} component = {ModifyScreen} />
-            {/* <Stack.Screen name = {ModifyName} component = {ModifyScreen} />
-            <Stack.Screen name = {ListName} component = {MemoListScreen} />
-            <Stack.Screen name = {AlbumName} component = {AlbumScreen} /> */}
         </Stack.Navigator>
     )
 }
