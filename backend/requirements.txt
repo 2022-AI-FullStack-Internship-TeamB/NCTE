@@ -4,10 +4,11 @@ pymysql
 djangorestframework
 djangorestframework-simplejwt
 drf-yasg
-torch
 transformers
 sklearn
 jpype1
 konlpy
 sentence_transformers
+gunicorn
+torch
 easyocr
