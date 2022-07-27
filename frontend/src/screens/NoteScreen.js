@@ -97,9 +97,9 @@ const NoteScreen = ({ navigation, route }) => {
                 if(response.status === 204){
                     console.log('delete');
                     fromUpload ? (
-                        navigation.navigate('Camera')
+                        navigation.replace('Camera')
                     ) : (
-                        navigation.navigate('List', {
+                        navigation.replace('List', {
                             categoryName: categoryName,
                             userId: userId
                         })
