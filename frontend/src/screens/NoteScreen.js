@@ -58,7 +58,6 @@ const NoteScreen = ({ navigation, route }) => {
         getCategory();
         setNoteId(route.params.noteId);
         setFromUpload(route.params.fromUpload);
-        console.log(fromUpload);
         getNotes();
     }, [noteId]);
 
