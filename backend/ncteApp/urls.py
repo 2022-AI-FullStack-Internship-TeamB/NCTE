@@ -26,7 +26,8 @@ urlpatterns = [
     path('notes/<int:pk>', note_views.NoteDetail.as_view()),
 
     # 카테고리
-    path('category', categories_views.CreateCategory.as_view()),
+    path('category/<int:pk>', categories_views.CreateCategory.as_view()),
+    path('category/<int:pk>/<int:pk2>', categories_views.CategoryDetails.as_view()),
 
     # 요약
     path('summary/<int:pk>', summary_views.SummaryAPI.as_view()),
