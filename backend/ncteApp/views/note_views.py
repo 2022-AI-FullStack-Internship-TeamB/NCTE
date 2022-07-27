@@ -25,7 +25,7 @@ class NotesList(APIView):
             print(Categories.objects.get(
                 category=category_pk).category_id)
             category_id = Categories.objects.get(
-                category=category_pk).category_id
+                category=category_pk, user_id=pk).category_id
             queryset = Notes.objects.filter(
                 user_id=pk, category_id=category_id)
         queryset = queryset.order_by('-date')
