@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Dimensions } from 'react-native';
+import { View, ScrollView, Text, Image, Dimensions } from 'react-native';
 import API from '../api';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
@@ -53,60 +53,61 @@ const SignUpScreen = ({ navigation }) => {
     }
 
 	return (
-    	<View>
-            <View style = {boxStyles.top}>
-                <Text style = {textStyles.title}>
-                    Register
-                </Text>
-            </View>
-
-            <View style = {viewStyles.container}>
-                <View style = {{
-                    marginTop: height / 12,
-                }}>
-                    <View style = {viewStyles.row}>
-                        <Image source = {images.email} />
-                        <CustomInput
-                            value={email}
-                            setValue={setEmail}
-                            placeholder="E-mail address"
-                        />
-                    </View>
-                    <View style = {viewStyles.row}>
-                        <Image source = {images.nickname} />
-                        <CustomInput
-                            value={username}
-                            setValue={setUsername}
-                            placeholder="Nickname"
-                        />
-                    </View>
-                    <View style = {viewStyles.row}>
-                        <Image source = {images.password} />
-                        <CustomInput
-                            value={password}
-                            setValue={setPassword}
-                            placeholder="Password"
-                            secureTextEntry
-                        />
-                    </View>
+    	<View style = {{
+            flex: 1
+        }}>
+            <ScrollView>
+                <View style = {boxStyles.top}>
+                    <Text style = {textStyles.title}>
+                        Register
+                    </Text>
                 </View>
 
-                <View style = {{
-                    marginTop: height / 3.5,
-                }}>
-                    <View style = {viewStyles.row}>    
-                            <CustomButton
-                                onPress = {onBackPressed}
-                                text = "Back"
-                            />
-                        <View style = {{
-                            marginLeft: 100,
-                        }}>
-                            <CustomButton
-                                onPress = {onSignUpPressed}
-                                text = "SignUp"
+                <View style = {viewStyles.container}>
+                    <View style = {{
+                        marginTop: height / 12,
+                    }}>
+                        <View style = {viewStyles.row}>
+                            <Image source = {images.email} />
+                            <CustomInput
+                                value={email}
+                                setValue={setEmail}
+                                placeholder="E-mail address"
                             />
                         </View>
+                        <View style = {viewStyles.row}>
+                            <Image source = {images.nickname} />
+                            <CustomInput
+                                value={username}
+                                setValue={setUsername}
+                                placeholder="Nickname"
+                            />
+                        </View>
+                        <View style = {viewStyles.row}>
+                            <Image source = {images.password} />
+                            <CustomInput
+                                value={password}
+                                setValue={setPassword}
+                                placeholder="Password"
+                                secureTextEntry
+                            />
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
+            <View style = {viewStyles.container}>
+                <View style = {viewStyles.row}>    
+                    <CustomButton
+                        onPress = {onBackPressed}
+                        text = "Back"
+                    />
+                    <View style = {{
+                        marginLeft: 100,
+                    }}>
+                        <CustomButton
+                            onPress = {onSignUpPressed}
+                            text = "SignUp"
+                        />
                     </View>
                 </View>
             </View>
