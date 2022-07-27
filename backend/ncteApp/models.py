@@ -22,6 +22,8 @@ class Users(AbstractUser):
 
 class Categories(models.Model):
     category_id = models.AutoField(primary_key=True, db_column='category_id')
+    user_id = models.ForeignKey(
+        Users, on_delete=models.CASCADE, db_column='user_id')
     category = models.CharField(max_length=20, null=False)
 
 

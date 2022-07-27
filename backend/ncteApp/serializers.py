@@ -73,7 +73,7 @@ class ConvertedTextSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Categories
-        fields = ['category_id', 'category']
+        fields = ['category_id', 'user_id', 'category']
 
 
 class SummarySerializer(serializers.ModelSerializer):
