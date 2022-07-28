@@ -22,8 +22,6 @@ class NotesList(APIView):
         if category_pk == 'all' or category_pk == None:
             queryset = Notes.objects.filter(user_id=pk)
         else:
-            print(Categories.objects.get(
-                category=category_pk).category_id)
             category_id = Categories.objects.get(
                 category=category_pk, user_id=pk).category_id
             queryset = Notes.objects.filter(
