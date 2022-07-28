@@ -175,7 +175,7 @@ const Album = ({ navigation }) => {
                     setValue1 = {setOne}
                     setValue2 = {setTwo}
                     setValue3 = {setThree}
-                    onPress = {() => modifyCategory(ctId, getCtId(ctId))}
+                    onPress = {() => modifyCategory((userId-1) * 3 + ctId, getCtId(ctId))}
                     onBackPressed = {() => setModalVisible(false)}
                 />
             </View>
