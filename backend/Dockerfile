@@ -4,6 +4,7 @@ WORKDIR /usr/src/app
 
 ## Install packages
 RUN pip install --no-cache-dir torch==1.8.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip install --no-cache-dir torchvision==0.9.0+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html 
 RUN pip install transformers tqdm numpy scikit-learn scipy nltk sentencepiece
 RUN pip install --no-deps sentence-transformers
 
