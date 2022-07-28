@@ -1,11 +1,14 @@
 # NCTE
-Note Cursive To E-notes  
-
-## Index  
+### Note Cursive To E-notes  
+Takes pictures of handwritten notes and upload them, and get results of converted text  
+Users can manage handwritten notes online  
 
 ## 1. Prerequisites  
-#### System Architecture  
+### System Architecture  
 ![system architecture](image_files/system_architecture.png)  
+
+### Oracle Cloud  
+![oracle cloud](image_files/docker_containers.png)  
 
 ## 2. Installation Process  
 ```bash
@@ -23,5 +26,5 @@ This project is not intended for commercial use, please do not use it for commer
 ## 6. Contact Information  
 |Name|곽미래|곽서진|고은서|이정현|최정민
 |------|---|---|---|---|---|
-|role|backend, AI|frontend|frontend|backend, AI|AI|
+|Role|backend/DevOps|frontend|frontend|backend/AI|AI|
 |Github|@miraekwak|@SJ-Kwak|@godori1012|@Jeong-Hyeon-Lee|@JAIBC|
