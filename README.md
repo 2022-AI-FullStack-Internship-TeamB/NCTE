@@ -26,7 +26,8 @@ $ docker-compose up --build
 
 ## 4. Acknowledgement and References  
 This project is based on several open-source repositories.  
-We used [EasyOCR](https://github.com/JaidedAI/EasyOCR) for detecting and recognizing text. We fine-tuned EasyOCR with training script and pretrained model provided in the link. Dataset we used when fine tuning is part of the data from ai hub - [Korean OCR](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=91).
+We used [EasyOCR](https://github.com/JaidedAI/EasyOCR) for detecting and recognizing text. We fine-tuned EasyOCR with training script and pretrained model provided in the link.  
+Dataset we used for fine tuning is part of [Korean OCR data](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=91) from AI hub.
 
 
 ## 5. Copyrights / End User Licensce
@@ -36,4 +37,4 @@ This project is not intended for commercial use, please do not use it for commer
 |Name|곽미래|곽서진|고은서|이정현|최정민
 |------|---|---|---|---|---|
 |Role|backend/DevOps|frontend|frontend|backend/AI|AI|
-|Github|@miraekwak|@SJ-Kwak|@godori1012|@Jeong-Hyeon-Lee|@JAIBC|
+|Github|[@miraekwak](https://github.com/miraekwak)|[@SJ-Kwak](https://github.com/SJ-Kwak)|[@godori1012](https://github.com/godori1012)|[@Jeong-Hyeon-Lee](https://github.com/Jeong-Hyeon-Lee)|[@JAIBC](https://github.com/JAIBC)|
