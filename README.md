@@ -12,9 +12,6 @@ With this Android/ios Application, users can manage handwritten notes online.
 ### System Architecture  
 ![system architecture](image_files/system_architecture.png)  
 
-### Oracle Cloud  
-![oracle cloud](image_files/docker_containers.png)  
-
 ### AI Architecture  
 ![ai architecure](image_files/AI_architecture.png)  
 
