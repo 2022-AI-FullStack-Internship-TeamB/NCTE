@@ -62,7 +62,7 @@ const NoteScreen = ({ navigation, route }) => {
     }, [noteId]);
 
     const onBackPressed = () => {
-        navigation.navigate('List', {
+        navigation.replace('List', {
             categoryName: categoryName,
             userId: userId
         });

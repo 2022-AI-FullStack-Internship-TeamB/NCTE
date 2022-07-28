@@ -76,7 +76,7 @@ const MemoListScreen = ({ navigation, route }) => {
   const renderMemo = ({ item }) => {
     return (
       <TouchableOpacity style={boxStyles.memo}
-        onPress={() => navigation.navigate('Note', {
+        onPress={() => navigation.replace('Note', {
           noteId: item.id,
           categoryName: category,
           userId: userId
