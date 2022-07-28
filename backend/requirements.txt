@@ -9,6 +9,5 @@ sklearn
 jpype1
 konlpy
 sentence_transformers
-gunicorn
 torch
 easyocr
