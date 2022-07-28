@@ -23,9 +23,9 @@ $ docker-compose up --build
 
 ## 4. Acknowledgement and References  
 This project is based on several open-source repositories.  
-We used [EasyOCR](https://github.com/JaidedAI/EasyOCR) for detecting and recognizing text. We fine-tuned EasyOCR with training script and pretrained model provided in the link.  
+We used [EasyOCR](https://github.com/JaidedAI/EasyOCR) for detecting and recognizing text. We fine-tuned EasyOCR using training script from [here](https://github.com/JaidedAI/EasyOCR/tree/master/trainer) and [korean_g2.pth](https://jaided.ai/easyocr/modelhub/).  
 Dataset we used for fine tuning is part of [Korean OCR data](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=91) from AI hub.  
-We used the [KoBART](https://github.com/SKT-AI/KoBART) model for content summarization. One of the examples provided by kobart, [kobart-sumarization](https://github.com/seujung/KoBART-summarization), was referenced. It is summarized using a pretrained model of kobart-sumarization.
+We used the [KoBART](https://github.com/SKT-AI/KoBART) model for content summarization. One of the examples provided by kobart, [kobart-sumarization](https://github.com/seujung/KoBART-summarization), was referenced. It is summarized using a pretrained model of kobart-sumarization.  
 KeyBERT was also used to extract keywords. [Sentence Transformers](https://github.com/UKPLab/sentence-transformers), a package for SBERT, and [KoNLPy](https://github.com/konlpy/konlpy), a morpheme analyzer, were used.
 
 ## 5. Copyrights / End User Licensce
