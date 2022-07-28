@@ -20,8 +20,11 @@ const ModifyScreen = ({ navigation, route }) => {
 
     const [open, setOpen] = useState(false);
     const [category, setCategory] = useState([]);
-    const _categoryName = [];
-    const [items, setItems] = useState ([]);
+    const [items, setItems] = useState([
+        { label: 'Diary', value: 'Diary' },
+        { label: 'Todo', value: 'Todo' },
+        { label: 'Study', value: 'Study' },
+    ]);
     const [categoryName, setCategoryName] = useState('');
 
     const getIndex = (value) => {
@@ -51,36 +54,13 @@ const ModifyScreen = ({ navigation, route }) => {
         }
     }
 
-    const getCategory = async (j) => {
-        try {
-            for (let i = (j-1)*3+1; i <= (j-1)*3+3; i++){
-                await API.get(
-                    `category/${userId}/${i}`
-                )
-                .then(function (response) {
-                    _categoryName.push(response.data.result[0].category);
-                })
-                .catch(function (error) {
-                    console.log(error.response);
-                })
-            }
-            setItems([
-                { label: _categoryName[0], value: _categoryName[0] },
-                { label: _categoryName[1], value: _categoryName[1] },
-                { label: _categoryName[2], value: _categoryName[2] }
-            ])
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    const modifyNote = async (j) => {
+    const modifyNote = async () => {
         const data = {
             user_id: userId,
             title: title,
             contents: contents,
             date: new Date(),
-            category_id: categoryId + 3*(j-1) + 1,
+            category_id: categoryId + 1,
         }
 
         try {
@@ -112,8 +92,7 @@ const ModifyScreen = ({ navigation, route }) => {
         setCategoryName(route.params.categoryName);
         setFromUpload(route.params.fromUpload);
         getNotes();
-        getCategory(userId);
-    }, [userId, noteId]);
+    }, [noteId]);
 
     const onBackPressed = () => {
         navigation.navigate('Note', {
@@ -193,7 +172,7 @@ const ModifyScreen = ({ navigation, route }) => {
                             marginLeft: 100,
                         }}>
                             <CustomButton
-                                onPress={() => modifyNote(userId)}
+                                onPress={modifyNote}
                                 text="Confirm"
                             />
                         </View>
