@@ -5,9 +5,13 @@ Note Cursive To E-notes
 
 ## 1. Prerequisites  
 #### System Architecture  
-![](https://keep.google.com/u/0/media/v2/1KNIltDYHaHDIKJOzNJ-m38ipQlDrSzWZwes6gffs4w0kubi5vFs74C2BsMCyBUU/1Wu8kS8FO_xQyOmFYl2otowhm1zniWsOn0C_XqnfCx3UFRDfhdY6d9606To1XRw?sz=512&accept=image%2Fgif%2Cimage%2Fjpeg%2Cimage%2Fjpg%2Cimage%2Fpng%2Cimage%2Fwebp)  
+![](https://keep.google.com/u/0/media/v2/1RCnYJLiYmFcPoWcN8m9-UTQ24B_ELHy1sFjr5M4FicyPUVELmnLMv6qT3PRBTg/11OR5svKaJDnE0NxYtKMeJrWAaPEKniHvBcku2mEUIynfJDGwh_Bd1ETy2JJC?sz=512&accept=image%2Fgif%2Cimage%2Fjpeg%2Cimage%2Fjpg%2Cimage%2Fpng%2Cimage%2Fwebp)  
 
 ## 2. Installation Process  
+```bash
+$ git clone https://github.com/2022-AI-FullStack-Internship-TeamB/NCTE.git
+$ docker-compose up --build
+```  
 
 ## 3. Getting Started  
 
