@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, DevSettings } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import API from '../api';
 import restart from '../restart';
@@ -63,6 +63,7 @@ const MyPageScreen = ({ navigation, route, props }) => {
             .then(function (response) {
                 setUserName(userName);
                 setEmail(email);
+                alert('변경되었습니다.');
             })
             .catch(function (error) {
                 console.log(error.response);
@@ -72,7 +73,7 @@ const MyPageScreen = ({ navigation, route, props }) => {
         }
     }
 
-    const onLogoutPressed = async () => {
+    const logout = async () => {
         try {
             AsyncStorage.clear();
             restart();
@@ -80,6 +81,24 @@ const MyPageScreen = ({ navigation, route, props }) => {
             console.log(error);
         }
     };
+    
+    const onLogoutPressed = () => {
+        Alert.alert(
+            'Logout',
+            '로그아웃하시겠습니까 ?',
+            [
+                {text: '취소', style: 'cancel'}, 
+                {
+                    text: '로그아웃',    
+                    onPress: logout,
+                        style: 'destructive',
+                },
+            ],
+                {
+                    cancelable: true,
+                },
+        );
+    }
 
    return (
        <View>
