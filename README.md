@@ -1,6 +1,6 @@
 # NCTE
-### Note Cursive To E-note  
-#### -for Korean Handwritten Notes  
+### Note Cursive To E-note
+#### - for Korean Handwritten Notes  
 Upload pictures of handwritten notes and get results of converted text.  
 With this Android/ios Application, users can manage handwritten notes online.  
 
