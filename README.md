@@ -32,7 +32,7 @@ KeyBERT was also used to extract keywords. [Sentence Transformers](https://githu
 This project is not intended for commercial use, please do not use it for commercial purposes.  
 
 ## 6. Contact Information  
-|Name|곽미래|곽서진|고은서|이정현|최정민
-|------|---|---|---|---|---|
-|Role|backend/DevOps|frontend|frontend|backend/AI|AI|
+|Name|곽미래|곽서진|고은서|이정현|최정민|
+|:------:|:---:|:---:|:---:|:---:|:---:|
+|Role|Backend/DevOps|Frontend|Frontend|Backend/AI|AI|
 |Github|[@miraekwak](https://github.com/miraekwak)|[@SJ-Kwak](https://github.com/SJ-Kwak)|[@godori1012](https://github.com/godori1012)|[@Jeong-Hyeon-Lee](https://github.com/Jeong-Hyeon-Lee)|[@JAIBC](https://github.com/JAIBC)|
