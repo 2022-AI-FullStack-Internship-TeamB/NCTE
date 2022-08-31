@@ -20,6 +20,7 @@ With this Android/ios Application, users can manage handwritten notes online.
 $ git clone https://github.com/2022-AI-FullStack-Internship-TeamB/NCTE.git
 $ docker-compose up --build
 ```  
+**docker failed, just install requirements.txt and execute 'runserver' from 'backend' directory
 
 ## 4. Acknowledgement and References  
 This project is based on several open-source repositories.  
